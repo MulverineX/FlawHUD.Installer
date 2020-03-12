@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="app_download" xml:space="preserve">
+    <value>https://github.com/criticalflaw/flawhud/archive/master.zip</value>
+  </data>
+  <data name="app_download_streamer" xml:space="preserve">
+    <value>https://github.com/criticalflaw/flawhud/archive/stream.zip</value>
+  </data>
+  <data name="app_readme" xml:space="preserve">
+    <value>https://raw.githubusercontent.com/criticalflaw/flawhud/master/README.md</value>
+  </data>
+  <data name="app_update" xml:space="preserve">
+    <value>https://raw.githubusercontent.com/CriticalFlaw/FlawHUD.Installer/master/Update.xml</value>
+  </data>
+  <data name="dir_console" xml:space="preserve">
+    <value>\flawhud\materials\console\</value>
+  </data>
+  <data name="dir_resource_ui" xml:space="preserve">
+    <value>\flawhud\resource\ui</value>
+  </data>
+  <data name="dir_scripts" xml:space="preserve">
+    <value>\flawhud\scripts</value>
+  </data>
+  <data name="error_app_directory" xml:space="preserve">
+    <value>The tf/custom directory needs to be set in order to use the installer.</value>
+  </data>
+  <data name="error_app_install" xml:space="preserve">
+    <value>An error occurred while installing FlawHUD.</value>
+  </data>
+  <data name="error_app_load" xml:space="preserve">
+    <value>An error occurred while loading FlawHUD settings.</value>
+  </data>
+  <data name="error_app_reset" xml:space="preserve">
+    <value>An error occurred while resetting FlawHUD settings.</value>
+  </data>
+  <data name="error_app_save" xml:space="preserve">
+    <value>An error occurred while saving FlawHUD settings.</value>
+  </data>
+  <data name="error_app_uninstall" xml:space="preserve">
+    <value>An error occurred while uninstalling FlawHUD.</value>
+  </data>
+  <data name="error_app_version" xml:space="preserve">
+    <value>An error occurred while checking the FlawHUD version number.</value>
+  </data>
+  <data name="error_set_colors" xml:space="preserve">
+    <value>An error occurred while applying the color settings.</value>
+  </data>
+  <data name="error_set_fonts" xml:space="preserve">
+    <value>An error occurred while applying the custom fonts setting.</value>
+  </data>
+  <data name="error_set_menu_backgrounds" xml:space="preserve">
+    <value>An error occurred while applying the main menu background setting.</value>
+  </data>
+  <data name="error_set_menu_class_image" xml:space="preserve">
+    <value>An error occurred while applying the main menu class image setting.</value>
+  </data>
+  <data name="error_set_spy_disguise_image" xml:space="preserve">
+    <value>An error occurred while applying the spy disguise image setting.</value>
+  </data>
+  <data name="error_set_transparent_viewmodels" xml:space="preserve">
+    <value>An error occurred while applying the transparent viewmodels setting.</value>
+  </data>
+  <data name="error_set_xhair" xml:space="preserve">
+    <value>An error occurred while applying the crosshair settings.</value>
+  </data>
+  <data name="error_set_xhair_pulse" xml:space="preserve">
+    <value>An error occurred while applying the crosshair pulse setting.</value>
+  </data>
+  <data name="file_chapterbackgrounds" xml:space="preserve">
+    <value>\flawhud\scripts\chapterbackgrounds.txt</value>
+  </data>
+  <data name="file_clientscheme" xml:space="preserve">
+    <value>\flawhud\resource\clientscheme.res</value>
+  </data>
+  <data name="file_clientscheme_colors" xml:space="preserve">
+    <value>\flawhud\resource\scheme\clientscheme_colors.res</value>
+  </data>
+  <data name="file_hudanimations" xml:space="preserve">
+    <value>\flawhud\scripts\hudanimations_custom.txt</value>
+  </data>
+  <data name="file_hudlayout" xml:space="preserve">
+    <value>\flawhud\scripts\hudlayout.res</value>
+  </data>
+  <data name="file_mainmenuoverride" xml:space="preserve">
+    <value>\flawhud\resource\ui\mainmenuoverride.res</value>
+  </data>
+  <data name="info_create_backup" xml:space="preserve">
+    <value>An existing flawhud-master folder has been found. To avoid conflicts, a backup has been created.</value>
+  </data>
+  <data name="info_folder_browser" xml:space="preserve">
+    <value>Please select your tf\\custom folder. If the correct directory is not provided, the options to install and modify FlawHUD will not be available.</value>
+  </data>
+</root>
