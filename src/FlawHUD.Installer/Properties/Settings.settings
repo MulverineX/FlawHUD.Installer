@@ -3,22 +3,22 @@
   <Profiles />
   <Settings>
     <Setting Name="color_ammo_clip" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#30FF30</Value>
+      <Value Profile="(Default)">#00AA7F</Value>
     </Setting>
     <Setting Name="color_ammo_clip_low" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#FF2A82</Value>
+      <Value Profile="(Default)">#BE1414</Value>
     </Setting>
     <Setting Name="color_health_low" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#FF9900</Value>
+      <Value Profile="(Default)">#BE1414</Value>
     </Setting>
     <Setting Name="color_health_normal" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#EBE2CA</Value>
+      <Value Profile="(Default)">#00AA7F</Value>
     </Setting>
     <Setting Name="color_uber_bar" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#EBE2CA</Value>
+      <Value Profile="(Default)">#00AA7F</Value>
     </Setting>
     <Setting Name="color_uber_full" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#FF3219</Value>
+      <Value Profile="(Default)">#00787F</Value>
     </Setting>
     <Setting Name="color_xhair_normal" Type="System.String" Scope="User">
       <Value Profile="(Default)">#F2F2F2</Value>
@@ -42,7 +42,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="toggle_menu_images" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="toggle_stock_backgrounds" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -57,16 +57,19 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="toggle_xhair_pulse" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="val_xhair_size" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">26</Value>
     </Setting>
     <Setting Name="val_xhair_x" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">25</Value>
     </Setting>
     <Setting Name="val_xhair_y" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">24</Value>
+    </Setting>
+    <Setting Name="toggle_casting_essentials" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -12,7 +12,7 @@ namespace FlawHUD.Installer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#30FF30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#00AA7F")]
         public string color_ammo_clip {
             get {
                 return ((string)(this["color_ammo_clip"]));
@@ -37,7 +37,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF2A82")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#BE1414")]
         public string color_ammo_clip_low {
             get {
                 return ((string)(this["color_ammo_clip_low"]));
@@ -49,7 +49,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF9900")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#BE1414")]
         public string color_health_low {
             get {
                 return ((string)(this["color_health_low"]));
@@ -61,7 +61,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#EBE2CA")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#00AA7F")]
         public string color_health_normal {
             get {
                 return ((string)(this["color_health_normal"]));
@@ -73,7 +73,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#EBE2CA")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#00AA7F")]
         public string color_uber_bar {
             get {
                 return ((string)(this["color_uber_bar"]));
@@ -85,7 +85,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF3219")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#00787F")]
         public string color_uber_full {
             get {
                 return ((string)(this["color_uber_full"]));
@@ -181,7 +181,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool toggle_menu_images {
             get {
                 return ((bool)(this["toggle_menu_images"]));
@@ -241,7 +241,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool toggle_xhair_pulse {
             get {
                 return ((bool)(this["toggle_xhair_pulse"]));
@@ -253,7 +253,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("26")]
         public int val_xhair_size {
             get {
                 return ((int)(this["val_xhair_size"]));
@@ -265,7 +265,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
         public int val_xhair_x {
             get {
                 return ((int)(this["val_xhair_x"]));
@@ -277,13 +277,25 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("24")]
         public int val_xhair_y {
             get {
                 return ((int)(this["val_xhair_y"]));
             }
             set {
                 this["val_xhair_y"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool toggle_casting_essentials {
+            get {
+                return ((bool)(this["toggle_casting_essentials"]));
+            }
+            set {
+                this["toggle_casting_essentials"] = value;
             }
         }
     }

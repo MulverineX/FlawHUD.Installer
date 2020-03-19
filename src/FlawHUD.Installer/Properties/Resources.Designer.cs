@@ -187,6 +187,15 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while installing the latest version of CastingEssentials..
+        /// </summary>
+        internal static string error_set_castingessentials {
+            get {
+                return ResourceManager.GetString("error_set_castingessentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while applying the color settings..
         /// </summary>
         internal static string error_set_colors {
@@ -322,7 +331,7 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select your tf\\custom folder. If the correct directory is not provided, the options to install and modify FlawHUD will not be available..
+        ///   Looks up a localized string similar to Select your tf/custom folder. If a valid directory is not provided, the options to install and modify FlawHUD will not be available..
         /// </summary>
         internal static string info_folder_browser {
             get {

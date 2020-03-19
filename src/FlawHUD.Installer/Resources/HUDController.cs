@@ -1,7 +1,9 @@
 ﻿using FlawHUD.Installer.Properties;
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 
 namespace FlawHUD.Installer
 {
@@ -22,17 +24,17 @@ namespace FlawHUD.Installer
                 var file = hudPath + Resources.file_clientscheme_colors;
                 var lines = File.ReadAllLines(file);
                 // Health
-                lines[28] = $"\t\t\"Overheal\"\t\t\t\t\"{RGBConverter(Settings.Default.color_health_normal)}\"";
-                lines[30] = $"\t\t\"LowValue\"\t\t\t\t\"{RGBConverter(Settings.Default.color_health_low)}\"";
+                lines[28] = $"\t\t\"Overheal\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_normal)}\"";
+                lines[30] = $"\t\t\"LowValue\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_low)}\"";
                 // Ammo
                 lines[31] = $"\t\t\"OverhealPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_clip)}\"";
-                lines[32] = $"\t\t\"LowValuePulse\"\t\t\t\"{RGBConverter(Settings.Default.color_ammo_clip_low)}\"";
+                lines[32] = $"\t\t\"LowValuePulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_clip_low)}\"";
                 // Crosshair
                 lines[35] = $"\t\t\"Crosshair\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_xhair_normal)}\"";
                 lines[36] = $"\t\t\"CrosshairDamage\"\t\t\t\"{RGBConverter(Settings.Default.color_xhair_pulse)}\"";
                 // Ubercharge
-                lines[40] = $"\t\t\"Ubercharge1\"\t\t\t\"{RGBConverter(Settings.Default.color_uber_bar)}\"";
-                lines[41] = $"\t\t\"Ubercharge2\"\t\t\t\"{RGBConverter(Settings.Default.color_uber_full)}\"";
+                lines[39] = $"\t\t\"Ubercharge1\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_bar)}\"";
+                lines[40] = $"\t\t\"Ubercharge2\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full)}\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -52,20 +54,20 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Crosshair.");
                 var file = hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
-                lines[11] = "\t\t\"visible\"\t\t\"0\"";
-                lines[12] = "\t\t\"enabled\"\t\t\"0\"";
-                lines[17] = "\t\t\"xpos\"\t\t\"c-25\"";
-                lines[18] = "\t\t\"xpos\"\t\t\"c-24\"";
-                lines[21] = "\t\t\"font\"\t\t\"size:26,outline:off\"";
+                lines[11] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[12] = "\t\t\"enabled\"\t\t\t\"0\"";
+                lines[17] = "\t\t\"xpos\"\t\t\t\t\"c-25\"";
+                lines[18] = "\t\t\"ypos\"\t\t\t\t\"c-24\"";
+                lines[21] = "\t\t\"font\"\t\t\t\t\"size:26,outline:off\"";
                 File.WriteAllLines(file, lines);
 
                 if (Settings.Default.toggle_xhair_enable)
                 {
-                    lines[11] = "\t\t\"visible\"\t\t\"1\"";
-                    lines[12] = "\t\t\"enabled\"\t\t\"1\"";
-                    lines[17] = $"\t\t\"xpos\"\t\t\"c-{Settings.Default.val_xhair_x}\"";
-                    lines[18] = $"\t\t\"ypos\"\t\t\"c-{Settings.Default.val_xhair_y}\"";
-                    lines[21] = $"\t\t\"font\"\t\t\"size:{Settings.Default.val_xhair_size},outline:off\"";
+                    lines[11] = "\t\t\"visible\"\t\t\t\"1\"";
+                    lines[12] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    lines[17] = $"\t\t\"xpos\"\t\t\t\t\"c-{Settings.Default.val_xhair_x}\"";
+                    lines[18] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
+                    lines[21] = $"\t\t\"font\"\t\t\t\t\"size:{Settings.Default.val_xhair_size},outline:off\"";
                     File.WriteAllLines(file, lines);
                 }
             }
@@ -86,8 +88,8 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Crosshair Pulse.");
                 var file = hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
-                lines[96] = CommentOutTextLine(lines[133]);
-                lines[97] = CommentOutTextLine(lines[134]);
+                lines[96] = CommentOutTextLine(lines[96]);
+                lines[97] = CommentOutTextLine(lines[97]);
 
                 if (Settings.Default.toggle_xhair_pulse)
                 {
@@ -179,7 +181,7 @@ namespace FlawHUD.Installer
                 var file = hudPath + Resources.file_mainmenuoverride;
                 var lines = File.ReadAllLines(file);
                 var value = (Settings.Default.toggle_menu_images) ? "-80" : "9999";
-                lines[1012] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
+                lines[199] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -200,13 +202,13 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Transparent Viewmodels.");
                 var file = hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
-                lines[699] = "\t\t\"visible\"\t\t\t\"0\"";
-                lines[700] = "\t\t\"enabled\"\t\t\t\"0\"";
+                lines[39] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[40] = "\t\t\"enabled\"\t\t\t\"0\"";
 
                 if (Settings.Default.toggle_transparent_viewmodels)
                 {
-                    lines[699] = "\t\t\"visible\"\t\t\t\"1\"";
-                    lines[700] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    lines[39] = "\t\t\"visible\"\t\t\t\"1\"";
+                    lines[40] = "\t\t\"enabled\"\t\t\t\"1\"";
                 }
                 File.WriteAllLines(file, lines);
             }
@@ -228,8 +230,41 @@ namespace FlawHUD.Installer
                 var file = hudPath + Resources.file_clientscheme;
                 var lines = File.ReadAllLines(file);
                 var value = (Settings.Default.toggle_code_pro_fonts) ? "clientscheme_fonts" : "clientscheme_fonts_tf";
-                lines[2] = $"#base \"scheme\\{value}.res\"";
+                lines[2] = $"#base \"scheme/{value}.res\"";
                 File.WriteAllLines(file, lines);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Updating Custom Fonts.", Resources.error_set_fonts, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Installs the latest version of CastingEssentials
+        /// </summary>
+        public void CastingEssentials()
+        {
+            try
+            {
+                // Skip this step if CastingEssentials is already installed and the user doesn't have the option checked.
+                if (!Directory.Exists(hudPath + "\\CastingEssentials") && Settings.Default.toggle_casting_essentials == true)
+                {
+                    // Download the latest version of CastingEssentials.
+                    ServicePointManager.Expect100Continue = true;
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                    var client = new WebClient();
+                    client.DownloadFile("https://github.com/PazerOP/CastingEssentials/releases/download/r21/CastingEssentials_r21.zip", "CastingEssentials.zip");
+                    client.Dispose();
+
+                    // Extract it into the tf/custom directory
+                    var appPath = System.Windows.Forms.Application.StartupPath;
+                    ZipFile.ExtractToDirectory(appPath + "\\CastingEssentials.zip", Settings.Default.hud_directory);
+
+                    // Remove the downloaded file from the installer directory.
+                    if (File.Exists(appPath + "\\CastingEssentials.zip"))
+                        File.Delete(appPath + "\\CastingEssentials.zip");
+                }
             }
             catch (Exception ex)
             {

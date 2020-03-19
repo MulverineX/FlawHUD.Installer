@@ -35,14 +35,14 @@ namespace FlawHUD.Installer
             AutoUpdater.Start(Properties.Resources.app_update);
         }
 
-        private void DownloadHUD(bool streamerMode = false)
+        private void DownloadHUD()
         {
             logger.Info("Downloading the latest FlawHUD...");
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             var client = new WebClient();
-            client.DownloadFile(streamerMode ? Properties.Resources.app_download : Properties.Resources.app_download_streamer, "flawhud.zip");
+            client.DownloadFile(chkStreamerMode.IsChecked == true ? Properties.Resources.app_download : Properties.Resources.app_download_streamer, "flawhud.zip");
             client.Dispose();
             logger.Info("Downloading the latest FlawHUD...Done!");
             ExtractHUD();
@@ -64,6 +64,8 @@ namespace FlawHUD.Installer
                 Directory.Delete(settings.hud_directory + "\\flawhud", true);
             if (Directory.Exists(settings.hud_directory + "\\flawhud-master"))
                 Directory.Move(settings.hud_directory + "\\flawhud-master", settings.hud_directory + "\\flawhud");
+            else if (Directory.Exists(settings.hud_directory + "\\flawhud-stream"))
+                Directory.Move(settings.hud_directory + "\\flawhud-stream", settings.hud_directory + "\\flawhud");
             logger.Info("Extracting downloaded FlawHUD...Done!");
         }
 
@@ -117,18 +119,22 @@ namespace FlawHUD.Installer
             // Clean the application directory
             if (File.Exists(appPath + "\\flawhud.zip"))
                 File.Delete(appPath + "\\flawhud.zip");
+            if (File.Exists(appPath + "\\CastingEssentials.zip"))
+                File.Delete(appPath + "\\CastingEssentials.zip");
 
             // Clean the tf/custom directory
-            if (Directory.Exists(settings.hud_directory + "\\flawhud-master"))
+            var hudDirectory = Directory.Exists(settings.hud_directory + "\\flawhud-master") ? settings.hud_directory + "\\flawhud-master" : string.Empty;
+            hudDirectory = Directory.Exists(settings.hud_directory + "\\flawhud-stream") ? settings.hud_directory + "\\flawhud-stream" : hudDirectory;
+
+            if (!string.IsNullOrEmpty(hudDirectory))
             {
+                // Remove the previous backup if found.
                 if (File.Exists(settings.hud_directory + "\\flawhud-backup.zip"))
-                {
-                    logger.Info("Found a FlawHUD backup. Removing.");
                     File.Delete(settings.hud_directory + "\\flawhud-backup.zip");
-                }
-                logger.Info("Found a FlawHUD installation. Backing-up.");
-                ZipFile.CreateFromDirectory(settings.hud_directory + "\\flawhud-master", settings.hud_directory + "\\flawhud-backup.zip");
-                Directory.Delete(settings.hud_directory + "\\flawhud-master", true);
+
+                logger.Info("Found a FlawHUD installation. Creating a back-up.");
+                ZipFile.CreateFromDirectory(hudDirectory, settings.hud_directory + "\\flawhud-backup.zip");
+                Directory.Delete(hudDirectory, true);
                 System.Windows.Forms.MessageBox.Show(Properties.Resources.info_create_backup, "Backup Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             logger.Info("Cleaning-up FlawHUD directories...Done!");
@@ -160,7 +166,7 @@ namespace FlawHUD.Installer
         /// </summary>
         public static void ShowErrorMessage(string title, string message, string exception)
         {
-            System.Windows.Forms.MessageBox.Show(message + ". " + exception, "Error: " + title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            System.Windows.Forms.MessageBox.Show($"{message} {exception}", "Error: " + title, MessageBoxButtons.OK, MessageBoxIcon.Error);
             logger.Error(exception);
         }
 
@@ -217,20 +223,20 @@ namespace FlawHUD.Installer
             {
                 var isInstalled = CheckHUDPath();
                 if (isInstalled) CheckHUDVersion();
-                Start.Visibility = Visibility.Visible;
-                Install.Visibility = Visibility.Visible;
+                Start.IsEnabled = true;
+                Install.IsEnabled = true;
                 Install.Content = isInstalled ? "Refresh" : "Install";
-                Save.Visibility = isInstalled ? Visibility.Visible : Visibility.Hidden;
-                Uninstall.Visibility = isInstalled ? Visibility.Visible : Visibility.Hidden;
-                lblStatus.Content = $"FlawHUD is {(!isInstalled ? "not" : "")}installed...";
+                Save.IsEnabled = isInstalled ? true : false;
+                Uninstall.IsEnabled = isInstalled ? true : false;
+                lblStatus.Content = $"FlawHUD is {(!isInstalled ? "not " : "")}installed...";
                 Properties.Settings.Default.Save();
             }
             else
             {
-                Start.Visibility = Visibility.Hidden;
-                Install.Visibility = Visibility.Hidden;
-                Save.Visibility = Visibility.Hidden;
-                Uninstall.Visibility = Visibility.Hidden;
+                Start.IsEnabled = false;
+                Install.IsEnabled = false;
+                Save.IsEnabled = false;
+                Uninstall.IsEnabled = false;
                 lblStatus.Content = "Directory is not set...";
             }
         }
@@ -325,8 +331,8 @@ namespace FlawHUD.Installer
                 settings.color_xhair_normal = cpXHairColor.SelectedColor.Value.ToString();
                 settings.color_xhair_pulse = cpXHairPulse.SelectedColor.Value.ToString();
                 settings.val_xhair_size = cbXHairSize.SelectedIndex;
-                settings.val_xhair_x = tbXHairXPos.Value ?? 0;
-                settings.val_xhair_y = tbXHairYPos.Value ?? 0;
+                settings.val_xhair_x = tbXHairXPos.Value ?? 25;
+                settings.val_xhair_y = tbXHairYPos.Value ?? 24;
                 settings.toggle_xhair_enable = chkXHairEnable.IsChecked ?? false;
                 settings.toggle_xhair_pulse = chkXHairPulse.IsChecked ?? false;
                 settings.toggle_disguise_image = chkDisguiseImage.IsChecked ?? false;
@@ -335,6 +341,7 @@ namespace FlawHUD.Installer
                 settings.toggle_transparent_viewmodels = chkTransparentVM.IsChecked ?? false;
                 settings.toggle_code_pro_fonts = chkCodeProFonts.IsChecked ?? false;
                 settings.toggle_streamer_mode = chkStreamerMode.IsChecked ?? false;
+                settings.toggle_casting_essentials = chkCastingEssentials.IsChecked ?? false;
                 settings.Save();
                 logger.Info("Saving HUD Settings...Done!");
             }
@@ -373,6 +380,7 @@ namespace FlawHUD.Installer
                 chkTransparentVM.IsChecked = settings.toggle_transparent_viewmodels;
                 chkCodeProFonts.IsChecked = settings.toggle_code_pro_fonts;
                 chkStreamerMode.IsChecked = settings.toggle_streamer_mode;
+                chkCastingEssentials.IsChecked = settings.toggle_casting_essentials;
                 logger.Info("Loading HUD Settings...Done!");
             }
             catch (Exception ex)
@@ -390,25 +398,26 @@ namespace FlawHUD.Installer
             {
                 logger.Info("Resetting HUD Settings...");
                 var cc = new ColorConverter();
-                cpHealthNormal.SelectedColor = (Color)cc.ConvertFrom("#EBE2CA");
-                cpHealthLow.SelectedColor = (Color)cc.ConvertFrom("#FF9900");
-                cpAmmoClip.SelectedColor = (Color)cc.ConvertFrom("#30FF30");
-                cpAmmoClipLow.SelectedColor = (Color)cc.ConvertFrom("#FF2A82");
-                cpUberBarColor.SelectedColor = (Color)cc.ConvertFrom("#EBE2CA");
-                cpUberFullColor.SelectedColor = (Color)cc.ConvertFrom("#FF3219");
+                cpHealthNormal.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
+                cpHealthLow.SelectedColor = (Color)cc.ConvertFrom("#BE1414");
+                cpAmmoClip.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
+                cpAmmoClipLow.SelectedColor = (Color)cc.ConvertFrom("#BE1414");
+                cpUberBarColor.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
+                cpUberFullColor.SelectedColor = (Color)cc.ConvertFrom("#00787F");
                 cpXHairColor.SelectedColor = (Color)cc.ConvertFrom("#F2F2F2");
                 cpXHairPulse.SelectedColor = (Color)cc.ConvertFrom("#FF0000");
-                cbXHairSize.SelectedIndex = 0;
-                tbXHairXPos.Value = 0;
-                tbXHairYPos.Value = 0;
+                cbXHairSize.SelectedIndex = 16;
+                tbXHairXPos.Value = 25;
+                tbXHairYPos.Value = 24;
                 chkXHairEnable.IsChecked = false;
-                chkXHairPulse.IsChecked = false;
+                chkXHairPulse.IsChecked = true;
                 chkDisguiseImage.IsChecked = false;
                 chkDefaultBG.IsChecked = false;
-                chkMenuImages.IsChecked = false;
+                chkMenuImages.IsChecked = true;
                 chkTransparentVM.IsChecked = false;
                 chkCodeProFonts.IsChecked = false;
                 chkStreamerMode.IsChecked = false;
+                chkCastingEssentials.IsChecked = false;
                 lblNews.Content = "Settings Reset at " + DateTime.Now;
                 logger.Info("Resetting HUD Settings...Done!");
             }
@@ -425,7 +434,7 @@ namespace FlawHUD.Installer
         {
             logger.Info("Applying HUD Settings...");
             if (chkStreamerMode.IsChecked == true)
-                DownloadHUD(true);
+                DownloadHUD();
             var writer = new HUDController();
             writer.MainMenuBackground();
             writer.DisguiseImage();
@@ -435,6 +444,7 @@ namespace FlawHUD.Installer
             writer.Colors();
             writer.TransparentViewmodels();
             writer.CodeProFonts();
+            writer.CastingEssentials();
             lblNews.Content = "Settings Saved at " + DateTime.Now;
             logger.Info("Resetting HUD Settings...Done!");
         }
