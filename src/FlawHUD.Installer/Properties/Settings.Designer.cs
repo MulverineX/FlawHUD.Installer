@@ -25,25 +25,13 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#00AA7F")]
-        public string color_ammo_clip {
-            get {
-                return ((string)(this["color_ammo_clip"]));
-            }
-            set {
-                this["color_ammo_clip"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#BE1414")]
-        public string color_ammo_clip_low {
+        public string color_ammo_low {
             get {
-                return ((string)(this["color_ammo_clip_low"]));
+                return ((string)(this["color_ammo_low"]));
             }
             set {
-                this["color_ammo_clip_low"] = value;
+                this["color_ammo_low"] = value;
             }
         }
         
@@ -62,12 +50,12 @@ namespace FlawHUD.Installer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#00AA7F")]
-        public string color_health_normal {
+        public string color_health_buff {
             get {
-                return ((string)(this["color_health_normal"]));
+                return ((string)(this["color_health_buff"]));
             }
             set {
-                this["color_health_normal"] = value;
+                this["color_health_buff"] = value;
             }
         }
         
@@ -85,7 +73,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#00787F")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#00AA7F")]
         public string color_uber_full {
             get {
                 return ((string)(this["color_uber_full"]));
@@ -296,6 +284,18 @@ namespace FlawHUD.Installer.Properties {
             }
             set {
                 this["toggle_casting_essentials"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool toggle_color_text {
+            get {
+                return ((bool)(this["toggle_color_text"]));
+            }
+            set {
+                this["toggle_color_text"] = value;
             }
         }
     }

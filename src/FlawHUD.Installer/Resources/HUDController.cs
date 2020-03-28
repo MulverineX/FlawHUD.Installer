@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 
 namespace FlawHUD.Installer
@@ -15,7 +14,7 @@ namespace FlawHUD.Installer
         /// Set the client scheme colors
         /// </summary>
         /// <remarks>TODO: Find variables by name instead of index.</remarks>
-        /// <remarks>TODO: Separate health colors from Ammo (FlawHUD)</remarks>
+        /// <remarks>TODO: Implement the ability to have colors display on text instead of panels.</remarks>
         public void Colors()
         {
             try
@@ -24,17 +23,20 @@ namespace FlawHUD.Installer
                 var file = hudPath + Resources.file_clientscheme_colors;
                 var lines = File.ReadAllLines(file);
                 // Health
-                lines[28] = $"\t\t\"Overheal\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_normal)}\"";
-                lines[30] = $"\t\t\"LowValue\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_low)}\"";
+                lines[28] = $"\t\t\"Overheal\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_buff)}\"";
+                lines[29] = $"\t\t\"OverhealPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_health_buff, alpha: true)}\"";
+                lines[30] = $"\t\t\"LowHealth\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_low)}\"";
+                lines[31] = $"\t\t\"LowHealthPulse\"\t\t\t\"{RGBConverter(Settings.Default.color_health_low, alpha: true)}\"";
                 // Ammo
-                lines[31] = $"\t\t\"OverhealPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_clip)}\"";
-                lines[32] = $"\t\t\"LowValuePulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_clip_low)}\"";
+                lines[32] = $"\t\t\"LowAmmo\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_low)}\"";
+                lines[33] = $"\t\t\"LowAmmoPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_low, alpha: true)}\"";
                 // Crosshair
-                lines[35] = $"\t\t\"Crosshair\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_xhair_normal)}\"";
-                lines[36] = $"\t\t\"CrosshairDamage\"\t\t\t\"{RGBConverter(Settings.Default.color_xhair_pulse)}\"";
-                // Ubercharge
-                lines[39] = $"\t\t\"Ubercharge1\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_bar)}\"";
-                lines[40] = $"\t\t\"Ubercharge2\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full)}\"";
+                lines[36] = $"\t\t\"Crosshair\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_xhair_normal)}\"";
+                lines[37] = $"\t\t\"CrosshairDamage\"\t\t\t\"{RGBConverter(Settings.Default.color_xhair_pulse)}\"";
+                // ÜberCharge
+                lines[40] = $"\t\t\"UberCharged1\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full)}\"";
+                lines[41] = $"\t\t\"UberCharged2\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full, pulse: true)}\"";
+                lines[42] = $"\t\t\"UberCharging\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_bar)}\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -115,17 +117,17 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Spy Disguise Image.");
                 var file = hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
-                lines[109] = CommentOutTextLine(lines[109]);
-                lines[110] = CommentOutTextLine(lines[110]);
-                lines[115] = CommentOutTextLine(lines[115]);
-                lines[116] = CommentOutTextLine(lines[116]);
+                lines[105] = CommentOutTextLine(lines[105]);
+                lines[106] = CommentOutTextLine(lines[106]);
+                lines[111] = CommentOutTextLine(lines[111]);
+                lines[112] = CommentOutTextLine(lines[112]);
 
                 if (Settings.Default.toggle_disguise_image)
                 {
-                    lines[109] = lines[109].Replace("//", string.Empty);
-                    lines[110] = lines[110].Replace("//", string.Empty);
-                    lines[115] = lines[115].Replace("//", string.Empty);
-                    lines[116] = lines[116].Replace("//", string.Empty);
+                    lines[105] = lines[105].Replace("//", string.Empty);
+                    lines[106] = lines[106].Replace("//", string.Empty);
+                    lines[111] = lines[111].Replace("//", string.Empty);
+                    lines[112] = lines[112].Replace("//", string.Empty);
                 }
                 File.WriteAllLines(file, lines);
             }
@@ -146,19 +148,19 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Main Menu Backgrounds.");
                 var directory = new DirectoryInfo(hudPath + Resources.dir_console);
                 var chapterbackgrounds = hudPath + Resources.file_chapterbackgrounds;
-                var chapterbackgrounds_temp = hudPath + (Resources.file_chapterbackgrounds.Replace(".txt", ".file"));
+                var chapterbackgrounds_temp = chapterbackgrounds.Replace(".txt", ".file");
 
                 if (Settings.Default.toggle_stock_backgrounds)
                 {
-                    foreach (FileInfo file in directory.GetFiles())
-                        file.Delete();
+                    foreach (var file in directory.GetFiles())
+                        File.Move(file.FullName, file.FullName.Replace("upward", "off"));
                     if (File.Exists(chapterbackgrounds))
                         File.Move(chapterbackgrounds, chapterbackgrounds_temp);
                 }
                 else
                 {
-                    if (Directory.GetFiles(directory.ToString()).Count() == 0)
-                        CopyBackgroundFiles();
+                    foreach (var file in directory.GetFiles())
+                        File.Move(file.FullName, file.FullName.Replace("off", "upward"));
                     if (File.Exists(chapterbackgrounds_temp))
                         File.Move(chapterbackgrounds_temp, chapterbackgrounds);
                 }
@@ -273,21 +275,6 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Copy the background images to the materials/console folder.
-        /// </summary>
-        public void CopyBackgroundFiles()
-        {
-            var directory = new DirectoryInfo(hudPath + Resources.dir_console);
-            var background_base = hudPath + Resources.dir_console + "upward.vtf";
-            var background_wide = hudPath + Resources.dir_console + "upward_widescreen.vtf";
-
-            foreach (FileInfo file in directory.GetFiles())
-                file.Delete();
-            File.Copy(background_base, directory + "background_upward.vtf");
-            File.Copy(background_wide, directory + "background_upward_widescreen.vtf");
-        }
-
-        /// <summary>
         /// Clear all existing comment identifiers, then apply a fresh one.
         /// </summary>
         public string CommentOutTextLine(string value)
@@ -299,10 +286,14 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Convert color HEX code to RGB
         /// </summary>
-        private static string RGBConverter(string hex)
+        /// <param name="hex">The HEX code representing the color to convert to RGB</param>
+        /// <param name="pulse">Flag the color as a pulse, slightly lowering the alpha</param>
+        private static string RGBConverter(string hex, bool alpha = false, bool pulse = false)
         {
             var color = System.Drawing.ColorTranslator.FromHtml(hex);
-            return $"{color.R} {color.G} {color.B} {color.A}";
+            var alpha_new = (alpha == true) ? "200" : color.A.ToString();
+            var pulse_new = (pulse == true && color.G >= 50) ? color.G - 50 : color.G;
+            return $"{color.R} {pulse_new} {color.B} {alpha_new}";
         }
     }
 }

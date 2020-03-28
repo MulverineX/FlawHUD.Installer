@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FlawHUD.Installer"
         mc:Ignorable="d"
         Title="FlawHUD Installer"
-        Height="650" Width="900" 
+        Height="650" Width="900"
         SizeToContent="Manual"
         FontFamily="../Resources/tf2secondary.ttf #TF2 Secondary"
         FontSize="20px"
@@ -42,22 +42,21 @@
 
             <Grid>
                 <x2:ColorPicker
-                    x:Name="cpHealthNormal"
+                    x:Name="cpHealthBuffed"
                     Width="200"
                     Margin="200,10,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     ColorMode="ColorCanvas"
                     ShowRecentColors="True"
-                    Foreground="Black"
-                    ShowDropDownButton="False" />
+                    Foreground="Black" />
 
                 <Label
                     Margin="10,10,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Overheal:"
-                    ToolTip="Color of the player health"
+                    Content="Buffed Health:"
+                    ToolTip="Color of the player's health when buffed"
                     Foreground="White" />
 
                 <x2:ColorPicker
@@ -68,89 +67,79 @@
                     VerticalAlignment="Top"
                     ColorMode="ColorCanvas"
                     ShowRecentColors="True"
-                    Foreground="Black" 
-                    ShowDropDownButton="False" />
+                    Foreground="Black" />
 
                 <Label
                     Margin="10,60,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Overheal Pulse:"
-                    ToolTip="Color of the player health when low"
+                    Content="Low Health:"
+                    ToolTip="Color of the player's health when low"
                     Foreground="White" />
 
                 <x2:ColorPicker
-                    x:Name="cpAmmoClipLow"
+                    x:Name="cpAmmoLow"
                     Width="200"
                     Margin="200,110,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     ColorMode="ColorCanvas"
                     ShowRecentColors="True"
-                    Foreground="Black"
-                    ShowDropDownButton="False" RenderTransformOrigin="1.682,1.867" />
+                    Foreground="Black" />
 
                 <Label
                     Margin="10,110,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Low Health:"
-                    ToolTip="Color of the ammo clip when low"
+                    Content="Low Ammo:"
+                    ToolTip="Color of the player's ammo when low"
                     Foreground="White" />
 
                 <x2:ColorPicker
                     x:Name="cpUberBarColor"
-                    Width="200"
-                    Margin="200,210,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    ColorMode="ColorCanvas"
-                    ShowRecentColors="True"
-                    Foreground="Black" 
-                    ShowDropDownButton="False" />
-
-                <Label
-                    Margin="11,210,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="Uber Charging:"
-                    ToolTip="Color of the ubercharge when full"
-                    Foreground="White" Width="160" />
-
-                <x2:ColorPicker
-                    x:Name="cpUberFullColor"
-                    Width="200"
-                    Margin="200,260,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    ColorMode="ColorCanvas"
-                    ShowRecentColors="True"
-                    Foreground="Black" 
-                    ShowDropDownButton="False" />
-
-                <Label
-                    Margin="11,260,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="Uber Charged:"
-                    Foreground="White" Width="175" />
-                <Label
-                    Margin="10,160,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="Low Health Pulse:"
-                    ToolTip="Color of the ammo clip when low"
-                    Foreground="White" />
-                <x2:ColorPicker
-                    x:Name="cpAmmoClipLow_Copy"
                     Width="200"
                     Margin="200,160,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     ColorMode="ColorCanvas"
                     ShowRecentColors="True"
-                    Foreground="Black"
-                    ShowDropDownButton="False" RenderTransformOrigin="1.682,1.867" />
+                    Foreground="Black" />
+
+                <Label
+                    Margin="10,160,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Uber Charging:"
+                    ToolTip="Color of the ÜberCharge meter while charging"
+                    Foreground="White" Width="160" />
+
+                <x2:ColorPicker
+                    x:Name="cpUberFullColor"
+                    Width="200"
+                    Margin="200,210,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    ColorMode="ColorCanvas"
+                    ShowRecentColors="True"
+                    Foreground="Black" />
+
+                <Label
+                    Margin="10,210,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Uber Charged:"
+                    ToolTip="Color of the ÜberCharge meter when charged"
+                    Foreground="White" Width="175" />
+
+                <CheckBox
+                    x:Name="chkColorText"
+                    Margin="10,260,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Visibility="Hidden"
+                    Content="Color Health/Ammo text instead of panels"
+                    ToolTip="Display the colors on the health and ammo text instead of background panels"
+                    Foreground="White" />
             </Grid>
         </GroupBox>
 
@@ -173,8 +162,7 @@
                     VerticalAlignment="Top"
                     ColorMode="ColorCanvas"
                     ShowRecentColors="True"
-                    Foreground="Black"
-                    ShowDropDownButton="False" />
+                    Foreground="Black" />
 
                 <Label
                     Margin="10,60,0,0"
@@ -195,7 +183,7 @@
                     <ComboBoxItem
                         Width="118.4"
                         HorizontalAlignment="Left"
-                        Content="10"/>
+                        Content="10" />
                     <ComboBoxItem
                         Width="118.4"
                         HorizontalAlignment="Left"
@@ -335,8 +323,7 @@
                     VerticalAlignment="Top"
                     ColorMode="ColorCanvas"
                     ShowRecentColors="True"
-                    Foreground="Black"
-                    ShowDropDownButton="False" />
+                    Foreground="Black" />
 
                 <Label
                     Margin="10,110,0,0"
@@ -390,7 +377,7 @@
 
                 <CheckBox
                     x:Name="chkXHairEnable"
-                    Margin="10,10,0,0"
+                    Margin="10,15,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Enable Crosshair"
@@ -398,7 +385,7 @@
 
                 <CheckBox
                     x:Name="chkXHairPulse"
-                    Margin="200,10,0,0"
+                    Margin="200,15,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Pulse Hitmarker"
@@ -424,7 +411,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Spy Disguise Image"
-                    ToolTip="Toggle the Spy silhouette image seen when disguising"
+                    ToolTip="Display the silhouette of the Spy while disguising"
                     Foreground="White" />
 
                 <CheckBox
@@ -433,7 +420,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Default Backgrounds"
-                    ToolTip="Toggle the stock main menu backgrounds"
+                    ToolTip="Display the default TF2 backgrounds on the main menu"
                     Foreground="White" Grid.ColumnSpan="2" />
 
                 <CheckBox
@@ -442,7 +429,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Main Menu Class Images"
-                    ToolTip="Toggle the class images seen on the main menu"
+                    ToolTip="Display class images on the main menu"
                     Foreground="White" Grid.ColumnSpan="2" />
 
                 <CheckBox
@@ -451,7 +438,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Transparent Viewmodels"
-                    ToolTip="Toggle the transparency on the weapon viewmodels"
+                    ToolTip="Enable transparency on the weapon viewmodels"
                     Foreground="White" Grid.Column="1" />
 
                 <CheckBox
@@ -460,7 +447,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Code Pro Fonts"
-                    ToolTip="Toggle the transparency on the weapon viewmodels"
+                    ToolTip="Change the HUD fonts to Code Pro"
                     Foreground="White" Grid.Column="1" />
 
                 <CheckBox
@@ -469,7 +456,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Streamer Mode"
-                    ToolTip="Toggle the transparency on the weapon viewmodels"
+                    ToolTip="Download a version of FlawHUD modified for streaming"
                     Foreground="White" Grid.Column="1" />
 
                 <CheckBox
@@ -478,9 +465,9 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Casting Essentials"
-                    ToolTip="Install the latest version of CastingEssentials"
+                    ToolTip="Setup the latest version of CastingEssentials"
                     Foreground="White"
-                    Visibility="Hidden"/>
+                    Visibility="Hidden" />
 
                 <Button
                     x:Name="ReportIssue"
@@ -490,16 +477,16 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Click="ReportIssue_Click"
-                    ToolTip="Report an Issue" >
+                    ToolTip="Report an Issue">
                     <Button.Template>
                         <ControlTemplate>
                             <Image>
                                 <Image.Style>
                                     <Style TargetType="{x:Type Image}">
-                                        <Setter Property="Source" Value="Resources/alert.png"/>
+                                        <Setter Property="Source" Value="Resources/alert.png" />
                                         <Style.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Source" Value="Resources/alert2.png"/>
+                                                <Setter Property="Source" Value="Resources/alert2.png" />
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
@@ -508,7 +495,6 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                
             </Grid>
         </GroupBox>
 

@@ -2,23 +2,20 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FlawHUD.Installer.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="color_ammo_clip" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#00AA7F</Value>
-    </Setting>
-    <Setting Name="color_ammo_clip_low" Type="System.String" Scope="User">
+    <Setting Name="color_ammo_low" Type="System.String" Scope="User">
       <Value Profile="(Default)">#BE1414</Value>
     </Setting>
     <Setting Name="color_health_low" Type="System.String" Scope="User">
       <Value Profile="(Default)">#BE1414</Value>
     </Setting>
-    <Setting Name="color_health_normal" Type="System.String" Scope="User">
+    <Setting Name="color_health_buff" Type="System.String" Scope="User">
       <Value Profile="(Default)">#00AA7F</Value>
     </Setting>
     <Setting Name="color_uber_bar" Type="System.String" Scope="User">
       <Value Profile="(Default)">#00AA7F</Value>
     </Setting>
     <Setting Name="color_uber_full" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#00787F</Value>
+      <Value Profile="(Default)">#00AA7F</Value>
     </Setting>
     <Setting Name="color_xhair_normal" Type="System.String" Scope="User">
       <Value Profile="(Default)">#F2F2F2</Value>
@@ -69,6 +66,9 @@
       <Value Profile="(Default)">24</Value>
     </Setting>
     <Setting Name="toggle_casting_essentials" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="toggle_color_text" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

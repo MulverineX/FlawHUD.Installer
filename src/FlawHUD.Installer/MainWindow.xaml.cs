@@ -322,10 +322,9 @@ namespace FlawHUD.Installer
             {
                 logger.Info("Saving HUD Settings...");
                 var settings = Properties.Settings.Default;
-                settings.color_health_normal = cpHealthNormal.SelectedColor.Value.ToString();
+                settings.color_health_buff = cpHealthBuffed.SelectedColor.Value.ToString();
                 settings.color_health_low = cpHealthLow.SelectedColor.Value.ToString();
-                settings.color_ammo_clip = cpAmmoClip.SelectedColor.Value.ToString();
-                settings.color_ammo_clip_low = cpAmmoClipLow.SelectedColor.Value.ToString();
+                settings.color_ammo_low = cpAmmoLow.SelectedColor.Value.ToString();
                 settings.color_uber_bar = cpUberBarColor.SelectedColor.Value.ToString();
                 settings.color_uber_full = cpUberFullColor.SelectedColor.Value.ToString();
                 settings.color_xhair_normal = cpXHairColor.SelectedColor.Value.ToString();
@@ -342,6 +341,7 @@ namespace FlawHUD.Installer
                 settings.toggle_code_pro_fonts = chkCodeProFonts.IsChecked ?? false;
                 settings.toggle_streamer_mode = chkStreamerMode.IsChecked ?? false;
                 settings.toggle_casting_essentials = chkCastingEssentials.IsChecked ?? false;
+                settings.toggle_color_text = chkColorText.IsChecked ?? false;
                 settings.Save();
                 logger.Info("Saving HUD Settings...Done!");
             }
@@ -361,10 +361,9 @@ namespace FlawHUD.Installer
                 logger.Info("Loading HUD Settings...");
                 var settings = Properties.Settings.Default;
                 var cc = new ColorConverter();
-                cpHealthNormal.SelectedColor = (Color)cc.ConvertFrom(settings.color_health_normal);
+                cpHealthBuffed.SelectedColor = (Color)cc.ConvertFrom(settings.color_health_buff);
                 cpHealthLow.SelectedColor = (Color)cc.ConvertFrom(settings.color_health_low);
-                cpAmmoClip.SelectedColor = (Color)cc.ConvertFrom(settings.color_ammo_clip);
-                cpAmmoClipLow.SelectedColor = (Color)cc.ConvertFrom(settings.color_ammo_clip_low);
+                cpAmmoLow.SelectedColor = (Color)cc.ConvertFrom(settings.color_ammo_low);
                 cpUberBarColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_uber_bar);
                 cpUberFullColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_uber_full);
                 cpXHairColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_xhair_normal);
@@ -381,6 +380,7 @@ namespace FlawHUD.Installer
                 chkCodeProFonts.IsChecked = settings.toggle_code_pro_fonts;
                 chkStreamerMode.IsChecked = settings.toggle_streamer_mode;
                 chkCastingEssentials.IsChecked = settings.toggle_casting_essentials;
+                chkColorText.IsChecked = settings.toggle_color_text;
                 logger.Info("Loading HUD Settings...Done!");
             }
             catch (Exception ex)
@@ -398,12 +398,11 @@ namespace FlawHUD.Installer
             {
                 logger.Info("Resetting HUD Settings...");
                 var cc = new ColorConverter();
-                cpHealthNormal.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
+                cpHealthBuffed.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
                 cpHealthLow.SelectedColor = (Color)cc.ConvertFrom("#BE1414");
-                cpAmmoClip.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
-                cpAmmoClipLow.SelectedColor = (Color)cc.ConvertFrom("#BE1414");
+                cpAmmoLow.SelectedColor = (Color)cc.ConvertFrom("#BE1414");
                 cpUberBarColor.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
-                cpUberFullColor.SelectedColor = (Color)cc.ConvertFrom("#00787F");
+                cpUberFullColor.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
                 cpXHairColor.SelectedColor = (Color)cc.ConvertFrom("#F2F2F2");
                 cpXHairPulse.SelectedColor = (Color)cc.ConvertFrom("#FF0000");
                 cbXHairSize.SelectedIndex = 16;
@@ -418,6 +417,7 @@ namespace FlawHUD.Installer
                 chkCodeProFonts.IsChecked = false;
                 chkStreamerMode.IsChecked = false;
                 chkCastingEssentials.IsChecked = false;
+                chkColorText.IsChecked = false;
                 lblNews.Content = "Settings Reset at " + DateTime.Now;
                 logger.Info("Resetting HUD Settings...Done!");
             }
