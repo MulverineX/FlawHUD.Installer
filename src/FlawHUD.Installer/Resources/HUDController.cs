@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 
 namespace FlawHUD.Installer
@@ -9,11 +10,11 @@ namespace FlawHUD.Installer
     public class HUDController
     {
         private readonly string hudPath = Settings.Default.hud_directory;
+        private readonly string appPath = System.Windows.Forms.Application.StartupPath;
 
         /// <summary>
         /// Set the client scheme colors
         /// </summary>
-        /// <remarks>TODO: Find variables by name instead of index.</remarks>
         /// <remarks>TODO: Implement the ability to have colors display on text instead of panels.</remarks>
         public void Colors()
         {
@@ -23,20 +24,20 @@ namespace FlawHUD.Installer
                 var file = hudPath + Resources.file_clientscheme_colors;
                 var lines = File.ReadAllLines(file);
                 // Health
-                lines[28] = $"\t\t\"Overheal\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_buff)}\"";
-                lines[29] = $"\t\t\"OverhealPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_health_buff, alpha: true)}\"";
-                lines[30] = $"\t\t\"LowHealth\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_low)}\"";
-                lines[31] = $"\t\t\"LowHealthPulse\"\t\t\t\"{RGBConverter(Settings.Default.color_health_low, alpha: true)}\"";
+                lines[FindIndex(lines, "\"Overheal\"")] = $"\t\t\"Overheal\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_buff)}\"";
+                lines[FindIndex(lines, "OverhealPulse")] = $"\t\t\"OverhealPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_health_buff, alpha: true)}\"";
+                lines[FindIndex(lines, "\"LowHealth\"")] = $"\t\t\"LowHealth\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_low)}\"";
+                lines[FindIndex(lines, "LowHealthPulse")] = $"\t\t\"LowHealthPulse\"\t\t\t\"{RGBConverter(Settings.Default.color_health_low, alpha: true)}\"";
                 // Ammo
-                lines[32] = $"\t\t\"LowAmmo\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_low)}\"";
-                lines[33] = $"\t\t\"LowAmmoPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_low, alpha: true)}\"";
+                lines[FindIndex(lines, "\"LowAmmo\"")] = $"\t\t\"LowAmmo\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_low)}\"";
+                lines[FindIndex(lines, "LowAmmoPulse")] = $"\t\t\"LowAmmoPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_low, alpha: true)}\"";
                 // Crosshair
-                lines[36] = $"\t\t\"Crosshair\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_xhair_normal)}\"";
-                lines[37] = $"\t\t\"CrosshairDamage\"\t\t\t\"{RGBConverter(Settings.Default.color_xhair_pulse)}\"";
+                lines[FindIndex(lines, "\"Crosshair\"")] = $"\t\t\"Crosshair\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_xhair_normal)}\"";
+                lines[FindIndex(lines, "CrosshairDamage")] = $"\t\t\"CrosshairDamage\"\t\t\t\"{RGBConverter(Settings.Default.color_xhair_pulse)}\"";
                 // ÜberCharge
-                lines[40] = $"\t\t\"UberCharged1\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full)}\"";
-                lines[41] = $"\t\t\"UberCharged2\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full, pulse: true)}\"";
-                lines[42] = $"\t\t\"UberCharging\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_bar)}\"";
+                lines[FindIndex(lines, "UberCharged1")] = $"\t\t\"UberCharged1\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full)}\"";
+                lines[FindIndex(lines, "UberCharged2")] = $"\t\t\"UberCharged2\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full, pulse: true)}\"";
+                lines[FindIndex(lines, "UberCharging")] = $"\t\t\"UberCharging\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_bar)}\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -48,7 +49,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the crosshair
         /// </summary>
-        /// <remarks>TODO: Find variables by name instead of index.</remarks>
         public void Crosshair()
         {
             try
@@ -56,20 +56,21 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Crosshair.");
                 var file = hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
-                lines[11] = "\t\t\"visible\"\t\t\t\"0\"";
-                lines[12] = "\t\t\"enabled\"\t\t\t\"0\"";
-                lines[17] = "\t\t\"xpos\"\t\t\t\t\"c-25\"";
-                lines[18] = "\t\t\"ypos\"\t\t\t\t\"c-24\"";
-                lines[21] = "\t\t\"font\"\t\t\t\t\"size:26,outline:off\"";
+                var start = FindIndex(lines, "KnucklesCrosses");
+                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "xpos", start)] = "\t\t\"xpos\"\t\t\t\t\"c-25\"";
+                lines[FindIndex(lines, "ypos", start)] = "\t\t\"ypos\"\t\t\t\t\"c-24\"";
+                lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"size:26,outline:off\"";
                 File.WriteAllLines(file, lines);
 
                 if (Settings.Default.toggle_xhair_enable)
                 {
-                    lines[11] = "\t\t\"visible\"\t\t\t\"1\"";
-                    lines[12] = "\t\t\"enabled\"\t\t\t\"1\"";
-                    lines[17] = $"\t\t\"xpos\"\t\t\t\t\"c-{Settings.Default.val_xhair_x}\"";
-                    lines[18] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
-                    lines[21] = $"\t\t\"font\"\t\t\t\t\"size:{Settings.Default.val_xhair_size},outline:off\"";
+                    lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                    lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"c-{Settings.Default.val_xhair_x}\"";
+                    lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
+                    lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"size:{Settings.Default.val_xhair_size},outline:off\"";
                     File.WriteAllLines(file, lines);
                 }
             }
@@ -82,7 +83,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the crosshair hitmarker
         /// </summary>
-        /// <remarks>TODO: Find variables by name instead of index.</remarks>
         public void CrosshairPulse()
         {
             try
@@ -90,13 +90,16 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Crosshair Pulse.");
                 var file = hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
-                lines[96] = CommentOutTextLine(lines[96]);
-                lines[97] = CommentOutTextLine(lines[97]);
+                var start = FindIndex(lines, "DamagedPlayer");
+                var index1 = FindIndex(lines, "StopEvent", start);
+                var index2 = FindIndex(lines, "RunEvent", start);
+                lines[index1] = CommentOutTextLine(lines[index1]);
+                lines[index2] = CommentOutTextLine(lines[index2]);
 
                 if (Settings.Default.toggle_xhair_pulse)
                 {
-                    lines[96] = lines[96].Replace("//", string.Empty);
-                    lines[97] = lines[97].Replace("//", string.Empty);
+                    lines[index1] = lines[index1].Replace("//", string.Empty);
+                    lines[index2] = lines[index2].Replace("//", string.Empty);
                 }
                 File.WriteAllLines(file, lines);
             }
@@ -109,7 +112,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the visibility of the Spy's disguise image
         /// </summary>
-        /// <remarks>TODO: Find variables by name instead of index.</remarks>
         public void DisguiseImage()
         {
             try
@@ -117,17 +119,23 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Spy Disguise Image.");
                 var file = hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
-                lines[105] = CommentOutTextLine(lines[105]);
-                lines[106] = CommentOutTextLine(lines[106]);
-                lines[111] = CommentOutTextLine(lines[111]);
-                lines[112] = CommentOutTextLine(lines[112]);
+                var start = FindIndex(lines, "HudSpyDisguiseFadeIn");
+                var index1 = FindIndex(lines, "RunEvent", start);
+                var index2 = FindIndex(lines, "Animate", start);
+                start = FindIndex(lines, "HudSpyDisguiseFadeOut");
+                var index3 = FindIndex(lines, "RunEvent", start);
+                var index4 = FindIndex(lines, "Animate", start);
+                lines[index1] = CommentOutTextLine(lines[index1]);
+                lines[index2] = CommentOutTextLine(lines[index2]);
+                lines[index3] = CommentOutTextLine(lines[index3]);
+                lines[index4] = CommentOutTextLine(lines[index4]);
 
                 if (Settings.Default.toggle_disguise_image)
                 {
-                    lines[105] = lines[105].Replace("//", string.Empty);
-                    lines[106] = lines[106].Replace("//", string.Empty);
-                    lines[111] = lines[111].Replace("//", string.Empty);
-                    lines[112] = lines[112].Replace("//", string.Empty);
+                    lines[index1] = lines[index1].Replace("//", string.Empty);
+                    lines[index2] = lines[index2].Replace("//", string.Empty);
+                    lines[index3] = lines[index3].Replace("//", string.Empty);
+                    lines[index4] = lines[index4].Replace("//", string.Empty);
                 }
                 File.WriteAllLines(file, lines);
             }
@@ -140,7 +148,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the main menu backgrounds
         /// </summary>
-        /// <remarks>TODO: Find variables by name instead of index.</remarks>
         public void MainMenuBackground()
         {
             try
@@ -174,7 +181,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the visibility of the main menu class image
         /// </summary>
-        /// <remarks>TODO: Find variables by name instead of index.</remarks>
         public void MainMenuClassImage()
         {
             try
@@ -182,8 +188,9 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Main Menu Class Image.");
                 var file = hudPath + Resources.file_mainmenuoverride;
                 var lines = File.ReadAllLines(file);
+                var start = FindIndex(lines, "TFCharacterImage");
                 var value = (Settings.Default.toggle_menu_images) ? "-80" : "9999";
-                lines[199] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -195,8 +202,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the weapon viewmodel transparency
         /// </summary>
-        /// <remarks>TODO: Find variables by name instead of index.</remarks>
-        /// <remarks>TODO: Add the transparent viewmodels configuration file.</remarks>
         public void TransparentViewmodels()
         {
             try
@@ -204,13 +209,19 @@ namespace FlawHUD.Installer
                 MainWindow.logger.Info("Updating Transparent Viewmodels.");
                 var file = hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
-                lines[39] = "\t\t\"visible\"\t\t\t\"0\"";
-                lines[40] = "\t\t\"enabled\"\t\t\t\"0\"";
+                var start = FindIndex(lines, "\"TransparentViewmodel\"");
+                var index1 = FindIndex(lines, "visible", start);
+                var index2 = FindIndex(lines, "enabled", start);
+                lines[index1] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[index2] = "\t\t\"enabled\"\t\t\t\"0\"";
+                if (File.Exists(hudPath + Resources.file_cfg))
+                    File.Delete(hudPath + Resources.file_cfg);
 
                 if (Settings.Default.toggle_transparent_viewmodels)
                 {
-                    lines[39] = "\t\t\"visible\"\t\t\t\"1\"";
-                    lines[40] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    lines[index1] = "\t\t\"visible\"\t\t\t\"1\"";
+                    lines[index2] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    File.Copy(appPath + "\\hud.cfg", hudPath + Resources.file_cfg);
                 }
                 File.WriteAllLines(file, lines);
             }
@@ -223,7 +234,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the visibility of the main menu class image
         /// </summary>
-        /// <remarks>TODO: Find variables by name instead of index.</remarks>
         public void CodeProFonts()
         {
             try
@@ -232,7 +242,7 @@ namespace FlawHUD.Installer
                 var file = hudPath + Resources.file_clientscheme;
                 var lines = File.ReadAllLines(file);
                 var value = (Settings.Default.toggle_code_pro_fonts) ? "clientscheme_fonts" : "clientscheme_fonts_tf";
-                lines[2] = $"#base \"scheme/{value}.res\"";
+                lines[FindIndex(lines, "clientscheme_fonts")] = $"#base \"scheme/{value}.res\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -272,6 +282,18 @@ namespace FlawHUD.Installer
             {
                 MainWindow.ShowErrorMessage("Updating Custom Fonts.", Resources.error_set_fonts, ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Retrieves the index of where a given value was found in a string array.
+        /// </summary>
+        public int FindIndex(string[] array, string value, int skip = 0)
+        {
+            var list = array.Skip(skip);
+            var index = list.Select((v, i) => new { Index = i, Value = v }) // Pair up values and indexes
+                .Where(p => p.Value.Contains(value)) // Do the filtering
+                .Select(p => p.Index); // Keep the index and drop the value
+            return index.First() + skip;
         }
 
         /// <summary>

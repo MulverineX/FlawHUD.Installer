@@ -42,7 +42,7 @@ namespace FlawHUD.Installer
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             var client = new WebClient();
-            client.DownloadFile(chkStreamerMode.IsChecked == true ? Properties.Resources.app_download : Properties.Resources.app_download_streamer, "flawhud.zip");
+            client.DownloadFile(chkStreamerMode.IsChecked == true ? Properties.Resources.app_download_streamer : Properties.Resources.app_download, "flawhud.zip");
             client.Dispose();
             logger.Info("Downloading the latest FlawHUD...Done!");
             ExtractHUD();
@@ -86,8 +86,8 @@ namespace FlawHUD.Installer
                         {
                             var settings = Properties.Settings.Default;
                             settings.hud_directory = browser.SelectedPath;
-                            lblStatus.Content = settings.hud_directory;
                             settings.Save();
+                            lblStatus.Content = settings.hud_directory;
                             logger.Info("Directory has been set to " + lblStatus.Content);
                         }
                         else
@@ -114,7 +114,6 @@ namespace FlawHUD.Installer
         private void CleanDirectory()
         {
             logger.Info("Cleaning-up FlawHUD directories...");
-            var settings = Properties.Settings.Default;
 
             // Clean the application directory
             if (File.Exists(appPath + "\\flawhud.zip"))
@@ -123,6 +122,7 @@ namespace FlawHUD.Installer
                 File.Delete(appPath + "\\CastingEssentials.zip");
 
             // Clean the tf/custom directory
+            var settings = Properties.Settings.Default;
             var hudDirectory = Directory.Exists(settings.hud_directory + "\\flawhud-master") ? settings.hud_directory + "\\flawhud-master" : string.Empty;
             hudDirectory = Directory.Exists(settings.hud_directory + "\\flawhud-stream") ? settings.hud_directory + "\\flawhud-stream" : hudDirectory;
 
