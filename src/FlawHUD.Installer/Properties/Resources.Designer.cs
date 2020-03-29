@@ -268,6 +268,15 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to \flawhud\cfg\hud.cfg.
+        /// </summary>
+        internal static string file_cfg {
+            get {
+                return ResourceManager.GetString("file_cfg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to \flawhud\scripts\chapterbackgrounds.txt.
         /// </summary>
         internal static string file_chapterbackgrounds {

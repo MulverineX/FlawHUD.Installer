@@ -186,6 +186,9 @@
   <data name="error_set_xhair_pulse" xml:space="preserve">
     <value>An error occurred while applying the crosshair pulse setting.</value>
   </data>
+  <data name="file_cfg" xml:space="preserve">
+    <value>\flawhud\cfg\hud.cfg</value>
+  </data>
   <data name="file_chapterbackgrounds" xml:space="preserve">
     <value>\flawhud\scripts\chapterbackgrounds.txt</value>
   </data>

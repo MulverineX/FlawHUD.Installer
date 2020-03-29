@@ -9,7 +9,7 @@
         Title="FlawHUD Installer"
         Height="650" Width="900"
         SizeToContent="Manual"
-        FontFamily="../Resources/tf2secondary.ttf #TF2 Secondary"
+        FontFamily="../Resources/style/tf2secondary.ttf #TF2 Secondary"
         FontSize="20px"
         ResizeMode="CanMinimize">
 
@@ -483,10 +483,10 @@
                             <Image>
                                 <Image.Style>
                                     <Style TargetType="{x:Type Image}">
-                                        <Setter Property="Source" Value="Resources/alert.png" />
+                                        <Setter Property="Source" Value="Resources/style/alert.png" />
                                         <Style.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Source" Value="Resources/alert2.png" />
+                                                <Setter Property="Source" Value="Resources/style/alert2.png" />
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>

@@ -37,7 +37,7 @@
         <SolidColorBrush x:Key="TeamSpirit-Blu" Color="#5885A2" />
 
         <Style x:Key="Button" TargetType="Button">
-            <Setter Property="FontFamily" Value="../Resources/tf2build.ttf #TF2 Build" />
+            <Setter Property="FontFamily" Value="../Resources/style/tf2build.ttf #TF2 Build" />
             <Setter Property="FontSize" Value="15px" />
             <Setter Property="Foreground" Value="#EBE2CA" />
             <Setter Property="Background" Value="#776B5F" />
@@ -60,13 +60,13 @@
 
         <Style x:Key="Text" TargetType="Label">
             <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontFamily" Value="../Resources/tf2secondary.ttf #TF2 Secondary" />
+            <Setter Property="FontFamily" Value="../Resources/style/tf2secondary.ttf #TF2 Secondary" />
             <Setter Property="Foreground" Value="White" />
         </Style>
 
         <Style x:Key="Header" TargetType="Label">
             <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontFamily" Value="../Resources/tf2build.ttf #TF2 Build" />
+            <Setter Property="FontFamily" Value="../Resources/style/tf2build.ttf #TF2 Build" />
             <Setter Property="Foreground" Value="White" />
         </Style>
 
