@@ -35,6 +35,9 @@ namespace FlawHUD.Installer
             AutoUpdater.Start(Properties.Resources.app_update);
         }
 
+        /// <summary>
+        /// Calls to download the latest version of FlawHUD
+        /// </summary>
         private void DownloadHUD()
         {
             logger.Info("Downloading the latest FlawHUD...");
@@ -57,6 +60,7 @@ namespace FlawHUD.Installer
         {
             var settings = Properties.Settings.Default;
             logger.Info("Extracting downloaded FlawHUD to " + settings.hud_directory);
+            //var updateMode = (Install.Content.ToString() == "Update") ? true : false;
             ZipFile.ExtractToDirectory(appPath + "\\flawhud.zip", settings.hud_directory);
             if (update)
                 Directory.Delete(settings.hud_directory + "\\flawhud", true);
@@ -242,7 +246,10 @@ namespace FlawHUD.Installer
         }
 
         #region CLICK_EVENTS
-
+        
+        /// <summary>
+        /// Installs FlawHUD to the user's tf/custom folder
+        /// </summary>
         private void Install_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -262,6 +269,9 @@ namespace FlawHUD.Installer
             }
         }
 
+        /// <summary>
+        /// Removes FlawHUD from the user's tf/custom folder
+        /// </summary>
         private void Uninstall_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -280,29 +290,44 @@ namespace FlawHUD.Installer
             }
         }
 
+        /// <summary>
+        /// Saves then applies the FlawHUD settings
+        /// </summary>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveHUDSettings();
             ApplyHUDSettings();
         }
 
+        /// <summary>
+        /// Resets the FlawHUD settings to the default
+        /// </summary>
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             ResetHUDSettings();
         }
 
+        /// <summary>
+        /// Opens the directory browser to let the user to set their tf/custom directory
+        /// </summary>
         private void ChangeDirectory_Click(object sender, RoutedEventArgs e)
         {
             logger.Info("Opening Directory Browser...");
             SetupDirectory(true);
         }
 
+        /// <summary>
+        /// Opens the GitHub issue tracker in a web browser
+        /// </summary>
         private void ReportIssue_Click(object sender, RoutedEventArgs e)
         {
             logger.Info("Opening Issue Tracker...");
             Process.Start("https://github.com/CriticalFlaw/FlawHUD.Installer/issues");
         }
 
+        /// <summary>
+        /// Launches Team Fortress 2 through Steam
+        /// </summary>
         private void Start_Click(object sender, RoutedEventArgs e)
         {
             logger.Info("Launching Team Fortress 2...");
