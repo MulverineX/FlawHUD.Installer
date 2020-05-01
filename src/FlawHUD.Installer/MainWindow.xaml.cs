@@ -487,6 +487,7 @@ namespace FlawHUD.Installer
             writer.MainMenuClassImage();
             writer.Crosshair(cbXHairStyle.SelectedValue.ToString(), cbXHairSize.SelectedValue.ToString());
             writer.Colors();
+            writer.ColorText();
             writer.TransparentViewmodels();
             writer.CodeProFonts();
             writer.CastingEssentials();

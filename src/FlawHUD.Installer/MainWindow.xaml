@@ -41,26 +41,18 @@
             Header="Colors">
 
             <Grid>
+                <CheckBox
+                    x:Name="chkColorText"
+                    Margin="10,20,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FontSize="15px"
+                    Content="Color Health/Ammo text instead of panels"
+                    ToolTip="Display the colors on the health and ammo text instead of background panels"
+                    Foreground="White" />
+                
                 <x2:ColorPicker
                     x:Name="cpHealthBuffed"
-                    Width="200"
-                    Margin="200,10,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    ColorMode="ColorCanvas"
-                    ShowRecentColors="True"
-                    Foreground="Black" />
-
-                <Label
-                    Margin="10,10,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="Buffed Health:"
-                    ToolTip="Color of the player's health when buffed"
-                    Foreground="White" />
-
-                <x2:ColorPicker
-                    x:Name="cpHealthLow"
                     Width="200"
                     Margin="200,60,0,0"
                     HorizontalAlignment="Left"
@@ -73,12 +65,12 @@
                     Margin="10,60,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Low Health:"
-                    ToolTip="Color of the player's health when low"
+                    Content="Buffed Health:"
+                    ToolTip="Color of the player's health when buffed"
                     Foreground="White" />
 
                 <x2:ColorPicker
-                    x:Name="cpAmmoLow"
+                    x:Name="cpHealthLow"
                     Width="200"
                     Margin="200,110,0,0"
                     HorizontalAlignment="Left"
@@ -91,12 +83,12 @@
                     Margin="10,110,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Low Ammo:"
-                    ToolTip="Color of the player's ammo when low"
+                    Content="Low Health:"
+                    ToolTip="Color of the player's health when low"
                     Foreground="White" />
 
                 <x2:ColorPicker
-                    x:Name="cpUberBarColor"
+                    x:Name="cpAmmoLow"
                     Width="200"
                     Margin="200,160,0,0"
                     HorizontalAlignment="Left"
@@ -109,12 +101,12 @@
                     Margin="10,160,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Uber Charging:"
-                    ToolTip="Color of the ÜberCharge meter while charging"
-                    Foreground="White" Width="160" />
+                    Content="Low Ammo:"
+                    ToolTip="Color of the player's ammo when low"
+                    Foreground="White" />
 
                 <x2:ColorPicker
-                    x:Name="cpUberFullColor"
+                    x:Name="cpUberBarColor"
                     Width="200"
                     Margin="200,210,0,0"
                     HorizontalAlignment="Left"
@@ -127,19 +119,27 @@
                     Margin="10,210,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Uber Charged:"
-                    ToolTip="Color of the ÜberCharge meter when charged"
-                    Foreground="White" Width="175" />
+                    Content="Uber Charging:"
+                    ToolTip="Color of the ÜberCharge meter while charging"
+                    Foreground="White" Width="160" />
 
-                <CheckBox
-                    x:Name="chkColorText"
+                <x2:ColorPicker
+                    x:Name="cpUberFullColor"
+                    Width="200"
+                    Margin="200,260,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    ColorMode="ColorCanvas"
+                    ShowRecentColors="True"
+                    Foreground="Black" />
+
+                <Label
                     Margin="10,260,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Visibility="Hidden"
-                    Content="Color Health/Ammo text instead of panels"
-                    ToolTip="Display the colors on the health and ammo text instead of background panels"
-                    Foreground="White" />
+                    Content="Uber Charged:"
+                    ToolTip="Color of the ÜberCharge meter when charged"
+                    Foreground="White" Width="175" />
             </Grid>
         </GroupBox>
 
@@ -337,7 +337,7 @@
                 <ComboBox
                     Name="cbXHairStyle"
                     Width="200"
-                    Margin="200,210,0,0"
+                    Margin="200,202,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     SelectedValuePath="Content"
@@ -562,7 +562,7 @@
                     Minimum="-9999"
                     Maximum="9999"
                     HorizontalAlignment="Left"
-                    Margin="81,271,0,0"
+                    Margin="81,262,0,0"
                     VerticalAlignment="Top"
                     TextAlignment="Left"
                     Width="120" />
@@ -575,13 +575,13 @@
                     Minimum="-9999"
                     Maximum="9999"
                     HorizontalAlignment="Left"
-                    Margin="280,271,0,0"
+                    Margin="280,262,0,0"
                     VerticalAlignment="Top"
                     TextAlignment="Left"
                     Width="120" />
 
                 <Label
-                    Margin="10,268,0,0"
+                    Margin="10,260,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="X-Axis:"
@@ -589,7 +589,7 @@
                     Foreground="White" />
 
                 <Label
-                    Margin="206,268,0,0"
+                    Margin="206,260,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Y-Axis:"
@@ -598,7 +598,7 @@
 
                 <CheckBox
                     x:Name="chkXHairEnable"
-                    Margin="10,19,0,0"
+                    Margin="10,20,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Enable Crosshair"
@@ -607,7 +607,7 @@
 
                 <CheckBox
                     x:Name="chkXHairPulse"
-                    Margin="147,19,0,0"
+                    Margin="147,20,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Pulse Hitmarker"
@@ -616,7 +616,7 @@
 
                 <CheckBox
                     x:Name="chkXHairRotate"
-                    Margin="279,19,0,0"
+                    Margin="279,20,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Rotate Crosshair"

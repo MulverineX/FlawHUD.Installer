@@ -15,7 +15,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the client scheme colors
         /// </summary>
-        /// <remarks>TODO: Implement the ability to have colors display on text instead of panels.</remarks>
         public void Colors()
         {
             try
@@ -38,6 +37,33 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "UberCharged1")] = $"\t\t\"UberCharged1\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full)}\"";
                 lines[FindIndex(lines, "UberCharged2")] = $"\t\t\"UberCharged2\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full, pulse: true)}\"";
                 lines[FindIndex(lines, "UberCharging")] = $"\t\t\"UberCharging\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_bar)}\"";
+                File.WriteAllLines(file, lines);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Updating Colors.", Resources.error_set_colors, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Set the health and ammo colors to be displayed on text instead of a panel
+        /// </summary>
+        public void ColorText()
+        {
+            try
+            {
+                var file = hudPath + Resources.file_hudanimations;
+                var lines = File.ReadAllLines(file);
+                // Panels
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "HealthBG", !Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", !Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoBG", !Settings.Default.toggle_color_text);
+                // Text
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInClip", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInReserve", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoNoClip", Settings.Default.toggle_color_text);
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -341,6 +367,18 @@ namespace FlawHUD.Installer
         {
             value = value.Replace("//", string.Empty);
             return string.Concat("//", value);
+        }
+
+        /// <summary>
+        /// Clear all existing comment identifiers, then apply a fresh one.
+        /// </summary>
+        public string[] CommentOutTextLineSuper(string[] lines, string start, string query, bool commentOut)
+        {
+            var index1 = FindIndex(lines, query, FindIndex(lines, start));
+            var index2 = FindIndex(lines, query, index1++);
+            lines[index1] = (commentOut) ? lines[index1].Replace("//", string.Empty) : CommentOutTextLine(lines[index1]);
+            lines[index2] = (commentOut) ? lines[index2].Replace("//", string.Empty) : CommentOutTextLine(lines[index2]);
+            return lines;
         }
 
         /// <summary>
