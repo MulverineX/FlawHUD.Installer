@@ -49,7 +49,7 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the crosshair
         /// </summary>
-        public void Crosshair()
+        public void Crosshair(string style, string size)
         {
             try
             {
@@ -59,6 +59,7 @@ namespace FlawHUD.Installer
                 var start = FindIndex(lines, "KnucklesCrosses");
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "\"labelText\"", start)] = "\t\t\"labelText\"\t\t\t\"i\"";         
                 lines[FindIndex(lines, "xpos", start)] = "\t\t\"xpos\"\t\t\t\t\"c-25\"";
                 lines[FindIndex(lines, "ypos", start)] = "\t\t\"ypos\"\t\t\t\t\"c-24\"";
                 lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"size:26,outline:off\"";
@@ -68,9 +69,10 @@ namespace FlawHUD.Installer
                 {
                     lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
                     lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    lines[FindIndex(lines, "\"labelText\"", start)] = $"\t\t\"labelText\"\t\t\t\"{style}\"";
                     lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"c-{Settings.Default.val_xhair_x}\"";
                     lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
-                    lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"size:{Settings.Default.val_xhair_size},outline:off\"";
+                    lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"size:{size},outline:off\"";
                     File.WriteAllLines(file, lines);
                 }
             }

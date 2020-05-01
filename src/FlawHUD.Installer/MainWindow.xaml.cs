@@ -334,6 +334,17 @@ namespace FlawHUD.Installer
             Process.Start("steam://rungameid/440");
         }
 
+        /// <summary>
+        /// Disables certain crosshair options if rotating crosshair is enabled
+        /// </summary>
+        private void chkXHairRotate_Checked(object sender, RoutedEventArgs e)
+        {
+            cbXHairSize.IsEnabled = (chkXHairRotate.IsChecked == true) ? false : true;
+            cbXHairStyle.IsEnabled = (chkXHairRotate.IsChecked == true) ? false : true;
+            tbXHairXPos.IsEnabled = (chkXHairRotate.IsChecked == true) ? false : true;
+            tbXHairYPos.IsEnabled = (chkXHairRotate.IsChecked == true) ? false : true;
+        }
+
         #endregion CLICK_EVENTS
 
         #region SAVE_LOAD
@@ -355,6 +366,7 @@ namespace FlawHUD.Installer
                 settings.color_xhair_normal = cpXHairColor.SelectedColor.Value.ToString();
                 settings.color_xhair_pulse = cpXHairPulse.SelectedColor.Value.ToString();
                 settings.val_xhair_size = cbXHairSize.SelectedIndex;
+                settings.val_xhair_style = cbXHairStyle.SelectedIndex;
                 settings.val_xhair_x = tbXHairXPos.Value ?? 25;
                 settings.val_xhair_y = tbXHairYPos.Value ?? 24;
                 settings.toggle_xhair_enable = chkXHairEnable.IsChecked ?? false;
@@ -395,6 +407,7 @@ namespace FlawHUD.Installer
                 cpXHairColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_xhair_normal);
                 cpXHairPulse.SelectedColor = (Color)cc.ConvertFrom(settings.color_xhair_pulse);
                 cbXHairSize.SelectedIndex = settings.val_xhair_size;
+                cbXHairStyle.SelectedIndex = settings.val_xhair_style;
                 tbXHairXPos.Value = settings.val_xhair_x;
                 tbXHairYPos.Value = settings.val_xhair_y;
                 chkXHairEnable.IsChecked = settings.toggle_xhair_enable;
@@ -433,6 +446,7 @@ namespace FlawHUD.Installer
                 cpXHairColor.SelectedColor = (Color)cc.ConvertFrom("#F2F2F2");
                 cpXHairPulse.SelectedColor = (Color)cc.ConvertFrom("#FF0000");
                 cbXHairSize.SelectedIndex = 16;
+                cbXHairStyle.SelectedIndex = 48;
                 tbXHairXPos.Value = 25;
                 tbXHairYPos.Value = 24;
                 chkXHairEnable.IsChecked = false;
@@ -471,7 +485,7 @@ namespace FlawHUD.Installer
             else
                 writer.CrosshairPulse();
             writer.MainMenuClassImage();
-            writer.Crosshair();
+            writer.Crosshair(cbXHairStyle.SelectedValue.ToString(), cbXHairSize.SelectedValue.ToString());
             writer.Colors();
             writer.TransparentViewmodels();
             writer.CodeProFonts();
