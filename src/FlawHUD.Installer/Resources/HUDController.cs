@@ -110,6 +110,42 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
+        /// Set the rotating crosshair
+        /// </summary>
+        public void CrosshairRotate()
+        {
+            try
+            {
+                MainWindow.logger.Info("Updating Rotating Crosshair."); 
+
+                var file = hudPath + Resources.file_hudlayout;
+                var lines = File.ReadAllLines(file);
+                var start = FindIndex(lines, "\"Crosshair\"");
+                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                start = FindIndex(lines, "\"CrosshairPulse\"");
+                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                File.WriteAllLines(file, lines);
+
+                if (Settings.Default.toggle_xhair_rotate)
+                {
+                    start = FindIndex(lines, "\"Crosshair\"");
+                    lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                    lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    start = FindIndex(lines, "\"CrosshairPulse\"");
+                    lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                    lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    File.WriteAllLines(file, lines);
+                }
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Updating Rotating Crosshair.", Resources.error_set_xhair, ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Set the visibility of the Spy's disguise image
         /// </summary>
         public void DisguiseImage()

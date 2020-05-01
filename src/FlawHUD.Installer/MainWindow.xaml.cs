@@ -359,6 +359,7 @@ namespace FlawHUD.Installer
                 settings.val_xhair_y = tbXHairYPos.Value ?? 24;
                 settings.toggle_xhair_enable = chkXHairEnable.IsChecked ?? false;
                 settings.toggle_xhair_pulse = chkXHairPulse.IsChecked ?? false;
+                settings.toggle_xhair_rotate = chkXHairRotate.IsChecked ?? false;
                 settings.toggle_disguise_image = chkDisguiseImage.IsChecked ?? false;
                 settings.toggle_stock_backgrounds = chkDefaultBG.IsChecked ?? false;
                 settings.toggle_menu_images = chkMenuImages.IsChecked ?? false;
@@ -398,6 +399,7 @@ namespace FlawHUD.Installer
                 tbXHairYPos.Value = settings.val_xhair_y;
                 chkXHairEnable.IsChecked = settings.toggle_xhair_enable;
                 chkXHairPulse.IsChecked = settings.toggle_xhair_pulse;
+                chkXHairRotate.IsChecked = settings.toggle_xhair_rotate;
                 chkDisguiseImage.IsChecked = settings.toggle_disguise_image;
                 chkDefaultBG.IsChecked = settings.toggle_stock_backgrounds;
                 chkMenuImages.IsChecked = settings.toggle_menu_images;
@@ -435,6 +437,7 @@ namespace FlawHUD.Installer
                 tbXHairYPos.Value = 24;
                 chkXHairEnable.IsChecked = false;
                 chkXHairPulse.IsChecked = true;
+                chkXHairRotate.IsChecked = false;
                 chkDisguiseImage.IsChecked = false;
                 chkDefaultBG.IsChecked = false;
                 chkMenuImages.IsChecked = true;
@@ -463,7 +466,10 @@ namespace FlawHUD.Installer
             var writer = new HUDController();
             writer.MainMenuBackground();
             writer.DisguiseImage();
-            writer.CrosshairPulse();
+            if (chkXHairRotate.IsChecked == true)
+                writer.CrosshairRotate();
+            else
+                writer.CrosshairPulse();
             writer.MainMenuClassImage();
             writer.Crosshair();
             writer.Colors();

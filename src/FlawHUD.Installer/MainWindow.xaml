@@ -377,20 +377,30 @@
 
                 <CheckBox
                     x:Name="chkXHairEnable"
-                    Margin="10,15,0,0"
+                    Margin="10,19,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Enable Crosshair"
+                    FontSize="14px"
                     Foreground="White" />
 
                 <CheckBox
                     x:Name="chkXHairPulse"
-                    Margin="200,15,0,0"
+                    Margin="147,19,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Pulse Hitmarker"
-                    Foreground="White"
-                    RenderTransformOrigin="-0.061,1.395" />
+                    FontSize="14px"
+                    Foreground="White" />
+
+                <CheckBox
+                    x:Name="chkXHairRotate"
+                    Margin="279,19,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Rotate Crosshair"
+                    FontSize="14px"
+                    Foreground="White" />
             </Grid>
         </GroupBox>
 
