@@ -298,5 +298,29 @@ namespace FlawHUD.Installer.Properties {
                 this["toggle_color_text"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool toggle_xhair_rotate {
+            get {
+                return ((bool)(this["toggle_xhair_rotate"]));
+            }
+            set {
+                this["toggle_xhair_rotate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("48")]
+        public int val_xhair_style {
+            get {
+                return ((int)(this["val_xhair_style"]));
+            }
+            set {
+                this["val_xhair_style"] = value;
+            }
+        }
     }
 }

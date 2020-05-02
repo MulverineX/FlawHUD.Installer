@@ -124,6 +124,9 @@
     <None Include="hud.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Resource Include="Resources\style\KnucklesCrosses.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\style\tf2build.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

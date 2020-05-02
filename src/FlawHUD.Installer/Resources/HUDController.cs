@@ -15,7 +15,6 @@ namespace FlawHUD.Installer
         /// <summary>
         /// Set the client scheme colors
         /// </summary>
-        /// <remarks>TODO: Implement the ability to have colors display on text instead of panels.</remarks>
         public void Colors()
         {
             try
@@ -47,9 +46,36 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
+        /// Set the health and ammo colors to be displayed on text instead of a panel
+        /// </summary>
+        public void ColorText()
+        {
+            try
+            {
+                var file = hudPath + Resources.file_hudanimations;
+                var lines = File.ReadAllLines(file);
+                // Panels
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "HealthBG", !Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", !Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoBG", !Settings.Default.toggle_color_text);
+                // Text
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInClip", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInReserve", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoNoClip", Settings.Default.toggle_color_text);
+                File.WriteAllLines(file, lines);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Updating Colors.", Resources.error_set_colors, ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Set the crosshair
         /// </summary>
-        public void Crosshair()
+        public void Crosshair(string style, string size)
         {
             try
             {
@@ -59,6 +85,7 @@ namespace FlawHUD.Installer
                 var start = FindIndex(lines, "KnucklesCrosses");
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "\"labelText\"", start)] = "\t\t\"labelText\"\t\t\t\"i\"";         
                 lines[FindIndex(lines, "xpos", start)] = "\t\t\"xpos\"\t\t\t\t\"c-25\"";
                 lines[FindIndex(lines, "ypos", start)] = "\t\t\"ypos\"\t\t\t\t\"c-24\"";
                 lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"size:26,outline:off\"";
@@ -68,9 +95,10 @@ namespace FlawHUD.Installer
                 {
                     lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
                     lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    lines[FindIndex(lines, "\"labelText\"", start)] = $"\t\t\"labelText\"\t\t\t\"{style}\"";
                     lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"c-{Settings.Default.val_xhair_x}\"";
                     lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
-                    lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"size:{Settings.Default.val_xhair_size},outline:off\"";
+                    lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"size:{size},outline:off\"";
                     File.WriteAllLines(file, lines);
                 }
             }
@@ -106,6 +134,42 @@ namespace FlawHUD.Installer
             catch (Exception ex)
             {
                 MainWindow.ShowErrorMessage("Updating Crosshair Pulse.", Resources.error_set_xhair_pulse, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Set the rotating crosshair
+        /// </summary>
+        public void CrosshairRotate()
+        {
+            try
+            {
+                MainWindow.logger.Info("Updating Rotating Crosshair."); 
+
+                var file = hudPath + Resources.file_hudlayout;
+                var lines = File.ReadAllLines(file);
+                var start = FindIndex(lines, "\"Crosshair\"");
+                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                start = FindIndex(lines, "\"CrosshairPulse\"");
+                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                File.WriteAllLines(file, lines);
+
+                if (Settings.Default.toggle_xhair_rotate)
+                {
+                    start = FindIndex(lines, "\"Crosshair\"");
+                    lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                    lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    start = FindIndex(lines, "\"CrosshairPulse\"");
+                    lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                    lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                    File.WriteAllLines(file, lines);
+                }
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Updating Rotating Crosshair.", Resources.error_set_xhair, ex.Message);
             }
         }
 
@@ -303,6 +367,18 @@ namespace FlawHUD.Installer
         {
             value = value.Replace("//", string.Empty);
             return string.Concat("//", value);
+        }
+
+        /// <summary>
+        /// Clear all existing comment identifiers, then apply a fresh one.
+        /// </summary>
+        public string[] CommentOutTextLineSuper(string[] lines, string start, string query, bool commentOut)
+        {
+            var index1 = FindIndex(lines, query, FindIndex(lines, start));
+            var index2 = FindIndex(lines, query, index1++);
+            lines[index1] = (commentOut) ? lines[index1].Replace("//", string.Empty) : CommentOutTextLine(lines[index1]);
+            lines[index2] = (commentOut) ? lines[index2].Replace("//", string.Empty) : CommentOutTextLine(lines[index2]);
+            return lines;
         }
 
         /// <summary>

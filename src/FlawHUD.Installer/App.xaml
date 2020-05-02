@@ -6,6 +6,7 @@
     <Application.Resources>
         <Setter x:Key="TF2Build" Property="TextElement.FontFamily" Value="../Resources/tf2build.ttf #TF2 Build" />
         <Setter x:Key="TF2Secondary" Property="TextElement.FontFamily" Value="../Resources/tf2secondary.ttf #TF2 Secondary" />
+        <Setter x:Key="KnucklesCrosses" Property="TextElement.FontFamily" Value="../Resources/KnucklesCrosses.ttf #KnucklesCrosses" />
 
         <SolidColorBrush x:Key="Quality-Normal" Color="#B2B2B2" />
         <SolidColorBrush x:Key="Quality-Unique" Color="#FFD700" />
@@ -68,6 +69,16 @@
             <Setter Property="FontSize" Value="18" />
             <Setter Property="FontFamily" Value="../Resources/style/tf2build.ttf #TF2 Build" />
             <Setter Property="Foreground" Value="White" />
+        </Style>
+
+        <Style x:Key="Crosshair" TargetType="ComboBoxItem">
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="FontFamily" Value="../Resources/style/KnucklesCrosses.ttf #KnucklesCrosses" />
+        </Style>
+        
+        <Style x:Key="CrosshairBox" TargetType="ComboBox">
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="FontFamily" Value="../Resources/style/KnucklesCrosses.ttf #KnucklesCrosses" />
         </Style>
 
         <Style x:Key="Normal" TargetType="GroupBox">

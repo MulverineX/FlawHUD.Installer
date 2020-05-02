@@ -41,26 +41,18 @@
             Header="Colors">
 
             <Grid>
+                <CheckBox
+                    x:Name="chkColorText"
+                    Margin="10,20,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    FontSize="15px"
+                    Content="Color Health/Ammo text instead of panels"
+                    ToolTip="Display the colors on the health and ammo text instead of background panels"
+                    Foreground="White" />
+                
                 <x2:ColorPicker
                     x:Name="cpHealthBuffed"
-                    Width="200"
-                    Margin="200,10,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    ColorMode="ColorCanvas"
-                    ShowRecentColors="True"
-                    Foreground="Black" />
-
-                <Label
-                    Margin="10,10,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="Buffed Health:"
-                    ToolTip="Color of the player's health when buffed"
-                    Foreground="White" />
-
-                <x2:ColorPicker
-                    x:Name="cpHealthLow"
                     Width="200"
                     Margin="200,60,0,0"
                     HorizontalAlignment="Left"
@@ -73,12 +65,12 @@
                     Margin="10,60,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Low Health:"
-                    ToolTip="Color of the player's health when low"
+                    Content="Buffed Health:"
+                    ToolTip="Color of the player's health when buffed"
                     Foreground="White" />
 
                 <x2:ColorPicker
-                    x:Name="cpAmmoLow"
+                    x:Name="cpHealthLow"
                     Width="200"
                     Margin="200,110,0,0"
                     HorizontalAlignment="Left"
@@ -91,12 +83,12 @@
                     Margin="10,110,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Low Ammo:"
-                    ToolTip="Color of the player's ammo when low"
+                    Content="Low Health:"
+                    ToolTip="Color of the player's health when low"
                     Foreground="White" />
 
                 <x2:ColorPicker
-                    x:Name="cpUberBarColor"
+                    x:Name="cpAmmoLow"
                     Width="200"
                     Margin="200,160,0,0"
                     HorizontalAlignment="Left"
@@ -109,12 +101,12 @@
                     Margin="10,160,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Uber Charging:"
-                    ToolTip="Color of the ÜberCharge meter while charging"
-                    Foreground="White" Width="160" />
+                    Content="Low Ammo:"
+                    ToolTip="Color of the player's ammo when low"
+                    Foreground="White" />
 
                 <x2:ColorPicker
-                    x:Name="cpUberFullColor"
+                    x:Name="cpUberBarColor"
                     Width="200"
                     Margin="200,210,0,0"
                     HorizontalAlignment="Left"
@@ -127,19 +119,27 @@
                     Margin="10,210,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Uber Charged:"
-                    ToolTip="Color of the ÜberCharge meter when charged"
-                    Foreground="White" Width="175" />
+                    Content="Uber Charging:"
+                    ToolTip="Color of the ÜberCharge meter while charging"
+                    Foreground="White" Width="160" />
 
-                <CheckBox
-                    x:Name="chkColorText"
+                <x2:ColorPicker
+                    x:Name="cpUberFullColor"
+                    Width="200"
+                    Margin="200,260,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    ColorMode="ColorCanvas"
+                    ShowRecentColors="True"
+                    Foreground="Black" />
+
+                <Label
                     Margin="10,260,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Visibility="Hidden"
-                    Content="Color Health/Ammo text instead of panels"
-                    ToolTip="Display the colors on the health and ammo text instead of background panels"
-                    Foreground="White" />
+                    Content="Uber Charged:"
+                    ToolTip="Color of the ÜberCharge meter when charged"
+                    Foreground="White" Width="175" />
             </Grid>
         </GroupBox>
 
@@ -178,7 +178,8 @@
                     Width="200"
                     Margin="200,160,0,0"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top">
+                    VerticalAlignment="Top"
+                    SelectedValuePath="Content">
 
                     <ComboBoxItem
                         Width="118.4"
@@ -311,7 +312,7 @@
                     Margin="10,160,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Size:"
+                    Content="Crosshair Size:"
                     ToolTip="Size of the crosshair"
                     Foreground="White" />
 
@@ -324,6 +325,226 @@
                     ColorMode="ColorCanvas"
                     ShowRecentColors="True"
                     Foreground="Black" />
+
+                <Label
+                    Margin="10,210,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Crosshair Style:"
+                    ToolTip="Size of the crosshair"
+                    Foreground="White" />
+
+                <ComboBox
+                    Name="cbXHairStyle"
+                    Width="200"
+                    Margin="200,202,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    SelectedValuePath="Content"
+                    Style="{StaticResource CrosshairBox}">
+
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="#" />
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="$" />
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="%"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="1"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="2" />
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="3" />
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="4" />
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="5"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="6"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="7" />
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="8"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="9"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="A"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="B"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="C"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="D"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="E"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="F"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="G"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="H"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="I"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="J"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="K"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="L"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="M"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="N"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="O"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="P"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="Q"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="R"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="S"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="T"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="U"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="V"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="W"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="X"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="Y"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="Z"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="["/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="\"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="]"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="a"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="b"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="c"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="d"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="e"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="f"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="g"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="h"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="i"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="j"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="k"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="l"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="m"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="n"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="o"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="p"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="q"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="r"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="s"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="t"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="u"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="v"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="w"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="x"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="y"/>
+                    <ComboBoxItem Style="{StaticResource Crosshair}"
+                        HorizontalContentAlignment="Center"
+                        Content="z"/>
+                </ComboBox>
 
                 <Label
                     Margin="10,110,0,0"
@@ -341,10 +562,10 @@
                     Minimum="-9999"
                     Maximum="9999"
                     HorizontalAlignment="Left"
-                    Margin="200,210,0,0"
+                    Margin="81,262,0,0"
                     VerticalAlignment="Top"
                     TextAlignment="Left"
-                    Width="200" />
+                    Width="120" />
 
                 <x2:IntegerUpDown
                     x:Name="tbXHairYPos"
@@ -354,43 +575,55 @@
                     Minimum="-9999"
                     Maximum="9999"
                     HorizontalAlignment="Left"
-                    Margin="200,260,0,0"
+                    Margin="280,262,0,0"
                     VerticalAlignment="Top"
                     TextAlignment="Left"
-                    Width="200" />
-
-                <Label
-                    Margin="10,210,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="Position Horizontal:"
-                    ToolTip="Horizontal position of the crosshair"
-                    Foreground="White" />
+                    Width="120" />
 
                 <Label
                     Margin="10,260,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Position Vertical:"
-                    ToolTip="Vertical position of the crosshair"
+                    Content="X-Axis:"
+                    ToolTip="Horizontal position of the crosshair"
                     Foreground="White" />
+
+                <Label
+                    Margin="206,260,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Y-Axis:"
+                    ToolTip="Vertical position of the crosshair"
+                    Foreground="White" RenderTransformOrigin="0.486,0.647" />
 
                 <CheckBox
                     x:Name="chkXHairEnable"
-                    Margin="10,15,0,0"
+                    Margin="10,20,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Enable Crosshair"
+                    FontSize="14px"
                     Foreground="White" />
 
                 <CheckBox
                     x:Name="chkXHairPulse"
-                    Margin="200,15,0,0"
+                    Margin="147,20,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Content="Pulse Hitmarker"
-                    Foreground="White"
-                    RenderTransformOrigin="-0.061,1.395" />
+                    FontSize="14px"
+                    Foreground="White" />
+
+                <CheckBox
+                    x:Name="chkXHairRotate"
+                    Margin="279,20,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Rotate Crosshair"
+                    FontSize="14px"
+                    Foreground="White" 
+                    Checked="chkXHairRotate_Checked"
+                    Unchecked="chkXHairRotate_Checked"/>
             </Grid>
         </GroupBox>
 
