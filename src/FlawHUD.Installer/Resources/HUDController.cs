@@ -1,42 +1,55 @@
-﻿using FlawHUD.Installer.Properties;
-using System;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Windows.Forms;
+using FlawHUD.Installer.Properties;
 
 namespace FlawHUD.Installer
 {
     public class HUDController
     {
-        private readonly string hudPath = Settings.Default.hud_directory;
-        private readonly string appPath = System.Windows.Forms.Application.StartupPath;
+        private readonly string _appPath = Application.StartupPath;
+        private readonly string _hudPath = Settings.Default.hud_directory;
 
         /// <summary>
-        /// Set the client scheme colors
+        ///     Set the client scheme colors
         /// </summary>
         public void Colors()
         {
             try
             {
-                MainWindow.logger.Info("Updating Colors.");
-                var file = hudPath + Resources.file_clientscheme_colors;
+                MainWindow.Logger.Info("Updating Colors.");
+                var file = _hudPath + Resources.file_clientscheme_colors;
                 var lines = File.ReadAllLines(file);
                 // Health
-                lines[FindIndex(lines, "\"Overheal\"")] = $"\t\t\"Overheal\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_buff)}\"";
-                lines[FindIndex(lines, "OverhealPulse")] = $"\t\t\"OverhealPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_health_buff, alpha: true)}\"";
-                lines[FindIndex(lines, "\"LowHealth\"")] = $"\t\t\"LowHealth\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_health_low)}\"";
-                lines[FindIndex(lines, "LowHealthPulse")] = $"\t\t\"LowHealthPulse\"\t\t\t\"{RGBConverter(Settings.Default.color_health_low, alpha: true)}\"";
+                lines[FindIndex(lines, "\"Overheal\"")] =
+                    $"\t\t\"Overheal\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_health_buff)}\"";
+                lines[FindIndex(lines, "OverhealPulse")] =
+                    $"\t\t\"OverhealPulse\"\t\t\t\t\"{RgbConverter(Settings.Default.color_health_buff, true)}\"";
+                lines[FindIndex(lines, "\"LowHealth\"")] =
+                    $"\t\t\"LowHealth\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_health_low)}\"";
+                lines[FindIndex(lines, "LowHealthPulse")] =
+                    $"\t\t\"LowHealthPulse\"\t\t\t\"{RgbConverter(Settings.Default.color_health_low, true)}\"";
                 // Ammo
-                lines[FindIndex(lines, "\"LowAmmo\"")] = $"\t\t\"LowAmmo\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_low)}\"";
-                lines[FindIndex(lines, "LowAmmoPulse")] = $"\t\t\"LowAmmoPulse\"\t\t\t\t\"{RGBConverter(Settings.Default.color_ammo_low, alpha: true)}\"";
+                lines[FindIndex(lines, "\"LowAmmo\"")] =
+                    $"\t\t\"LowAmmo\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_ammo_low)}\"";
+                lines[FindIndex(lines, "LowAmmoPulse")] =
+                    $"\t\t\"LowAmmoPulse\"\t\t\t\t\"{RgbConverter(Settings.Default.color_ammo_low, true)}\"";
                 // Crosshair
-                lines[FindIndex(lines, "\"Crosshair\"")] = $"\t\t\"Crosshair\"\t\t\t\t\t\"{RGBConverter(Settings.Default.color_xhair_normal)}\"";
-                lines[FindIndex(lines, "CrosshairDamage")] = $"\t\t\"CrosshairDamage\"\t\t\t\"{RGBConverter(Settings.Default.color_xhair_pulse)}\"";
+                lines[FindIndex(lines, "\"Crosshair\"")] =
+                    $"\t\t\"Crosshair\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_xhair_normal)}\"";
+                lines[FindIndex(lines, "CrosshairDamage")] =
+                    $"\t\t\"CrosshairDamage\"\t\t\t\"{RgbConverter(Settings.Default.color_xhair_pulse)}\"";
                 // ÜberCharge
-                lines[FindIndex(lines, "UberCharged1")] = $"\t\t\"UberCharged1\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full)}\"";
-                lines[FindIndex(lines, "UberCharged2")] = $"\t\t\"UberCharged2\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_full, pulse: true)}\"";
-                lines[FindIndex(lines, "UberCharging")] = $"\t\t\"UberCharging\"\t\t\t\t\"{RGBConverter(Settings.Default.color_uber_bar)}\"";
+                lines[FindIndex(lines, "UberCharged1")] =
+                    $"\t\t\"UberCharged1\"\t\t\t\t\"{RgbConverter(Settings.Default.color_uber_full)}\"";
+                lines[FindIndex(lines, "UberCharged2")] =
+                    $"\t\t\"UberCharged2\"\t\t\t\t\"{RgbConverter(Settings.Default.color_uber_full, pulse: true)}\"";
+                lines[FindIndex(lines, "UberCharging")] =
+                    $"\t\t\"UberCharging\"\t\t\t\t\"{RgbConverter(Settings.Default.color_uber_bar)}\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -46,21 +59,23 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Set the health and ammo colors to be displayed on text instead of a panel
+        ///     Set the health and ammo colors to be displayed on text instead of a panel
         /// </summary>
         public void ColorText()
         {
             try
             {
-                var file = hudPath + Resources.file_hudanimations;
+                var file = _hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
                 // Panels
                 CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "HealthBG", !Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", !Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoBG", !Settings.Default.toggle_color_text);
                 // Text
-                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue",
+                    Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue",
+                    Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInClip", Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInReserve", Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoNoClip", Settings.Default.toggle_color_text);
@@ -73,34 +88,32 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Set the crosshair
+        ///     Set the crosshair
         /// </summary>
-        public void Crosshair(string style, string size)
+        public void Crosshair(string style, int? size)
         {
             try
             {
-                MainWindow.logger.Info("Updating Crosshair.");
-                var file = hudPath + Resources.file_hudlayout;
+                MainWindow.Logger.Info("Updating Crosshair.");
+                var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "KnucklesCrosses");
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
-                lines[FindIndex(lines, "\"labelText\"", start)] = "\t\t\"labelText\"\t\t\t\"i\"";         
+                lines[FindIndex(lines, "\"labelText\"", start)] = "\t\t\"labelText\"\t\t\t\"i\"";
                 lines[FindIndex(lines, "xpos", start)] = "\t\t\"xpos\"\t\t\t\t\"c-25\"";
                 lines[FindIndex(lines, "ypos", start)] = "\t\t\"ypos\"\t\t\t\t\"c-24\"";
                 lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"size:26,outline:off\"";
                 File.WriteAllLines(file, lines);
 
-                if (Settings.Default.toggle_xhair_enable)
-                {
-                    lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
-                    lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
-                    lines[FindIndex(lines, "\"labelText\"", start)] = $"\t\t\"labelText\"\t\t\t\"{style}\"";
-                    lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"c-{Settings.Default.val_xhair_x}\"";
-                    lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
-                    lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"size:{size},outline:off\"";
-                    File.WriteAllLines(file, lines);
-                }
+                if (!Settings.Default.toggle_xhair_enable) return;
+                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                lines[FindIndex(lines, "\"labelText\"", start)] = $"\t\t\"labelText\"\t\t\t\"{style}\"";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"c-{Settings.Default.val_xhair_x}\"";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
+                lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"size:{size},outline:off\"";
+                File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
             {
@@ -109,26 +122,25 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Set the crosshair hitmarker
+        ///     Set the crosshair hitmarker
         /// </summary>
         public void CrosshairPulse()
         {
             try
             {
-                MainWindow.logger.Info("Updating Crosshair Pulse.");
-                var file = hudPath + Resources.file_hudanimations;
+                MainWindow.Logger.Info("Updating Crosshair Pulse.");
+                var file = _hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "DamagedPlayer");
                 var index1 = FindIndex(lines, "StopEvent", start);
                 var index2 = FindIndex(lines, "RunEvent", start);
                 lines[index1] = CommentOutTextLine(lines[index1]);
                 lines[index2] = CommentOutTextLine(lines[index2]);
+                File.WriteAllLines(file, lines);
 
-                if (Settings.Default.toggle_xhair_pulse)
-                {
-                    lines[index1] = lines[index1].Replace("//", string.Empty);
-                    lines[index2] = lines[index2].Replace("//", string.Empty);
-                }
+                if (!Settings.Default.toggle_xhair_pulse) return;
+                lines[index1] = lines[index1].Replace("//", string.Empty);
+                lines[index2] = lines[index2].Replace("//", string.Empty);
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -138,15 +150,15 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Set the rotating crosshair
+        ///     Set the rotating crosshair
         /// </summary>
         public void CrosshairRotate()
         {
             try
             {
-                MainWindow.logger.Info("Updating Rotating Crosshair."); 
+                MainWindow.Logger.Info("Updating Rotating Crosshair.");
 
-                var file = hudPath + Resources.file_hudlayout;
+                var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "\"Crosshair\"");
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
@@ -156,16 +168,14 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
                 File.WriteAllLines(file, lines);
 
-                if (Settings.Default.toggle_xhair_rotate)
-                {
-                    start = FindIndex(lines, "\"Crosshair\"");
-                    lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
-                    lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
-                    start = FindIndex(lines, "\"CrosshairPulse\"");
-                    lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
-                    lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
-                    File.WriteAllLines(file, lines);
-                }
+                if (!Settings.Default.toggle_xhair_rotate) return;
+                start = FindIndex(lines, "\"Crosshair\"");
+                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                start = FindIndex(lines, "\"CrosshairPulse\"");
+                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
             {
@@ -174,14 +184,14 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Set the visibility of the Spy's disguise image
+        ///     Set the visibility of the Spy's disguise image
         /// </summary>
         public void DisguiseImage()
         {
             try
             {
-                MainWindow.logger.Info("Updating Spy Disguise Image.");
-                var file = hudPath + Resources.file_hudanimations;
+                MainWindow.Logger.Info("Updating Spy Disguise Image.");
+                var file = _hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "HudSpyDisguiseFadeIn");
                 var index1 = FindIndex(lines, "RunEvent", start);
@@ -193,119 +203,121 @@ namespace FlawHUD.Installer
                 lines[index2] = CommentOutTextLine(lines[index2]);
                 lines[index3] = CommentOutTextLine(lines[index3]);
                 lines[index4] = CommentOutTextLine(lines[index4]);
+                File.WriteAllLines(file, lines);
 
-                if (Settings.Default.toggle_disguise_image)
-                {
-                    lines[index1] = lines[index1].Replace("//", string.Empty);
-                    lines[index2] = lines[index2].Replace("//", string.Empty);
-                    lines[index3] = lines[index3].Replace("//", string.Empty);
-                    lines[index4] = lines[index4].Replace("//", string.Empty);
-                }
+                if (!Settings.Default.toggle_disguise_image) return;
+                lines[index1] = lines[index1].Replace("//", string.Empty);
+                lines[index2] = lines[index2].Replace("//", string.Empty);
+                lines[index3] = lines[index3].Replace("//", string.Empty);
+                lines[index4] = lines[index4].Replace("//", string.Empty);
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Spy Disguise Image.", Resources.error_set_spy_disguise_image, ex.Message);
+                MainWindow.ShowErrorMessage("Updating Spy Disguise Image.", Resources.error_set_spy_disguise_image,
+                    ex.Message);
             }
         }
 
         /// <summary>
-        /// Set the main menu backgrounds
+        ///     Set the main menu backgrounds
         /// </summary>
         public void MainMenuBackground()
         {
             try
             {
-                MainWindow.logger.Info("Updating Main Menu Backgrounds.");
-                var directory = new DirectoryInfo(hudPath + Resources.dir_console);
-                var chapterbackgrounds = hudPath + Resources.file_chapterbackgrounds;
-                var chapterbackgrounds_temp = chapterbackgrounds.Replace(".txt", ".file");
+                MainWindow.Logger.Info("Updating Main Menu Backgrounds.");
+                var directory = new DirectoryInfo(_hudPath + Resources.dir_console);
+                var chapterbackgrounds = _hudPath + Resources.file_chapterbackgrounds;
+                var chapterbackgroundsTemp = chapterbackgrounds.Replace(".txt", ".file");
 
                 if (Settings.Default.toggle_stock_backgrounds)
                 {
                     foreach (var file in directory.GetFiles())
                         File.Move(file.FullName, file.FullName.Replace("upward", "off"));
                     if (File.Exists(chapterbackgrounds))
-                        File.Move(chapterbackgrounds, chapterbackgrounds_temp);
+                        File.Move(chapterbackgrounds, chapterbackgroundsTemp);
                 }
                 else
                 {
                     foreach (var file in directory.GetFiles())
                         File.Move(file.FullName, file.FullName.Replace("off", "upward"));
-                    if (File.Exists(chapterbackgrounds_temp))
-                        File.Move(chapterbackgrounds_temp, chapterbackgrounds);
+                    if (File.Exists(chapterbackgroundsTemp))
+                        File.Move(chapterbackgroundsTemp, chapterbackgrounds);
                 }
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Main Menu Backgrounds.", Resources.error_set_menu_backgrounds, ex.Message);
+                MainWindow.ShowErrorMessage("Updating Main Menu Backgrounds.", Resources.error_set_menu_backgrounds,
+                    ex.Message);
             }
         }
 
         /// <summary>
-        /// Set the visibility of the main menu class image
+        ///     Set the visibility of the main menu class image
         /// </summary>
         public void MainMenuClassImage()
         {
             try
             {
-                MainWindow.logger.Info("Updating Main Menu Class Image.");
-                var file = hudPath + Resources.file_mainmenuoverride;
+                MainWindow.Logger.Info("Updating Main Menu Class Image.");
+                var file = _hudPath + Resources.file_mainmenuoverride;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "TFCharacterImage");
-                var value = (Settings.Default.toggle_menu_images) ? "-80" : "9999";
+                var value = Settings.Default.toggle_menu_images ? "-80" : "9999";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Main Menu Class Image.", Resources.error_set_menu_class_image, ex.Message);
+                MainWindow.ShowErrorMessage("Updating Main Menu Class Image.", Resources.error_set_menu_class_image,
+                    ex.Message);
             }
         }
 
         /// <summary>
-        /// Set the weapon viewmodel transparency
+        ///     Set the weapon viewmodel transparency
         /// </summary>
         public void TransparentViewmodels()
         {
             try
             {
-                MainWindow.logger.Info("Updating Transparent Viewmodels.");
-                var file = hudPath + Resources.file_hudlayout;
+                MainWindow.Logger.Info("Updating Transparent Viewmodels.");
+                var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "\"TransparentViewmodel\"");
                 var index1 = FindIndex(lines, "visible", start);
                 var index2 = FindIndex(lines, "enabled", start);
                 lines[index1] = "\t\t\"visible\"\t\t\t\"0\"";
                 lines[index2] = "\t\t\"enabled\"\t\t\t\"0\"";
-                if (File.Exists(hudPath + Resources.file_cfg))
-                    File.Delete(hudPath + Resources.file_cfg);
+                if (File.Exists(_hudPath + Resources.file_cfg))
+                    File.Delete(_hudPath + Resources.file_cfg);
+                File.WriteAllLines(file, lines);
 
-                if (Settings.Default.toggle_transparent_viewmodels)
-                {
-                    lines[index1] = "\t\t\"visible\"\t\t\t\"1\"";
-                    lines[index2] = "\t\t\"enabled\"\t\t\t\"1\"";
-                    File.Copy(appPath + "\\hud.cfg", hudPath + Resources.file_cfg);
-                }
+                if (!Settings.Default.toggle_transparent_viewmodels) return;
+                lines[index1] = "\t\t\"visible\"\t\t\t\"1\"";
+                lines[index2] = "\t\t\"enabled\"\t\t\t\"1\"";
+                File.Copy(_appPath + "\\hud.cfg", _hudPath + Resources.file_cfg);
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Transparent Viewmodels.", Resources.error_set_transparent_viewmodels, ex.Message);
+                MainWindow.ShowErrorMessage("Updating Transparent Viewmodels.",
+                    Resources.error_set_transparent_viewmodels, ex.Message);
             }
         }
 
         /// <summary>
-        /// Set the visibility of the main menu class image
+        ///     Set the visibility of the main menu class image
         /// </summary>
         public void CodeProFonts()
         {
             try
             {
-                MainWindow.logger.Info("Updating Custom Fonts.");
-                var file = hudPath + Resources.file_clientscheme;
+                MainWindow.Logger.Info("Updating Custom Fonts.");
+                var file = _hudPath + Resources.file_clientscheme;
                 var lines = File.ReadAllLines(file);
-                var value = (Settings.Default.toggle_code_pro_fonts) ? "clientscheme_fonts" : "clientscheme_fonts_tf";
+                var value = Settings.Default.toggle_code_pro_fonts ? "clientscheme_fonts" : "clientscheme_fonts_tf";
                 lines[FindIndex(lines, "clientscheme_fonts")] = $"#base \"scheme/{value}.res\"";
                 File.WriteAllLines(file, lines);
             }
@@ -316,31 +328,33 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Installs the latest version of CastingEssentials
+        ///     Installs the latest version of CastingEssentials
         /// </summary>
         public void CastingEssentials()
         {
             try
             {
                 // Skip this step if CastingEssentials is already installed and the user doesn't have the option checked.
-                if (!Directory.Exists(hudPath + "\\CastingEssentials") && Settings.Default.toggle_casting_essentials == true)
-                {
-                    // Download the latest version of CastingEssentials.
-                    ServicePointManager.Expect100Continue = true;
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                    var client = new WebClient();
-                    client.DownloadFile("https://github.com/PazerOP/CastingEssentials/releases/download/r21/CastingEssentials_r21.zip", "CastingEssentials.zip");
-                    client.Dispose();
+                if (Directory.Exists(_hudPath + "\\CastingEssentials") ||
+                    !Settings.Default.toggle_casting_essentials) return;
 
-                    // Extract it into the tf/custom directory
-                    var appPath = System.Windows.Forms.Application.StartupPath;
-                    ZipFile.ExtractToDirectory(appPath + "\\CastingEssentials.zip", Settings.Default.hud_directory);
+                // Download the latest version of CastingEssentials.
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                var client = new WebClient();
+                client.DownloadFile(
+                    "https://github.com/PazerOP/CastingEssentials/releases/download/r21/CastingEssentials_r21.zip",
+                    "CastingEssentials.zip");
+                client.Dispose();
 
-                    // Remove the downloaded file from the installer directory.
-                    if (File.Exists(appPath + "\\CastingEssentials.zip"))
-                        File.Delete(appPath + "\\CastingEssentials.zip");
-                }
+                // Extract it into the tf/custom directory
+                var appPath = Application.StartupPath;
+                ZipFile.ExtractToDirectory(appPath + "\\CastingEssentials.zip", Settings.Default.hud_directory);
+
+                // Remove the downloaded file from the installer directory.
+                if (File.Exists(appPath + "\\CastingEssentials.zip"))
+                    File.Delete(appPath + "\\CastingEssentials.zip");
             }
             catch (Exception ex)
             {
@@ -349,19 +363,19 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Retrieves the index of where a given value was found in a string array.
+        ///     Retrieves the index of where a given value was found in a string array.
         /// </summary>
         public int FindIndex(string[] array, string value, int skip = 0)
         {
             var list = array.Skip(skip);
-            var index = list.Select((v, i) => new { Index = i, Value = v }) // Pair up values and indexes
+            var index = list.Select((v, i) => new {Index = i, Value = v}) // Pair up values and indexes
                 .Where(p => p.Value.Contains(value)) // Do the filtering
                 .Select(p => p.Index); // Keep the index and drop the value
             return index.First() + skip;
         }
 
         /// <summary>
-        /// Clear all existing comment identifiers, then apply a fresh one.
+        ///     Clear all existing comment identifiers, then apply a fresh one.
         /// </summary>
         public string CommentOutTextLine(string value)
         {
@@ -370,28 +384,29 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        /// Clear all existing comment identifiers, then apply a fresh one.
+        ///     Clear all existing comment identifiers, then apply a fresh one.
         /// </summary>
         public string[] CommentOutTextLineSuper(string[] lines, string start, string query, bool commentOut)
         {
             var index1 = FindIndex(lines, query, FindIndex(lines, start));
             var index2 = FindIndex(lines, query, index1++);
-            lines[index1] = (commentOut) ? lines[index1].Replace("//", string.Empty) : CommentOutTextLine(lines[index1]);
-            lines[index2] = (commentOut) ? lines[index2].Replace("//", string.Empty) : CommentOutTextLine(lines[index2]);
+            lines[index1] = commentOut ? lines[index1].Replace("//", string.Empty) : CommentOutTextLine(lines[index1]);
+            lines[index2] = commentOut ? lines[index2].Replace("//", string.Empty) : CommentOutTextLine(lines[index2]);
             return lines;
         }
 
         /// <summary>
-        /// Convert color HEX code to RGB
+        ///     Convert color HEX code to RGB
         /// </summary>
         /// <param name="hex">The HEX code representing the color to convert to RGB</param>
+        /// <param name="alpha">Flag the code as having a lower alpha value than normal</param>
         /// <param name="pulse">Flag the color as a pulse, slightly lowering the alpha</param>
-        private static string RGBConverter(string hex, bool alpha = false, bool pulse = false)
+        private static string RgbConverter(string hex, bool alpha = false, bool pulse = false)
         {
-            var color = System.Drawing.ColorTranslator.FromHtml(hex);
-            var alpha_new = (alpha == true) ? "200" : color.A.ToString();
-            var pulse_new = (pulse == true && color.G >= 50) ? color.G - 50 : color.G;
-            return $"{color.R} {pulse_new} {color.B} {alpha_new}";
+            var color = ColorTranslator.FromHtml(hex);
+            var alphaNew = alpha ? "200" : color.A.ToString();
+            var pulseNew = pulse && color.G >= 50 ? color.G - 50 : color.G;
+            return $"{color.R} {pulseNew} {color.B} {alphaNew}";
         }
     }
 }
