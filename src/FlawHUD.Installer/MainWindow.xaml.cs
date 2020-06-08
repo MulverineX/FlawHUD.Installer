@@ -295,9 +295,9 @@ namespace FlawHUD.Installer
                 var worker = new BackgroundWorker();
                 worker.DoWork += (o, ea) =>
                 {
-                    DownloadHUD();
                     Dispatcher.Invoke(() =>
                     {
+                        DownloadHUD();
                         SaveHUDSettings();
                         ApplyHUDSettings();
                         SetFormControls();
