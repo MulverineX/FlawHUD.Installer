@@ -241,7 +241,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("26")]
+        [global::System.Configuration.DefaultSettingValueAttribute("18")]
         public int val_xhair_size {
             get {
                 return ((int)(this["val_xhair_size"]));
@@ -253,7 +253,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
         public int val_xhair_x {
             get {
                 return ((int)(this["val_xhair_x"]));
@@ -265,7 +265,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("24")]
+        [global::System.Configuration.DefaultSettingValueAttribute("49")]
         public int val_xhair_y {
             get {
                 return ((int)(this["val_xhair_y"]));
@@ -313,13 +313,25 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("48")]
+        [global::System.Configuration.DefaultSettingValueAttribute("24")]
         public int val_xhair_style {
             get {
                 return ((int)(this["val_xhair_style"]));
             }
             set {
                 this["val_xhair_style"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int val_xhair_effect {
+            get {
+                return ((int)(this["val_xhair_effect"]));
+            }
+            set {
+                this["val_xhair_effect"] = value;
             }
         }
     }

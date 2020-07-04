@@ -90,29 +90,30 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Set the crosshair
         /// </summary>
-        public void Crosshair(string style, int? size)
+        public void Crosshair(string style, int? size, string effect)
         {
             try
             {
                 MainWindow.Logger.Info("Updating Crosshair.");
                 var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
-                var start = FindIndex(lines, "KnucklesCrosses");
+                var start = FindIndex(lines, "CustomCrosshair");
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
                 lines[FindIndex(lines, "\"labelText\"", start)] = "\t\t\"labelText\"\t\t\t\"i\"";
-                lines[FindIndex(lines, "xpos", start)] = "\t\t\"xpos\"\t\t\t\t\"c-25\"";
-                lines[FindIndex(lines, "ypos", start)] = "\t\t\"ypos\"\t\t\t\t\"c-24\"";
-                lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"size:26,outline:off\"";
+                lines[FindIndex(lines, "xpos", start)] = "\t\t\"xpos\"\t\t\t\t\"c-50\"";
+                lines[FindIndex(lines, "ypos", start)] = "\t\t\"ypos\"\t\t\t\t\"c-49\"";
+                lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"Size:18 | Outline:OFF\"";
                 File.WriteAllLines(file, lines);
 
                 if (!Settings.Default.toggle_xhair_enable) return;
+                var strEffect = (effect != "None") ? $"{effect}:ON" : "Outline:OFF";
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
                 lines[FindIndex(lines, "\"labelText\"", start)] = $"\t\t\"labelText\"\t\t\t\"{style}\"";
                 lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"c-{Settings.Default.val_xhair_x}\"";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
-                lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"size:{size},outline:off\"";
+                lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"Size:{size} | {strEffect}\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)

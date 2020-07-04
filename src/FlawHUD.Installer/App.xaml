@@ -4,9 +4,9 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Setter x:Key="Tf2Build" Property="TextElement.FontFamily"
-                Value="./Resources/style/tf2build.ttf #TF2 Build" />
+                Value="./Resources/style/TF2Build.ttf #TF2 Build" />
         <Setter x:Key="Tf2Secondary" Property="TextElement.FontFamily"
-                Value="./Resources/style/tf2secondary.ttf #TF2 Secondary" />
+                Value="./Resources/style/TF2Secondary.ttf #TF2 Secondary" />
 
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White" />
@@ -23,19 +23,19 @@
         <Style x:Key="Crosshair" TargetType="ComboBoxItem">
             <Setter Property="FontSize" Value="30" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="./Resources/style/KnucklesCrosses.ttf #KnucklesCrosses" />
+            <Setter Property="FontFamily" Value="./Resources/style/TF2Crosshairs.otf #TF2Crosshairs" />
         </Style>
 
         <Style x:Key="CrosshairBox" TargetType="ComboBox">
             <Setter Property="FontSize" Value="30" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="./Resources/style/KnucklesCrosses.ttf #KnucklesCrosses" />
+            <Setter Property="FontFamily" Value="./Resources/style/TF2Crosshairs.otf #TF2Crosshairs" />
         </Style>
 
         <SolidColorBrush x:Key="Background-Dark" Color="#2B2724" />
 
         <Style x:Key="Button" TargetType="Button">
-            <Setter Property="FontFamily" Value="./Resources/style/tf2build.ttf #TF2 Build" />
+            <Setter Property="FontFamily" Value="./Resources/style/TF2Build.ttf #TF2 Build" />
             <Setter Property="FontSize" Value="15px" />
             <Setter Property="Foreground" Value="#EBE2CA" />
             <Setter Property="Background" Value="#776B5F" />

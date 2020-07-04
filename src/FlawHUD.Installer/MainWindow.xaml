@@ -144,7 +144,7 @@
                 <Grid>
                     <x2:ColorPicker
                         x:Name="CpXHairColor"
-                        Width="200"
+                        Width="100"
                         Margin="200,60,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -157,24 +157,31 @@
                         Margin="10,60,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="Normal Color:"
+                        Content="Colors:"
                         ToolTip="Color of the crosshair" />
+
+                    <Label
+                        Margin="10,84,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="*First color is the crosshair default and second is the hitmarker"
+                        FontSize="10px"/>
 
                     <x2:IntegerUpDown
                         x:Name="IntXHairSize"
-                        Margin="200,160,0,0"
+                        Margin="200,110,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         FormatString="N0"
-                        Value="14"
+                        Value="18"
                         Increment="1"
                         Minimum="10"
-                        Maximum="40" Height="28" Width="200"
+                        Maximum="30" Height="28" Width="200"
                         AllowTextInput="False"
                         IsEnabled="False" />
 
                     <Label
-                        Margin="10,160,0,0"
+                        Margin="10,110,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="Crosshair Size:"
@@ -182,8 +189,8 @@
 
                     <x2:ColorPicker
                         x:Name="CpXHairPulse"
-                        Width="200"
-                        Margin="200,110,0,0"
+                        Width="100"
+                        Margin="301,60,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         ColorMode="ColorCanvas"
@@ -192,7 +199,7 @@
                         IsEnabled="False" />
 
                     <Label
-                        Margin="10,210,0,0"
+                        Margin="10,160,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="Crosshair Style:"
@@ -201,7 +208,7 @@
                     <ComboBox
                         Name="CbXHairStyle"
                         Width="200"
-                        Margin="200,202,0,0"
+                        Margin="200,152,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         SelectedValuePath="Content"
@@ -209,11 +216,31 @@
                         IsEnabled="False">
 
                         <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="!" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="#" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="$" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="%" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="'" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="(" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content=")" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="*" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="+" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="," />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="-" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="." />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="/" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="1" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
@@ -232,6 +259,20 @@
                                       Content="8" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="9" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content=":" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content=";" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="&lt;" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="=" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content=">" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="?" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="@" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="A" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
@@ -291,6 +332,12 @@
                         <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="]" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="^" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="_" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="`" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="a" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="b" />
@@ -336,17 +383,43 @@
                                       Content="v" />
                         <ComboBoxItem Style="{StaticResource Crosshair}"
                                       Content="w" />
-                        <ComboBoxItem Style="{StaticResource Crosshair}" Content="x" />
-                        <ComboBoxItem Style="{StaticResource Crosshair}" Content="y" />
-                        <ComboBoxItem Style="{StaticResource Crosshair}" Content="z" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="x" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="y" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="z" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="|" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="}" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="x" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="y" />
+                        <ComboBoxItem Style="{StaticResource Crosshair}"
+                                      Content="z" />
                     </ComboBox>
 
                     <Label
-                        Margin="10,110,0,0"
+                        Margin="10,210,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="Hitmarker Color:"
-                        ToolTip="Color of the crosshair when hitting another player" />
+                        Content="Crosshair Effect:"
+                        ToolTip="Effect applied to the crosshair (Blur, Outline or Shadow)" />
+
+                    <ComboBox
+                        x:Name="CbXHairEffect"
+                        Width="200"
+                        Margin="200,210,0,0"
+                        SelectedValuePath="Content"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
+                        <ComboBoxItem>None</ComboBoxItem>
+                        <ComboBoxItem>Blur</ComboBoxItem>
+                        <ComboBoxItem>Outline</ComboBoxItem>
+                        <ComboBoxItem>Shadow</ComboBoxItem>
+                    </ComboBox>
 
                     <x2:IntegerUpDown
                         x:Name="IntXHairXPos"

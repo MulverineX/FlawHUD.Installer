@@ -1,7 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
-              GeneratedClassNamespace="FlawHUD.Installer.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FlawHUD.Installer.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="color_ammo_low" Type="System.String" Scope="User">
@@ -59,13 +57,13 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="val_xhair_size" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">26</Value>
+      <Value Profile="(Default)">18</Value>
     </Setting>
     <Setting Name="val_xhair_x" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">25</Value>
+      <Value Profile="(Default)">50</Value>
     </Setting>
     <Setting Name="val_xhair_y" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">24</Value>
+      <Value Profile="(Default)">49</Value>
     </Setting>
     <Setting Name="toggle_casting_essentials" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -77,7 +75,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="val_xhair_style" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">48</Value>
+      <Value Profile="(Default)">24</Value>
+    </Setting>
+    <Setting Name="val_xhair_effect" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

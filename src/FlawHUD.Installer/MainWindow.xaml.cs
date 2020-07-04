@@ -278,6 +278,7 @@ namespace FlawHUD.Installer
 
             IntXHairSize.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
             CbXHairStyle.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
+            CbXHairEffect.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
             IntXHairXPos.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
             IntXHairYPos.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
         }
@@ -426,6 +427,7 @@ namespace FlawHUD.Installer
                 settings.color_xhair_pulse = CpXHairPulse.SelectedColor?.ToString();
                 settings.val_xhair_size = IntXHairSize.Value ?? 26;
                 settings.val_xhair_style = CbXHairStyle.SelectedIndex;
+                settings.val_xhair_effect = CbXHairEffect.SelectedIndex;
                 settings.val_xhair_x = IntXHairXPos.Value ?? 25;
                 settings.val_xhair_y = IntXHairYPos.Value ?? 24;
                 settings.toggle_xhair_enable = CbXHairEnable.IsChecked ?? false;
@@ -467,6 +469,7 @@ namespace FlawHUD.Installer
                 CpXHairPulse.SelectedColor = (Color) cc.ConvertFrom(settings.color_xhair_pulse);
                 IntXHairSize.Value = settings.val_xhair_size;
                 CbXHairStyle.SelectedIndex = settings.val_xhair_style;
+                CbXHairEffect.SelectedIndex = settings.val_xhair_effect;
                 IntXHairXPos.Value = settings.val_xhair_x;
                 IntXHairYPos.Value = settings.val_xhair_y;
                 CbXHairEnable.IsChecked = settings.toggle_xhair_enable;
@@ -504,10 +507,11 @@ namespace FlawHUD.Installer
                 CpUberFullColor.SelectedColor = (Color) cc.ConvertFrom("#00AA7F");
                 CpXHairColor.SelectedColor = (Color) cc.ConvertFrom("#F2F2F2");
                 CpXHairPulse.SelectedColor = (Color) cc.ConvertFrom("#FF0000");
-                IntXHairSize.Value = 16;
-                CbXHairStyle.SelectedIndex = 48;
-                IntXHairXPos.Value = 25;
-                IntXHairYPos.Value = 24;
+                IntXHairSize.Value = 18;
+                CbXHairStyle.SelectedIndex = 24;
+                CbXHairEffect.SelectedIndex = 0;
+                IntXHairXPos.Value = 50;
+                IntXHairYPos.Value = 49;
                 CbXHairEnable.IsChecked = false;
                 CbXHairHitmarker.IsChecked = true;
                 CbXHairRotate.IsChecked = false;
@@ -545,7 +549,7 @@ namespace FlawHUD.Installer
             else
                 writer.CrosshairPulse();
             writer.MainMenuClassImage();
-            writer.Crosshair(CbXHairStyle.SelectedValue.ToString(), IntXHairSize.Value);
+            writer.Crosshair(CbXHairStyle.SelectedValue.ToString(), IntXHairSize.Value, CbXHairEffect.SelectedValue.ToString());
             writer.Colors();
             writer.ColorText();
             writer.TransparentViewmodels();
