@@ -38,6 +38,11 @@ namespace FlawHUD.Installer
                     $"\t\t\"LowAmmo\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_ammo_low)}\"";
                 lines[FindIndex(lines, "LowAmmoPulse")] =
                     $"\t\t\"LowAmmoPulse\"\t\t\t\t\"{RgbConverter(Settings.Default.color_ammo_low, true)}\"";
+                // Misc
+                lines[FindIndex(lines, "\"PositiveValue\"")] =
+                    $"\t\t\"PositiveValue\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_health_buff)}\"";
+                lines[FindIndex(lines, "NegativeValue")] =
+                    $"\t\t\"NegativeValue\"\t\t\t\t\"{RgbConverter(Settings.Default.color_health_low, true)}\"";
                 // Crosshair
                 lines[FindIndex(lines, "\"Crosshair\"")] =
                     $"\t\t\"Crosshair\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_xhair_normal)}\"";
@@ -72,10 +77,8 @@ namespace FlawHUD.Installer
                 CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", !Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoBG", !Settings.Default.toggle_color_text);
                 // Text
-                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue",
-                    Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue",
-                    Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue",  Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue",  Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInClip", Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInReserve", Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoNoClip", Settings.Default.toggle_color_text);

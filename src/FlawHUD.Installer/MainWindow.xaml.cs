@@ -34,7 +34,7 @@ namespace FlawHUD.Installer
             Logger.Info("INITIALIZING...");
             InitializeComponent();
             SetupDirectory();
-            LoadHUDSettings();
+            ReloadHUDSettings();
             SetCrosshairControls();
             AutoUpdater.OpenDownloadPage = true;
             AutoUpdater.Start(Properties.Resources.app_update);
@@ -189,7 +189,8 @@ namespace FlawHUD.Installer
         public static void ShowErrorMessage(string title, string message, string exception)
         {
             MessageBox.Show($@"{message} {exception}", string.Format(Properties.Resources.error_info, title),
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
             Logger.Error(exception);
         }
 
@@ -275,7 +276,6 @@ namespace FlawHUD.Installer
             CbXHairRotate.IsEnabled = CbXHairEnable.IsChecked ?? false;
             CpXHairColor.IsEnabled = CbXHairEnable.IsChecked ?? false;
             CpXHairPulse.IsEnabled = CbXHairEnable.IsChecked ?? false;
-
             IntXHairSize.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
             CbXHairStyle.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
             CbXHairEffect.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
@@ -425,11 +425,11 @@ namespace FlawHUD.Installer
                 settings.color_uber_full = CpUberFullColor.SelectedColor?.ToString();
                 settings.color_xhair_normal = CpXHairColor.SelectedColor?.ToString();
                 settings.color_xhair_pulse = CpXHairPulse.SelectedColor?.ToString();
-                settings.val_xhair_size = IntXHairSize.Value ?? 26;
+                settings.val_xhair_size = IntXHairSize.Value ?? 18;
                 settings.val_xhair_style = CbXHairStyle.SelectedIndex;
                 settings.val_xhair_effect = CbXHairEffect.SelectedIndex;
-                settings.val_xhair_x = IntXHairXPos.Value ?? 25;
-                settings.val_xhair_y = IntXHairYPos.Value ?? 24;
+                settings.val_xhair_x = IntXHairXPos.Value ?? 50;
+                settings.val_xhair_y = IntXHairYPos.Value ?? 49;
                 settings.toggle_xhair_enable = CbXHairEnable.IsChecked ?? false;
                 settings.toggle_xhair_pulse = CbXHairHitmarker.IsChecked ?? false;
                 settings.toggle_xhair_rotate = CbXHairRotate.IsChecked ?? false;
@@ -453,7 +453,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Load GUI with user settings from the file
         /// </summary>
-        private void LoadHUDSettings()
+        private void ReloadHUDSettings()
         {
             try
             {
