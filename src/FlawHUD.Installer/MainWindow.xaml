@@ -165,7 +165,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="*First color is the crosshair default and second is the hitmarker"
-                        FontSize="10px"/>
+                        FontSize="10px" />
 
                     <x2:IntegerUpDown
                         x:Name="IntXHairSize"
@@ -551,15 +551,6 @@
                         VerticalAlignment="Top"
                         Content="Streamer Mode"
                         ToolTip="Download a version of FlawHUD modified for streaming" />
-
-                    <CheckBox
-                        x:Name="CbCastingEssentials"
-                        Margin="230,40,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Content="Casting Essentials"
-                        ToolTip="Setup the latest version of CastingEssentials"
-                        Visibility="Hidden" />
 
                     <Button
                         x:Name="BtnReportIssue"

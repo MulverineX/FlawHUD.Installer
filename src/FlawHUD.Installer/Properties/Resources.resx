@@ -159,9 +159,6 @@
   <data name="error_app_version" xml:space="preserve">
     <value>An error occurred while checking the FlawHUD version number.</value>
   </data>
-  <data name="error_set_castingessentials" xml:space="preserve">
-    <value>An error occurred while installing the latest version of CastingEssentials.</value>
-  </data>
   <data name="error_set_colors" xml:space="preserve">
     <value>An error occurred while applying the color settings.</value>
   </data>

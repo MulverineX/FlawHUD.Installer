@@ -77,8 +77,8 @@ namespace FlawHUD.Installer
                 CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", !Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoBG", !Settings.Default.toggle_color_text);
                 // Text
-                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue",  Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue",  Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInClip", Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInReserve", Settings.Default.toggle_color_text);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoNoClip", Settings.Default.toggle_color_text);
@@ -103,14 +103,14 @@ namespace FlawHUD.Installer
                 var start = FindIndex(lines, "CustomCrosshair");
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
-                lines[FindIndex(lines, "\"labelText\"", start)] = "\t\t\"labelText\"\t\t\t\"i\"";
+                lines[FindIndex(lines, "\"labelText\"", start)] = "\t\t\"labelText\"\t\t\t\"<\"";
                 lines[FindIndex(lines, "xpos", start)] = "\t\t\"xpos\"\t\t\t\t\"c-50\"";
                 lines[FindIndex(lines, "ypos", start)] = "\t\t\"ypos\"\t\t\t\t\"c-49\"";
                 lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"Size:18 | Outline:OFF\"";
                 File.WriteAllLines(file, lines);
 
                 if (!Settings.Default.toggle_xhair_enable) return;
-                var strEffect = (effect != "None") ? $"{effect}:ON" : "Outline:OFF";
+                var strEffect = effect != "None" ? $"{effect}:ON" : "Outline:OFF";
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
                 lines[FindIndex(lines, "\"labelText\"", start)] = $"\t\t\"labelText\"\t\t\t\"{style}\"";
@@ -294,13 +294,16 @@ namespace FlawHUD.Installer
                 var index2 = FindIndex(lines, "enabled", start);
                 lines[index1] = "\t\t\"visible\"\t\t\t\"0\"";
                 lines[index2] = "\t\t\"enabled\"\t\t\t\"0\"";
-                if (File.Exists(_hudPath + Resources.file_cfg))
-                    File.Delete(_hudPath + Resources.file_cfg);
                 File.WriteAllLines(file, lines);
 
                 if (!Settings.Default.toggle_transparent_viewmodels) return;
                 lines[index1] = "\t\t\"visible\"\t\t\t\"1\"";
                 lines[index2] = "\t\t\"enabled\"\t\t\t\"1\"";
+
+                if (!Directory.Exists(_hudPath + "\\flawhud\\cfg"))
+                    Directory.CreateDirectory(_hudPath + "\\flawhud\\cfg");
+                if (File.Exists(_hudPath + Resources.file_cfg))
+                    File.Delete(_hudPath + Resources.file_cfg);
                 File.Copy(_appPath + "\\hud.cfg", _hudPath + Resources.file_cfg);
                 File.WriteAllLines(file, lines);
             }
@@ -332,47 +335,12 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        ///     Installs the latest version of CastingEssentials
-        /// </summary>
-        public void CastingEssentials()
-        {
-            try
-            {
-                // Skip this step if CastingEssentials is already installed and the user doesn't have the option checked.
-                if (Directory.Exists(_hudPath + "\\CastingEssentials") ||
-                    !Settings.Default.toggle_casting_essentials) return;
-
-                // Download the latest version of CastingEssentials.
-                ServicePointManager.Expect100Continue = true;
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                var client = new WebClient();
-                client.DownloadFile(
-                    "https://github.com/PazerOP/CastingEssentials/releases/download/r21/CastingEssentials_r21.zip",
-                    "CastingEssentials.zip");
-                client.Dispose();
-
-                // Extract it into the tf/custom directory
-                var appPath = Application.StartupPath;
-                ZipFile.ExtractToDirectory(appPath + "\\CastingEssentials.zip", Settings.Default.hud_directory);
-
-                // Remove the downloaded file from the installer directory.
-                if (File.Exists(appPath + "\\CastingEssentials.zip"))
-                    File.Delete(appPath + "\\CastingEssentials.zip");
-            }
-            catch (Exception ex)
-            {
-                MainWindow.ShowErrorMessage("Updating Custom Fonts.", Resources.error_set_fonts, ex.Message);
-            }
-        }
-
-        /// <summary>
         ///     Retrieves the index of where a given value was found in a string array.
         /// </summary>
         public int FindIndex(string[] array, string value, int skip = 0)
         {
             var list = array.Skip(skip);
-            var index = list.Select((v, i) => new {Index = i, Value = v}) // Pair up values and indexes
+            var index = list.Select((v, i) => new { Index = i, Value = v }) // Pair up values and indexes
                 .Where(p => p.Value.Contains(value)) // Do the filtering
                 .Select(p => p.Index); // Keep the index and drop the value
             return index.First() + skip;

@@ -63,14 +63,11 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Calls to extract FlawHUD to the tf/custom directory
         /// </summary>
-        /// <remarks>TODO: Refactor the update-refresh-install process</remarks>
-        private void ExtractHUD(bool update = false)
+        private void ExtractHUD()
         {
             var settings = Settings.Default;
             Logger.Info("Extracting downloaded FlawHUD to " + settings.hud_directory);
             ZipFile.ExtractToDirectory(_appPath + "\\flawhud.zip", settings.hud_directory);
-            if (update)
-                Directory.Delete(settings.hud_directory + "\\flawhud", true);
             if (Directory.Exists(settings.hud_directory + "\\flawhud"))
                 Directory.Delete(settings.hud_directory + "\\flawhud", true);
             if (Directory.Exists(settings.hud_directory + "\\flawhud-master"))
@@ -90,7 +87,7 @@ namespace FlawHUD.Installer
             {
                 Logger.Info("Setting the tf/custom directory. Opening folder browser, asking the user.");
                 using (var browser = new FolderBrowserDialog
-                    {Description = Properties.Resources.info_folder_browser, ShowNewFolderButton = true})
+                { Description = Properties.Resources.info_folder_browser, ShowNewFolderButton = true })
                 {
                     while (!browser.SelectedPath.Contains("tf\\custom"))
                         if (browser.ShowDialog() == System.Windows.Forms.DialogResult.OK &&
@@ -132,8 +129,6 @@ namespace FlawHUD.Installer
             // Clean the application directory
             if (File.Exists(_appPath + "\\flawhud.zip"))
                 File.Delete(_appPath + "\\flawhud.zip");
-            if (File.Exists(_appPath + "\\CastingEssentials.zip"))
-                File.Delete(_appPath + "\\CastingEssentials.zip");
 
             // Clean the tf/custom directory
             var settings = Settings.Default;
@@ -164,8 +159,7 @@ namespace FlawHUD.Installer
         {
             Logger.Info("Looking for the Team Fortress 2 directory...");
             var is64Bit = Environment.Is64BitProcess ? "Wow6432Node\\" : string.Empty;
-            var directory = (string) Registry.GetValue($@"HKEY_LOCAL_MACHINE\Software\{is64Bit}Valve\Steam",
-                "InstallPath", null);
+            var directory = (string)Registry.GetValue($@"HKEY_LOCAL_MACHINE\Software\{is64Bit}Valve\Steam", "InstallPath", null);
             if (!string.IsNullOrWhiteSpace(directory))
             {
                 directory += "\\steamapps\\common\\Team Fortress 2\\tf\\custom";
@@ -195,35 +189,6 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
-        ///     Check the FlawHUD version number
-        /// </summary>
-        public void CheckHUDVersion()
-        {
-            try
-            {
-                Logger.Info("Checking FlawHUD version...");
-                var client = new WebClient();
-                var readmeText = client.DownloadString(Properties.Resources.app_readme).Split('\n');
-                client.Dispose();
-                var current = readmeText[readmeText.Length - 2];
-                var local = File.ReadLines(Settings.Default.hud_directory + "\\flawhud\\README.md").Last().Trim();
-                if (!string.Equals(local, current))
-                {
-                    Logger.Info("Version Mismatch. New FlawHUD update available!");
-                    BtnInstall.Content = "Update";
-                    LblNews.Content = "Update Available!";
-                }
-
-                Logger.Info("Local version: " + local + "\t Live version: " + current);
-                Logger.Info("Checking FlawHUD version...Done!");
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex.Message);
-            }
-        }
-
-        /// <summary>
         ///     Check if FlawHUD is installed in the tf/custom directory
         /// </summary>
         public bool CheckHUDPath()
@@ -248,7 +213,6 @@ namespace FlawHUD.Installer
             if (Directory.Exists(Settings.Default.hud_directory) && CheckUserPath())
             {
                 var isInstalled = CheckHUDPath();
-                if (isInstalled) CheckHUDVersion();
                 BtnStart.IsEnabled = true;
                 BtnInstall.IsEnabled = true;
                 BtnInstall.Content = isInstalled ? "Refresh" : "Install";
@@ -439,7 +403,6 @@ namespace FlawHUD.Installer
                 settings.toggle_transparent_viewmodels = CbTransparentViewmodel.IsChecked ?? false;
                 settings.toggle_code_pro_fonts = CbCodeProFonts.IsChecked ?? false;
                 settings.toggle_streamer_mode = CbStreamerMode.IsChecked ?? false;
-                settings.toggle_casting_essentials = CbCastingEssentials.IsChecked ?? false;
                 settings.toggle_color_text = CbColorText.IsChecked ?? false;
                 settings.Save();
                 Logger.Info("Saving HUD Settings...Done!");
@@ -460,13 +423,13 @@ namespace FlawHUD.Installer
                 Logger.Info("Loading HUD Settings...");
                 var settings = Settings.Default;
                 var cc = new ColorConverter();
-                CpHealthBuffed.SelectedColor = (Color) cc.ConvertFrom(settings.color_health_buff);
-                CpHealthLow.SelectedColor = (Color) cc.ConvertFrom(settings.color_health_low);
-                CpAmmoLow.SelectedColor = (Color) cc.ConvertFrom(settings.color_ammo_low);
-                CpUberBarColor.SelectedColor = (Color) cc.ConvertFrom(settings.color_uber_bar);
-                CpUberFullColor.SelectedColor = (Color) cc.ConvertFrom(settings.color_uber_full);
-                CpXHairColor.SelectedColor = (Color) cc.ConvertFrom(settings.color_xhair_normal);
-                CpXHairPulse.SelectedColor = (Color) cc.ConvertFrom(settings.color_xhair_pulse);
+                CpHealthBuffed.SelectedColor = (Color)cc.ConvertFrom(settings.color_health_buff);
+                CpHealthLow.SelectedColor = (Color)cc.ConvertFrom(settings.color_health_low);
+                CpAmmoLow.SelectedColor = (Color)cc.ConvertFrom(settings.color_ammo_low);
+                CpUberBarColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_uber_bar);
+                CpUberFullColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_uber_full);
+                CpXHairColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_xhair_normal);
+                CpXHairPulse.SelectedColor = (Color)cc.ConvertFrom(settings.color_xhair_pulse);
                 IntXHairSize.Value = settings.val_xhair_size;
                 CbXHairStyle.SelectedIndex = settings.val_xhair_style;
                 CbXHairEffect.SelectedIndex = settings.val_xhair_effect;
@@ -481,7 +444,6 @@ namespace FlawHUD.Installer
                 CbTransparentViewmodel.IsChecked = settings.toggle_transparent_viewmodels;
                 CbCodeProFonts.IsChecked = settings.toggle_code_pro_fonts;
                 CbStreamerMode.IsChecked = settings.toggle_streamer_mode;
-                CbCastingEssentials.IsChecked = settings.toggle_casting_essentials;
                 CbColorText.IsChecked = settings.toggle_color_text;
                 Logger.Info("Loading HUD Settings...Done!");
             }
@@ -500,13 +462,13 @@ namespace FlawHUD.Installer
             {
                 Logger.Info("Resetting HUD Settings...");
                 var cc = new ColorConverter();
-                CpHealthBuffed.SelectedColor = (Color) cc.ConvertFrom("#00AA7F");
-                CpHealthLow.SelectedColor = (Color) cc.ConvertFrom("#BE1414");
-                CpAmmoLow.SelectedColor = (Color) cc.ConvertFrom("#BE1414");
-                CpUberBarColor.SelectedColor = (Color) cc.ConvertFrom("#00AA7F");
-                CpUberFullColor.SelectedColor = (Color) cc.ConvertFrom("#00AA7F");
-                CpXHairColor.SelectedColor = (Color) cc.ConvertFrom("#F2F2F2");
-                CpXHairPulse.SelectedColor = (Color) cc.ConvertFrom("#FF0000");
+                CpHealthBuffed.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
+                CpHealthLow.SelectedColor = (Color)cc.ConvertFrom("#BE1414");
+                CpAmmoLow.SelectedColor = (Color)cc.ConvertFrom("#BE1414");
+                CpUberBarColor.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
+                CpUberFullColor.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
+                CpXHairColor.SelectedColor = (Color)cc.ConvertFrom("#F2F2F2");
+                CpXHairPulse.SelectedColor = (Color)cc.ConvertFrom("#FF0000");
                 IntXHairSize.Value = 18;
                 CbXHairStyle.SelectedIndex = 24;
                 CbXHairEffect.SelectedIndex = 0;
@@ -521,7 +483,6 @@ namespace FlawHUD.Installer
                 CbTransparentViewmodel.IsChecked = false;
                 CbCodeProFonts.IsChecked = false;
                 CbStreamerMode.IsChecked = false;
-                CbCastingEssentials.IsChecked = false;
                 CbColorText.IsChecked = false;
                 SetCrosshairControls();
                 LblNews.Content = "Settings Reset at " + DateTime.Now;
@@ -554,7 +515,6 @@ namespace FlawHUD.Installer
             writer.ColorText();
             writer.TransparentViewmodels();
             writer.CodeProFonts();
-            writer.CastingEssentials();
             LblNews.Content = "Settings Saved at " + DateTime.Now;
             Logger.Info("Resetting HUD Settings...Done!");
         }

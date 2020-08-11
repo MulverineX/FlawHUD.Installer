@@ -205,15 +205,6 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred while installing the latest version of CastingEssentials..
-        /// </summary>
-        internal static string error_set_castingessentials {
-            get {
-                return ResourceManager.GetString("error_set_castingessentials", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to An error occurred while applying the color settings..
         /// </summary>
         internal static string error_set_colors {
