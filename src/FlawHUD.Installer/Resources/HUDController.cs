@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Net;
-using System.Windows.Forms;
 using FlawHUD.Installer.Properties;
 
 namespace FlawHUD.Installer
 {
     public class HUDController
     {
-        private readonly string _appPath = Application.StartupPath;
+        private readonly string _appPath = Directory.GetCurrentDirectory();
         private readonly string _hudPath = Settings.Default.hud_directory;
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace FlawHUD.Installer
                     $"\t\t\"LowAmmoPulse\"\t\t\t\t\"{RgbConverter(Settings.Default.color_ammo_low, true)}\"";
                 // Misc
                 lines[FindIndex(lines, "\"PositiveValue\"")] =
-                    $"\t\t\"PositiveValue\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_health_buff)}\"";
+                    $"\t\t\"PositiveValue\"\t\t\t\t\"{RgbConverter(Settings.Default.color_health_buff)}\"";
                 lines[FindIndex(lines, "NegativeValue")] =
                     $"\t\t\"NegativeValue\"\t\t\t\t\"{RgbConverter(Settings.Default.color_health_low, true)}\"";
                 // Crosshair
@@ -66,22 +63,22 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Set the health and ammo colors to be displayed on text instead of a panel
         /// </summary>
-        public void ColorText()
+        public void ColorText(bool colorText = false)
         {
             try
             {
                 var file = _hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
                 // Panels
-                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "HealthBG", !Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", !Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoBG", !Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "HealthBG", !colorText);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", !colorText);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoBG", !colorText);
                 // Text
-                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue", Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInClip", Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInReserve", Settings.Default.toggle_color_text);
-                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoNoClip", Settings.Default.toggle_color_text);
+                CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "PlayerStatusHealthValue", colorText);
+                CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "PlayerStatusHealthValue", colorText);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInClip", colorText);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInReserve", colorText);
+                CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoNoClip", colorText);
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -315,6 +312,39 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
+        ///     Set the health indicator to the cross style.
+        /// </summary>
+        public void HealthStyle()
+        {
+            try
+            {
+                var file = _hudPath + Resources.file_playerhealth;
+                var lines = File.ReadAllLines(file);
+                var start = FindIndex(lines, "\"PlayerStatusHealthBonusImage\"");
+                var index = FindIndex(lines, "image", start);
+                lines[index] = "\t\t\"image\"\t\t\t\"\"";
+
+                ColorText(Settings.Default.val_health_style == 1);
+
+                if (Settings.Default.val_health_style == 2)
+                {
+                    lines[index] = "\t\t\"image\"\t\t\t\"../hud/health_over_bg\"";
+                    File.WriteAllLines(file, lines);
+
+                    file = _hudPath + Resources.file_hudanimations;
+                    lines = File.ReadAllLines(file);
+                    CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "HealthBG", false);
+                    CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", false);
+                }
+                File.WriteAllLines(file, lines);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Updating Colors.", Resources.error_set_colors, ex.Message);
+            }
+        }
+
+        /// <summary>
         ///     Set the visibility of the main menu class image
         /// </summary>
         public void CodeProFonts()
@@ -324,7 +354,7 @@ namespace FlawHUD.Installer
                 MainWindow.Logger.Info("Updating Custom Fonts.");
                 var file = _hudPath + Resources.file_clientscheme;
                 var lines = File.ReadAllLines(file);
-                var value = Settings.Default.toggle_code_pro_fonts ? "clientscheme_fonts" : "clientscheme_fonts_tf";
+                var value = Settings.Default.toggle_code_fonts ? "clientscheme_fonts" : "clientscheme_fonts_tf";
                 lines[FindIndex(lines, "clientscheme_fonts")] = $"#base \"scheme/{value}.res\"";
                 File.WriteAllLines(file, lines);
             }

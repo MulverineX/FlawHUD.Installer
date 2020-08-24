@@ -340,6 +340,15 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to \flawhud\resource\ui\hudplayerhealth.res.
+        /// </summary>
+        internal static string file_playerhealth {
+            get {
+                return ResourceManager.GetString("file_playerhealth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An existing flawhud-master folder has been found. To avoid conflicts, a backup has been created..
         /// </summary>
         internal static string info_create_backup {

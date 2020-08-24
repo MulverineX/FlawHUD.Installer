@@ -37,18 +37,6 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#BE1414")]
-        public string color_health_low {
-            get {
-                return ((string)(this["color_health_low"]));
-            }
-            set {
-                this["color_health_low"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("#00AA7F")]
         public string color_health_buff {
             get {
@@ -56,6 +44,18 @@ namespace FlawHUD.Installer.Properties {
             }
             set {
                 this["color_health_buff"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#BE1414")]
+        public string color_health_low {
+            get {
+                return ((string)(this["color_health_low"]));
+            }
+            set {
+                this["color_health_low"] = value;
             }
         }
         
@@ -121,7 +121,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("03/12/2020 15:00:00")]
+        [global::System.Configuration.DefaultSettingValueAttribute("08/24/2020 11:24:00")]
         public global::System.DateTime hud_mod_date {
             get {
                 return ((global::System.DateTime)(this["hud_mod_date"]));
@@ -146,12 +146,12 @@ namespace FlawHUD.Installer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool toggle_code_pro_fonts {
+        public bool toggle_code_fonts {
             get {
-                return ((bool)(this["toggle_code_pro_fonts"]));
+                return ((bool)(this["toggle_code_fonts"]));
             }
             set {
-                this["toggle_code_pro_fonts"] = value;
+                this["toggle_code_fonts"] = value;
             }
         }
         
@@ -169,7 +169,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool toggle_menu_images {
             get {
                 return ((bool)(this["toggle_menu_images"]));
@@ -229,13 +229,37 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool toggle_xhair_pulse {
             get {
                 return ((bool)(this["toggle_xhair_pulse"]));
             }
             set {
                 this["toggle_xhair_pulse"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool toggle_xhair_rotate {
+            get {
+                return ((bool)(this["toggle_xhair_rotate"]));
+            }
+            set {
+                this["toggle_xhair_rotate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int val_xhair_effect {
+            get {
+                return ((int)(this["val_xhair_effect"]));
+            }
+            set {
+                this["val_xhair_effect"] = value;
             }
         }
         
@@ -248,6 +272,18 @@ namespace FlawHUD.Installer.Properties {
             }
             set {
                 this["val_xhair_size"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("24")]
+        public int val_xhair_style {
+            get {
+                return ((int)(this["val_xhair_style"]));
+            }
+            set {
+                this["val_xhair_style"] = value;
             }
         }
         
@@ -277,49 +313,13 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool toggle_color_text {
-            get {
-                return ((bool)(this["toggle_color_text"]));
-            }
-            set {
-                this["toggle_color_text"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool toggle_xhair_rotate {
-            get {
-                return ((bool)(this["toggle_xhair_rotate"]));
-            }
-            set {
-                this["toggle_xhair_rotate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("24")]
-        public int val_xhair_style {
-            get {
-                return ((int)(this["val_xhair_style"]));
-            }
-            set {
-                this["val_xhair_style"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int val_xhair_effect {
+        public int val_health_style {
             get {
-                return ((int)(this["val_xhair_effect"]));
+                return ((int)(this["val_health_style"]));
             }
             set {
-                this["val_xhair_effect"] = value;
+                this["val_health_style"] = value;
             }
         }
     }
