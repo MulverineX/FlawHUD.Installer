@@ -5,11 +5,11 @@
     <Setting Name="color_ammo_low" Type="System.String" Scope="User">
       <Value Profile="(Default)">#BE1414</Value>
     </Setting>
-    <Setting Name="color_health_low" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#BE1414</Value>
-    </Setting>
     <Setting Name="color_health_buff" Type="System.String" Scope="User">
       <Value Profile="(Default)">#00AA7F</Value>
+    </Setting>
+    <Setting Name="color_health_low" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#BE1414</Value>
     </Setting>
     <Setting Name="color_uber_bar" Type="System.String" Scope="User">
       <Value Profile="(Default)">#00AA7F</Value>
@@ -27,19 +27,19 @@
       <Value Profile="(Default)">\Program Files\Steam\steamapps\common\Team Fortress 2\tf\custom</Value>
     </Setting>
     <Setting Name="hud_mod_date" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)">03/12/2020 15:00:00</Value>
+      <Value Profile="(Default)">08/24/2020 11:24:00</Value>
     </Setting>
     <Setting Name="hud_updated" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="toggle_code_pro_fonts" Type="System.Boolean" Scope="User">
+    <Setting Name="toggle_code_fonts" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="toggle_disguise_image" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="toggle_menu_images" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="toggle_stock_backgrounds" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -54,10 +54,19 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="toggle_xhair_pulse" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="toggle_xhair_rotate" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="val_xhair_effect" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="val_xhair_size" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">18</Value>
+    </Setting>
+    <Setting Name="val_xhair_style" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">24</Value>
     </Setting>
     <Setting Name="val_xhair_x" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>
@@ -65,16 +74,7 @@
     <Setting Name="val_xhair_y" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">49</Value>
     </Setting>
-    <Setting Name="toggle_color_text" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="toggle_xhair_rotate" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="val_xhair_style" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">24</Value>
-    </Setting>
-    <Setting Name="val_xhair_effect" Type="System.Int32" Scope="User">
+    <Setting Name="val_health_style" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

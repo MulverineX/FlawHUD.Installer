@@ -37,14 +37,24 @@
                 VerticalAlignment="Top"
                 Header="Colors">
                 <Grid>
-                    <CheckBox
-                        x:Name="CbColorText"
-                        Margin="10,20,0,0"
+                    <Label
+                        Margin="10,10,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        FontSize="15px"
-                        Content="Color Health/Ammo text instead of panels"
-                        ToolTip="Display the colors on the health and ammo text instead of background panels" />
+                        Content="Health Style:"
+                        ToolTip="Select the style of the health display" />
+
+                    <ComboBox
+                        x:Name="CbHealthStyle"
+                        Width="200"
+                        Margin="200,10,0,0"
+                        SelectedValuePath="Content"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
+                        <ComboBoxItem>Default</ComboBoxItem>
+                        <ComboBoxItem>Colored Text</ComboBoxItem>
+                        <ComboBoxItem>Cross</ComboBoxItem>
+                    </ComboBox>
 
                     <x2:ColorPicker
                         x:Name="CpHealthBuffed"

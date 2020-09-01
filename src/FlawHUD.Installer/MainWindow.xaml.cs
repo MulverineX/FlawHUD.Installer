@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Windows;
@@ -14,8 +13,8 @@ using FlawHUD.Installer.Properties;
 using log4net;
 using log4net.Config;
 using Microsoft.Win32;
-using Application = System.Windows.Forms.Application;
-using MessageBox = System.Windows.Forms.MessageBox;
+using Application = System.Windows.Application;
+using MessageBox = System.Windows.MessageBox;
 
 namespace FlawHUD.Installer
 {
@@ -25,7 +24,7 @@ namespace FlawHUD.Installer
     public partial class MainWindow
     {
         public static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly string _appPath = Application.StartupPath;
+        private readonly string _appPath = Directory.GetCurrentDirectory();
 
         public MainWindow()
         {
@@ -109,9 +108,9 @@ namespace FlawHUD.Installer
                 {
                     Logger.Error("Unable to set the tf/custom directory. Exiting.");
                     MessageBox.Show(Properties.Resources.error_app_directory,
-                        Properties.Resources.error_app_directory_title, MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    System.Windows.Application.Current.Shutdown();
+                        Properties.Resources.error_app_directory_title, MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                    Application.Current.Shutdown();
                 }
             }
 
@@ -149,7 +148,7 @@ namespace FlawHUD.Installer
                 ZipFile.CreateFromDirectory(hudDirectory, settings.hud_directory + "\\flawhud-backup.zip");
                 Directory.Delete(hudDirectory, true);
                 MessageBox.Show(Properties.Resources.info_create_backup, Properties.Resources.info_create_backup_title,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
             Logger.Info("Cleaning-up FlawHUD directories...Done!");
@@ -159,7 +158,8 @@ namespace FlawHUD.Installer
         {
             Logger.Info("Looking for the Team Fortress 2 directory...");
             var is64Bit = Environment.Is64BitProcess ? "Wow6432Node\\" : string.Empty;
-            var directory = (string)Registry.GetValue($@"HKEY_LOCAL_MACHINE\Software\{is64Bit}Valve\Steam", "InstallPath", null);
+            var directory = (string)Registry.GetValue($@"HKEY_LOCAL_MACHINE\Software\{is64Bit}Valve\Steam",
+                "InstallPath", null);
             if (!string.IsNullOrWhiteSpace(directory))
             {
                 directory += "\\steamapps\\common\\Team Fortress 2\\tf\\custom";
@@ -183,8 +183,7 @@ namespace FlawHUD.Installer
         public static void ShowErrorMessage(string title, string message, string exception)
         {
             MessageBox.Show($@"{message} {exception}", string.Format(Properties.Resources.error_info, title),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+                MessageBoxButton.OK, MessageBoxImage.Error);
             Logger.Error(exception);
         }
 
@@ -274,7 +273,7 @@ namespace FlawHUD.Installer
                     LblNews.Content = "Installation finished at " + DateTime.Now;
                     Logger.Info("Installing FlawHUD...Done!");
                     MessageBox.Show(Properties.Resources.info_install_complete_desc,
-                        Properties.Resources.info_install_complete, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Properties.Resources.info_install_complete, MessageBoxButton.OK, MessageBoxImage.Information);
                 };
                 BusyIndicator.IsBusy = true;
                 worker.RunWorkerAsync();
@@ -299,7 +298,7 @@ namespace FlawHUD.Installer
                 SetupDirectory();
                 Logger.Info("Uninstalling FlawHUD...Done!");
                 MessageBox.Show(Properties.Resources.info_uninstall_complete_desc,
-                    Properties.Resources.info_uninstall_complete, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Properties.Resources.info_uninstall_complete, MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -401,9 +400,9 @@ namespace FlawHUD.Installer
                 settings.toggle_stock_backgrounds = CbDefaultBg.IsChecked ?? false;
                 settings.toggle_menu_images = CbMenuImages.IsChecked ?? false;
                 settings.toggle_transparent_viewmodels = CbTransparentViewmodel.IsChecked ?? false;
-                settings.toggle_code_pro_fonts = CbCodeProFonts.IsChecked ?? false;
+                settings.toggle_code_fonts = CbCodeProFonts.IsChecked ?? false;
                 settings.toggle_streamer_mode = CbStreamerMode.IsChecked ?? false;
-                settings.toggle_color_text = CbColorText.IsChecked ?? false;
+                settings.val_health_style = CbHealthStyle.SelectedIndex;
                 settings.Save();
                 Logger.Info("Saving HUD Settings...Done!");
             }
@@ -442,9 +441,9 @@ namespace FlawHUD.Installer
                 CbDefaultBg.IsChecked = settings.toggle_stock_backgrounds;
                 CbMenuImages.IsChecked = settings.toggle_menu_images;
                 CbTransparentViewmodel.IsChecked = settings.toggle_transparent_viewmodels;
-                CbCodeProFonts.IsChecked = settings.toggle_code_pro_fonts;
+                CbCodeProFonts.IsChecked = settings.toggle_code_fonts;
                 CbStreamerMode.IsChecked = settings.toggle_streamer_mode;
-                CbColorText.IsChecked = settings.toggle_color_text;
+                CbHealthStyle.SelectedIndex = settings.val_health_style;
                 Logger.Info("Loading HUD Settings...Done!");
             }
             catch (Exception ex)
@@ -483,7 +482,7 @@ namespace FlawHUD.Installer
                 CbTransparentViewmodel.IsChecked = false;
                 CbCodeProFonts.IsChecked = false;
                 CbStreamerMode.IsChecked = false;
-                CbColorText.IsChecked = false;
+                CbHealthStyle.SelectedIndex = 0;
                 SetCrosshairControls();
                 LblNews.Content = "Settings Reset at " + DateTime.Now;
                 Logger.Info("Resetting HUD Settings...Done!");
@@ -512,9 +511,9 @@ namespace FlawHUD.Installer
             writer.MainMenuClassImage();
             writer.Crosshair(CbXHairStyle.SelectedValue.ToString(), IntXHairSize.Value, CbXHairEffect.SelectedValue.ToString());
             writer.Colors();
-            writer.ColorText();
             writer.TransparentViewmodels();
             writer.CodeProFonts();
+            writer.HealthStyle();
             LblNews.Content = "Settings Saved at " + DateTime.Now;
             Logger.Info("Resetting HUD Settings...Done!");
         }
