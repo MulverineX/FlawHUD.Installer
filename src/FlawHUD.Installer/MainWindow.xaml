@@ -443,6 +443,7 @@
                         VerticalAlignment="Top"
                         TextAlignment="Left"
                         Width="120"
+                        AllowTextInput="False"
                         IsEnabled="False" />
 
                     <x2:IntegerUpDown
@@ -457,6 +458,7 @@
                         VerticalAlignment="Top"
                         TextAlignment="Left"
                         Width="120"
+                        AllowTextInput="False"
                         IsEnabled="False" />
 
                     <Label
@@ -514,7 +516,7 @@
                 <Grid>
                     <CheckBox
                         x:Name="CbDisguiseImage"
-                        Margin="10,10,0,0"
+                        Margin="10,40,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="Spy Disguise Image"
@@ -522,7 +524,7 @@
 
                     <CheckBox
                         x:Name="CbDefaultBg"
-                        Margin="10,130,0,0"
+                        Margin="10,100,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="Default Backgrounds"
@@ -540,7 +542,7 @@
 
                     <CheckBox
                         x:Name="CbTransparentViewmodel"
-                        Margin="10,100,0,0"
+                        Margin="10,130,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="Transparent Viewmodels"
@@ -548,11 +550,32 @@
 
                     <CheckBox
                         x:Name="CbCodeProFonts"
-                        Margin="10,40,0,0"
+                        Margin="10,10,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="Code Pro Fonts"
                         ToolTip="Change the HUD fonts to Code Pro" />
+
+                    <Label
+                        Margin="220,5,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="Killfeed Rows:"
+                        ToolTip="Color of the ÜberCharge meter when charged" />
+
+                    <x2:IntegerUpDown
+                        x:Name="IntKillFeedRows"
+                        FormatString="N0"
+                        Value="6"
+                        Increment="1"
+                        Minimum="0"
+                        Maximum="9"
+                        HorizontalAlignment="Left"
+                        Margin="352,8,0,0"
+                        VerticalAlignment="Top"
+                        TextAlignment="Left"
+                        Width="50"
+                        AllowTextInput="False"/>
 
                     <Button
                         x:Name="BtnReportIssue"

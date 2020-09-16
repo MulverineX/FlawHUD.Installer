@@ -394,6 +394,7 @@ namespace FlawHUD.Installer
                 settings.toggle_transparent_viewmodels = CbTransparentViewmodel.IsChecked ?? false;
                 settings.toggle_code_fonts = CbCodeProFonts.IsChecked ?? false;
                 settings.val_health_style = CbHealthStyle.SelectedIndex;
+                settings.val_killfeed_rows = IntKillFeedRows.Value ?? 6;
                 settings.Save();
                 Logger.Info("Saving HUD Settings...Done!");
             }
@@ -434,6 +435,7 @@ namespace FlawHUD.Installer
                 CbTransparentViewmodel.IsChecked = settings.toggle_transparent_viewmodels;
                 CbCodeProFonts.IsChecked = settings.toggle_code_fonts;
                 CbHealthStyle.SelectedIndex = settings.val_health_style;
+                IntKillFeedRows.Value = settings.val_killfeed_rows;
                 Logger.Info("Loading HUD Settings...Done!");
             }
             catch (Exception ex)
@@ -472,6 +474,7 @@ namespace FlawHUD.Installer
                 CbTransparentViewmodel.IsChecked = false;
                 CbCodeProFonts.IsChecked = false;
                 CbHealthStyle.SelectedIndex = 0;
+                IntKillFeedRows.Value = 6;
                 SetCrosshairControls();
                 LblNews.Content = "Settings Reset at " + DateTime.Now;
                 Logger.Info("Resetting HUD Settings...Done!");
@@ -501,6 +504,7 @@ namespace FlawHUD.Installer
             writer.TransparentViewmodels();
             writer.CodeProFonts();
             writer.HealthStyle();
+            writer.KillFeedRows();
             LblNews.Content = "Settings Saved at " + DateTime.Now;
             Logger.Info("Resetting HUD Settings...Done!");
         }

@@ -365,6 +365,28 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
+        ///     Set the number of rows on the killfeed
+        /// </summary>
+        public void KillFeedRows()
+        {
+            try
+            {
+                MainWindow.Logger.Info("Updating Kill Feed Row Count.");
+                var file = _hudPath + Resources.file_hudlayout;
+                var lines = File.ReadAllLines(file);
+                var start = FindIndex(lines, "HudDeathNotice");
+                var value = Settings.Default.val_killfeed_rows;
+                lines[FindIndex(lines, "MaxDeathNotices", start)] = $"\t\t\"MaxDeathNotices\"\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Updating Kill Feed Row Count.", Resources.error_set_menu_class_image,
+                    ex.Message);
+            }
+        }
+
+        /// <summary>
         ///     Retrieves the index of where a given value was found in a string array.
         /// </summary>
         public int FindIndex(string[] array, string value, int skip = 0)

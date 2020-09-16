@@ -214,6 +214,15 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while applying the killfeed row count..
+        /// </summary>
+        internal static string error_set_kilfeed_row_count {
+            get {
+                return ResourceManager.GetString("error_set_kilfeed_row_count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while applying the main menu background setting..
         /// </summary>
         internal static string error_set_menu_backgrounds {

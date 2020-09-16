@@ -310,5 +310,17 @@ namespace FlawHUD.Installer.Properties {
                 this["val_health_style"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int val_killfeed_rows {
+            get {
+                return ((int)(this["val_killfeed_rows"]));
+            }
+            set {
+                this["val_killfeed_rows"] = value;
+            }
+        }
     }
 }

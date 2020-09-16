@@ -168,6 +168,9 @@
   <data name="error_set_fonts" xml:space="preserve">
     <value>An error occurred while applying the custom fonts setting.</value>
   </data>
+  <data name="error_set_kilfeed_row_count" xml:space="preserve">
+    <value>An error occurred while applying the killfeed row count.</value>
+  </data>
   <data name="error_set_menu_backgrounds" xml:space="preserve">
     <value>An error occurred while applying the main menu background setting.</value>
   </data>
