@@ -70,15 +70,6 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/criticalflaw/flawhud/archive/stream.zip.
-        /// </summary>
-        internal static string app_download_streamer {
-            get {
-                return ResourceManager.GetString("app_download_streamer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to https://raw.githubusercontent.com/criticalflaw/flawhud/master/README.md.
         /// </summary>
         internal static string app_readme {

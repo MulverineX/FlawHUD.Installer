@@ -157,7 +157,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool toggle_disguise_image {
             get {
                 return ((bool)(this["toggle_disguise_image"]));
@@ -169,7 +169,7 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool toggle_menu_images {
             get {
                 return ((bool)(this["toggle_menu_images"]));
@@ -188,18 +188,6 @@ namespace FlawHUD.Installer.Properties {
             }
             set {
                 this["toggle_stock_backgrounds"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool toggle_streamer_mode {
-            get {
-                return ((bool)(this["toggle_streamer_mode"]));
-            }
-            set {
-                this["toggle_streamer_mode"] = value;
             }
         }
         

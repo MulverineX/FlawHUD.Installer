@@ -554,14 +554,6 @@
                         Content="Code Pro Fonts"
                         ToolTip="Change the HUD fonts to Code Pro" />
 
-                    <CheckBox
-                        x:Name="CbStreamerMode"
-                        Margin="230,10,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Content="Streamer Mode"
-                        ToolTip="Download a version of FlawHUD modified for streaming" />
-
                     <Button
                         x:Name="BtnReportIssue"
                         Width="64"

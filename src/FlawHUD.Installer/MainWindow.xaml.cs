@@ -49,10 +49,7 @@ namespace FlawHUD.Installer
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             var client = new WebClient();
-            client.DownloadFile(
-                CbStreamerMode.IsChecked == true
-                    ? Properties.Resources.app_download_streamer
-                    : Properties.Resources.app_download, "flawhud.zip");
+            client.DownloadFile(Properties.Resources.app_download, "flawhud.zip");
             client.Dispose();
             Logger.Info("Downloading the latest FlawHUD...Done!");
             ExtractHUD();
@@ -71,8 +68,6 @@ namespace FlawHUD.Installer
                 Directory.Delete(settings.hud_directory + "\\flawhud", true);
             if (Directory.Exists(settings.hud_directory + "\\flawhud-master"))
                 Directory.Move(settings.hud_directory + "\\flawhud-master", settings.hud_directory + "\\flawhud");
-            else if (Directory.Exists(settings.hud_directory + "\\flawhud-stream"))
-                Directory.Move(settings.hud_directory + "\\flawhud-stream", settings.hud_directory + "\\flawhud");
             Logger.Info("Extracting downloaded FlawHUD...Done!");
         }
 
@@ -134,9 +129,6 @@ namespace FlawHUD.Installer
             var hudDirectory = Directory.Exists(settings.hud_directory + "\\flawhud-master")
                 ? settings.hud_directory + "\\flawhud-master"
                 : string.Empty;
-            hudDirectory = Directory.Exists(settings.hud_directory + "\\flawhud-stream")
-                ? settings.hud_directory + "\\flawhud-stream"
-                : hudDirectory;
 
             if (!string.IsNullOrEmpty(hudDirectory))
             {
@@ -401,7 +393,6 @@ namespace FlawHUD.Installer
                 settings.toggle_menu_images = CbMenuImages.IsChecked ?? false;
                 settings.toggle_transparent_viewmodels = CbTransparentViewmodel.IsChecked ?? false;
                 settings.toggle_code_fonts = CbCodeProFonts.IsChecked ?? false;
-                settings.toggle_streamer_mode = CbStreamerMode.IsChecked ?? false;
                 settings.val_health_style = CbHealthStyle.SelectedIndex;
                 settings.Save();
                 Logger.Info("Saving HUD Settings...Done!");
@@ -442,7 +433,6 @@ namespace FlawHUD.Installer
                 CbMenuImages.IsChecked = settings.toggle_menu_images;
                 CbTransparentViewmodel.IsChecked = settings.toggle_transparent_viewmodels;
                 CbCodeProFonts.IsChecked = settings.toggle_code_fonts;
-                CbStreamerMode.IsChecked = settings.toggle_streamer_mode;
                 CbHealthStyle.SelectedIndex = settings.val_health_style;
                 Logger.Info("Loading HUD Settings...Done!");
             }
@@ -476,12 +466,11 @@ namespace FlawHUD.Installer
                 CbXHairEnable.IsChecked = false;
                 CbXHairHitmarker.IsChecked = true;
                 CbXHairRotate.IsChecked = false;
-                CbDisguiseImage.IsChecked = false;
+                CbDisguiseImage.IsChecked = true;
                 CbDefaultBg.IsChecked = false;
                 CbMenuImages.IsChecked = true;
                 CbTransparentViewmodel.IsChecked = false;
                 CbCodeProFonts.IsChecked = false;
-                CbStreamerMode.IsChecked = false;
                 CbHealthStyle.SelectedIndex = 0;
                 SetCrosshairControls();
                 LblNews.Content = "Settings Reset at " + DateTime.Now;
@@ -499,8 +488,6 @@ namespace FlawHUD.Installer
         private void ApplyHUDSettings()
         {
             Logger.Info("Applying HUD Settings...");
-            if (CbStreamerMode.IsChecked == true)
-                DownloadHUD();
             var writer = new HUDController();
             writer.MainMenuBackground();
             writer.DisguiseImage();

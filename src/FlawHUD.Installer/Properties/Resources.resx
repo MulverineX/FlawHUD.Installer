@@ -120,9 +120,6 @@
   <data name="app_download" xml:space="preserve">
     <value>https://github.com/criticalflaw/flawhud/archive/master.zip</value>
   </data>
-  <data name="app_download_streamer" xml:space="preserve">
-    <value>https://github.com/criticalflaw/flawhud/archive/stream.zip</value>
-  </data>
   <data name="app_readme" xml:space="preserve">
     <value>https://raw.githubusercontent.com/criticalflaw/flawhud/master/README.md</value>
   </data>

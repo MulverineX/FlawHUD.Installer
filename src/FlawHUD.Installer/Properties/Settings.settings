@@ -36,15 +36,12 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="toggle_disguise_image" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="toggle_menu_images" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="toggle_stock_backgrounds" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="toggle_streamer_mode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="toggle_transparent_viewmodels" Type="System.Boolean" Scope="User">
