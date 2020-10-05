@@ -61,7 +61,7 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/criticalflaw/flawhud/archive/master.zip.
+        ///   Looks up a localized string similar to https://github.com/CriticalFlaw/flawhud/archive/master.zip.
         /// </summary>
         internal static string app_download {
             get {
@@ -70,11 +70,20 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://raw.githubusercontent.com/criticalflaw/flawhud/master/README.md.
+        ///   Looks up a localized string similar to https://raw.githubusercontent.com/CriticalFlaw/flawhud/master/README.md.
         /// </summary>
         internal static string app_readme {
             get {
                 return ResourceManager.GetString("app_readme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/CriticalFlaw/FlawHUD.Installer/issues.
+        /// </summary>
+        internal static string app_tracker {
+            get {
+                return ResourceManager.GetString("app_tracker", resourceCulture);
             }
         }
         

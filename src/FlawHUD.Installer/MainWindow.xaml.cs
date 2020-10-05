@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -348,8 +349,26 @@ namespace FlawHUD.Installer
         /// </summary>
         private void BtnReportIssue_OnClick(object sender, RoutedEventArgs e)
         {
-            Logger.Info("Opening Issue Tracker...");
-            Process.Start("https://github.com/CriticalFlaw/FlawHUD.Installer/issues");
+            try
+            {
+                Logger.Info("Opening Issue Tracker...");
+                Process.Start(Properties.Resources.app_tracker);
+            }
+            catch
+            {
+                var url = Properties.Resources.app_tracker;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    url = url.Replace("&", "^&");
+                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    Process.Start("xdg-open", url);
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    Process.Start("open", url);
+                else
+                    throw;
+            }
         }
 
         /// <summary>

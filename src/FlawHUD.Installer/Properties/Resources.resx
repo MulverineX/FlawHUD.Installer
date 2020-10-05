@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="app_download" xml:space="preserve">
-    <value>https://github.com/criticalflaw/flawhud/archive/master.zip</value>
+    <value>https://github.com/CriticalFlaw/flawhud/archive/master.zip</value>
   </data>
   <data name="app_readme" xml:space="preserve">
-    <value>https://raw.githubusercontent.com/criticalflaw/flawhud/master/README.md</value>
+    <value>https://raw.githubusercontent.com/CriticalFlaw/flawhud/master/README.md</value>
+  </data>
+  <data name="app_tracker" xml:space="preserve">
+    <value>https://github.com/CriticalFlaw/FlawHUD.Installer/issues</value>
   </data>
   <data name="app_update" xml:space="preserve">
     <value>https://raw.githubusercontent.com/CriticalFlaw/FlawHUD.Installer/master/Update.xml</value>
