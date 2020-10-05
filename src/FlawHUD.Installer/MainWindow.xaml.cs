@@ -412,6 +412,7 @@ namespace FlawHUD.Installer
                 settings.toggle_menu_images = CbMenuImages.IsChecked ?? false;
                 settings.toggle_transparent_viewmodels = CbTransparentViewmodel.IsChecked ?? false;
                 settings.toggle_code_fonts = CbCodeProFonts.IsChecked ?? false;
+                settings.toggle_lower_stats = CbLowerPlayerStats.IsChecked ?? false;
                 settings.val_health_style = CbHealthStyle.SelectedIndex;
                 settings.val_killfeed_rows = IntKillFeedRows.Value ?? 5;
                 settings.Save();
@@ -453,6 +454,7 @@ namespace FlawHUD.Installer
                 CbMenuImages.IsChecked = settings.toggle_menu_images;
                 CbTransparentViewmodel.IsChecked = settings.toggle_transparent_viewmodels;
                 CbCodeProFonts.IsChecked = settings.toggle_code_fonts;
+                CbLowerPlayerStats.IsChecked = settings.toggle_lower_stats;
                 CbHealthStyle.SelectedIndex = settings.val_health_style;
                 IntKillFeedRows.Value = settings.val_killfeed_rows;
                 Logger.Info("Loading HUD Settings...Done!");
@@ -492,8 +494,9 @@ namespace FlawHUD.Installer
                 CbMenuImages.IsChecked = true;
                 CbTransparentViewmodel.IsChecked = false;
                 CbCodeProFonts.IsChecked = false;
+                CbLowerPlayerStats.IsChecked = false;
                 CbHealthStyle.SelectedIndex = 0;
-                IntKillFeedRows.Value = 6;
+                IntKillFeedRows.Value = 5;
                 SetCrosshairControls();
                 LblNews.Content = "Settings Reset at " + DateTime.Now;
                 Logger.Info("Resetting HUD Settings...Done!");
@@ -524,6 +527,7 @@ namespace FlawHUD.Installer
             writer.CodeProFonts();
             writer.HealthStyle();
             writer.KillFeedRows();
+            writer.LowerPlayerStats();
             LblNews.Content = "Settings Saved at " + DateTime.Now;
             Logger.Info("Resetting HUD Settings...Done!");
         }

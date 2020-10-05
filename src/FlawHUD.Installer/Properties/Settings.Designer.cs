@@ -322,5 +322,17 @@ namespace FlawHUD.Installer.Properties {
                 this["val_killfeed_rows"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool toggle_lower_stats {
+            get {
+                return ((bool)(this["toggle_lower_stats"]));
+            }
+            set {
+                this["toggle_lower_stats"] = value;
+            }
+        }
     }
 }

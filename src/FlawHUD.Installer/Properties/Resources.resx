@@ -174,6 +174,9 @@
   <data name="error_set_kilfeed_row_count" xml:space="preserve">
     <value>An error occurred while applying the killfeed row count.</value>
   </data>
+  <data name="error_set_lower_player_stats" xml:space="preserve">
+    <value>An error occurred while applying the lower player stats position.</value>
+  </data>
   <data name="error_set_menu_backgrounds" xml:space="preserve">
     <value>An error occurred while applying the main menu background setting.</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="file_hudlayout" xml:space="preserve">
     <value>\flawhud\scripts\hudlayout.res</value>
+  </data>
+  <data name="file_itemeffectmeter" xml:space="preserve">
+    <value>\flawhud\resource\ui\huditemeffectmeter{0}.res</value>
   </data>
   <data name="file_mainmenuoverride" xml:space="preserve">
     <value>\flawhud\resource\ui\mainmenuoverride.res</value>

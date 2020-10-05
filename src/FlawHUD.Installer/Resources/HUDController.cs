@@ -11,6 +11,8 @@ namespace FlawHUD.Installer
         private readonly string _appPath = Directory.GetCurrentDirectory();
         private readonly string _hudPath = Settings.Default.hud_directory;
 
+        private enum Positions { Top, Middle, Bottom }
+
         /// <summary>
         ///     Set the client scheme colors
         /// </summary>
@@ -387,6 +389,50 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
+        ///     Lowers the player health and ammo, if enabled.
+        /// </summary>
+        public void LowerPlayerStats()
+        {
+            try
+            {
+                MainWindow.Logger.Info("Updating Player Health and Ammo Position.");
+                var file = _hudPath + Resources.file_hudlayout;
+                var lines = File.ReadAllLines(file);
+                var start = FindIndex(lines, "HudWeaponAmmo");
+                var value = Settings.Default.toggle_lower_stats ? "r83" : "c93";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "HudMannVsMachineStatus");
+                value = Settings.Default.toggle_lower_stats ? "-55" : "0";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = _hudPath + Resources.file_playerhealth;
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "HudPlayerHealth");
+                value = Settings.Default.toggle_lower_stats ? "r108" : "c68";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, ""), Positions.Bottom);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_cleaver"), Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_heavy"), Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_particlecannon"), Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_pomson"), Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_pyro"), Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sapper"), Positions.Top);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_scout"), Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sniperfocus"), Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_spyknife"), Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sodapopper"), Positions.Top);
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Updating Player Health and Ammo Position.", Resources.error_set_lower_player_stats,
+                    ex.Message);
+            }
+        }
+
+        /// <summary>
         ///     Retrieves the index of where a given value was found in a string array.
         /// </summary>
         public int FindIndex(string[] array, string value, int skip = 0)
@@ -431,6 +477,26 @@ namespace FlawHUD.Installer
             var alphaNew = alpha ? "200" : color.A.ToString();
             var pulseNew = pulse && color.G >= 50 ? color.G - 50 : color.G;
             return $"{color.R} {pulseNew} {color.B} {alphaNew}";
+        }
+
+        private void SetItemEffectPosition(string file, Positions position = Positions.Bottom)
+        {
+            // positions 1 = top, 2 = middle, 3 = bottom
+            var lines = File.ReadAllLines(file);
+            var start = FindIndex(lines, "HudItemEffectMeter");
+            var value = Settings.Default.toggle_lower_stats ? "r50" : "c120";
+            switch (position)
+            {
+                case Positions.Top:
+                    value = Settings.Default.toggle_lower_stats ? "r70" : "c100";
+                    break;
+
+                case Positions.Middle:
+                    value = Settings.Default.toggle_lower_stats ? "r60" : "c110";
+                    break;
+            }
+            lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
+            File.WriteAllLines(file, lines);
         }
     }
 }

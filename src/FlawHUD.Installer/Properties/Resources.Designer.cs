@@ -232,6 +232,15 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while applying the lower player stats position..
+        /// </summary>
+        internal static string error_set_lower_player_stats {
+            get {
+                return ResourceManager.GetString("error_set_lower_player_stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while applying the main menu background setting..
         /// </summary>
         internal static string error_set_menu_backgrounds {
@@ -336,6 +345,15 @@ namespace FlawHUD.Installer.Properties {
         internal static string file_hudlayout {
             get {
                 return ResourceManager.GetString("file_hudlayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \flawhud\resource\ui\huditemeffectmeter{0}.res.
+        /// </summary>
+        internal static string file_itemeffectmeter {
+            get {
+                return ResourceManager.GetString("file_itemeffectmeter", resourceCulture);
             }
         }
         
