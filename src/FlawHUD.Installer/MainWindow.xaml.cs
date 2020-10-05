@@ -394,7 +394,7 @@ namespace FlawHUD.Installer
                 settings.toggle_transparent_viewmodels = CbTransparentViewmodel.IsChecked ?? false;
                 settings.toggle_code_fonts = CbCodeProFonts.IsChecked ?? false;
                 settings.val_health_style = CbHealthStyle.SelectedIndex;
-                settings.val_killfeed_rows = IntKillFeedRows.Value ?? 6;
+                settings.val_killfeed_rows = IntKillFeedRows.Value ?? 5;
                 settings.Save();
                 Logger.Info("Saving HUD Settings...Done!");
             }
