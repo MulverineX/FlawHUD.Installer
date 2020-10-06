@@ -453,7 +453,7 @@
                         x:Name="CbLowerPlayerStats"
                         Margin="220,10,0,0"
                         Content="Lower Player Stats"
-                        ToolTip="Enable transparency on the weapon viewmodels" />
+                        ToolTip="If enabled, lowers the player health and ammo indicators" />
 
                     <Label
                         Margin="220,34,0,0"
