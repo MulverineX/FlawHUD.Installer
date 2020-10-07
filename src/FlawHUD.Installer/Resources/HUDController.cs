@@ -404,6 +404,18 @@ namespace FlawHUD.Installer
                 start = FindIndex(lines, "HudMannVsMachineStatus");
                 value = Settings.Default.toggle_lower_stats ? "-55" : "0";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "CHealthAccountPanel");
+                value = Settings.Default.toggle_lower_stats ? "r150" : "267";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "CDamageAccountPanel");
+                value = Settings.Default.toggle_lower_stats ? "65" : "0";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "CSecondaryTargetID");
+                value = Settings.Default.toggle_lower_stats ? "325" : "355";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "HudSpellMenu");
+                value = Settings.Default.toggle_lower_stats ? "c-270" : "c-210";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
 
                 file = _hudPath + Resources.file_playerhealth;
