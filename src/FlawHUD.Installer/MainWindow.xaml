@@ -395,14 +395,14 @@
 
                     <CheckBox
                         x:Name="CbXHairHitmarker"
-                        Margin="147,20,0,0"
+                        Margin="285,20,0,0"
                         Content="Pulse Hitmarker"
                         FontSize="14px"
                         IsEnabled="False" />
 
                     <CheckBox
                         x:Name="CbXHairRotate"
-                        Margin="279,20,0,0"
+                        Margin="150,20,0,0"
                         Content="Rotate Crosshair"
                         FontSize="14px"
                         Click="CbXHairEnable_OnClick"

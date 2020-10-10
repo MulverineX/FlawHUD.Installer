@@ -516,12 +516,10 @@ namespace FlawHUD.Installer
             var writer = new HUDController();
             writer.MainMenuBackground();
             writer.DisguiseImage();
-            if (CbXHairRotate.IsChecked == true)
-                writer.CrosshairRotate();
-            else
-                writer.CrosshairPulse();
             writer.MainMenuClassImage();
             writer.Crosshair(CbXHairStyle.SelectedValue.ToString(), IntXHairSize.Value, CbXHairEffect.SelectedValue.ToString());
+            writer.CrosshairPulse();
+            writer.CrosshairRotate();
             writer.Colors();
             writer.TransparentViewmodels();
             writer.CodeProFonts();

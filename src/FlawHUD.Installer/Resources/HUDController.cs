@@ -108,6 +108,7 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"Size:18 | Outline:OFF\"";
                 File.WriteAllLines(file, lines);
 
+                if (Settings.Default.toggle_xhair_rotate) return;
                 if (!Settings.Default.toggle_xhair_enable) return;
                 var strEffect = effect != "None" ? $"{effect}:ON" : "Outline:OFF";
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
@@ -164,20 +165,21 @@ namespace FlawHUD.Installer
                 var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "\"Crosshair\"");
-                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
-                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "\"visible\"", start)] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "\"enabled\"", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
                 start = FindIndex(lines, "\"CrosshairPulse\"");
-                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"0\"";
-                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "\"visible\"", start)] = "\t\t\"visible\"\t\t\t\"0\"";
+                lines[FindIndex(lines, "\"enabled\"", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
                 File.WriteAllLines(file, lines);
 
+                if (!Settings.Default.toggle_xhair_enable) return;
                 if (!Settings.Default.toggle_xhair_rotate) return;
                 start = FindIndex(lines, "\"Crosshair\"");
-                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
-                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                lines[FindIndex(lines, "\"visible\"", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                lines[FindIndex(lines, "\"enabled\"", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
                 start = FindIndex(lines, "\"CrosshairPulse\"");
-                lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
-                lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
+                lines[FindIndex(lines, "\"visible\"", start)] = "\t\t\"visible\"\t\t\t\"1\"";
+                lines[FindIndex(lines, "\"enabled\"", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
                 File.WriteAllLines(file, lines);
             }
             catch (Exception ex)
@@ -413,6 +415,9 @@ namespace FlawHUD.Installer
                 start = FindIndex(lines, "CSecondaryTargetID");
                 value = Settings.Default.toggle_lower_stats ? "325" : "355";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "HudMenuSpyDisguise");
+                value = Settings.Default.toggle_lower_stats ? "c60" : "c130";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
                 start = FindIndex(lines, "HudSpellMenu");
                 value = Settings.Default.toggle_lower_stats ? "c-270" : "c-210";
                 lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"{value}\"";
