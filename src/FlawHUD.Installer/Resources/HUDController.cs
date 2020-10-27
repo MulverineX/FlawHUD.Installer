@@ -11,7 +11,7 @@ namespace FlawHUD.Installer
         private readonly string _appPath = Directory.GetCurrentDirectory();
         private readonly string _hudPath = Settings.Default.hud_directory;
 
-        private enum Positions { Top, Middle, Bottom }
+        private enum Positions { Top, Middle, Bottom, Default }
 
         /// <summary>
         ///     Set the client scheme colors
@@ -441,6 +441,10 @@ namespace FlawHUD.Installer
                 SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sniperfocus"), Positions.Middle);
                 SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_spyknife"), Positions.Middle);
                 SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sodapopper"), Positions.Top);
+                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomancharge.res", Positions.Middle, "ChargeMeter");
+                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomanpipes.res", Positions.Default, "PipesPresentPanel");
+                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomanpipes.res", Positions.Default, "NoPipesPresentPanel");
+                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\hudrocketpack.res", Positions.Middle);
             }
             catch (Exception ex)
             {
@@ -496,12 +500,12 @@ namespace FlawHUD.Installer
             return $"{color.R} {pulseNew} {color.B} {alphaNew}";
         }
 
-        private void SetItemEffectPosition(string file, Positions position = Positions.Bottom)
+        private void SetItemEffectPosition(string file, Positions position = Positions.Bottom, string search = "HudItemEffectMeter")
         {
             // positions 1 = top, 2 = middle, 3 = bottom
             var lines = File.ReadAllLines(file);
-            var start = FindIndex(lines, "HudItemEffectMeter");
-            var value = Settings.Default.toggle_lower_stats ? "r50" : "c120";
+            var start = FindIndex(lines, search);
+            var value = Settings.Default.toggle_lower_stats ? "r80" : "c92";
             switch (position)
             {
                 case Positions.Top:
@@ -510,6 +514,10 @@ namespace FlawHUD.Installer
 
                 case Positions.Middle:
                     value = Settings.Default.toggle_lower_stats ? "r60" : "c110";
+                    break;
+
+                case Positions.Bottom:
+                    value = Settings.Default.toggle_lower_stats ? "r50" : "c120";
                     break;
             }
             lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
