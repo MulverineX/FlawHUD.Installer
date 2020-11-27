@@ -10,8 +10,6 @@ namespace FlawHUD.Installer
     {
         private readonly string _hudPath = Settings.Default.hud_directory;
 
-        private enum Positions { Top, Middle, Bottom, Default }
-
         /// <summary>
         ///     Update the client scheme colors.
         /// </summary>
@@ -92,7 +90,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error updating player health color style.", Resources.error_set_colors, ex.Message);
+                MainWindow.ShowErrorMessage("Error updating player health color style.", Resources.error_set_colors,
+                    ex.Message);
                 return false;
             }
         }
@@ -130,7 +129,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error updating crosshair settings.", Resources.error_set_xhair, ex.Message);
+                MainWindow.ShowErrorMessage("Error updating crosshair settings.", Resources.error_set_xhair,
+                    ex.Message);
                 return false;
             }
         }
@@ -160,7 +160,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error toggling crosshair hitmarker.", Resources.error_set_xhair_pulse, ex.Message);
+                MainWindow.ShowErrorMessage("Error toggling crosshair hitmarker.", Resources.error_set_xhair_pulse,
+                    ex.Message);
                 return false;
             }
         }
@@ -197,7 +198,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error toggling rotating crosshairs.", Resources.error_set_xhair, ex.Message);
+                MainWindow.ShowErrorMessage("Error toggling rotating crosshairs.", Resources.error_set_xhair,
+                    ex.Message);
                 return false;
             }
         }
@@ -234,7 +236,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error toggling the Spy's disguise image.", Resources.error_set_spy_disguise_image, ex.Message);
+                MainWindow.ShowErrorMessage("Error toggling the Spy's disguise image.",
+                    Resources.error_set_spy_disguise_image, ex.Message);
                 return false;
             }
         }
@@ -270,7 +273,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error toggling custom main menu backgrounds.", Resources.error_set_menu_backgrounds,
+                MainWindow.ShowErrorMessage("Error toggling custom main menu backgrounds.",
+                    Resources.error_set_menu_backgrounds,
                     ex.Message);
                 return false;
             }
@@ -294,7 +298,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error toggling main menu class images.", Resources.error_set_menu_class_image,
+                MainWindow.ShowErrorMessage("Error toggling main menu class images.",
+                    Resources.error_set_menu_class_image,
                     ex.Message);
                 return false;
             }
@@ -363,12 +368,14 @@ namespace FlawHUD.Installer
                     CommentOutTextLineSuper(lines, "HudHealthBonusPulse", "HealthBG", false);
                     CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", false);
                 }
+
                 File.WriteAllLines(file, lines);
                 return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error setting player health style.", Resources.error_set_colors, ex.Message);
+                MainWindow.ShowErrorMessage("Error setting player health style.", Resources.error_set_colors,
+                    ex.Message);
                 return false;
             }
         }
@@ -390,7 +397,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error setting to the preferred font.", Resources.error_set_fonts, ex.Message);
+                MainWindow.ShowErrorMessage("Error setting to the preferred font.", Resources.error_set_fonts,
+                    ex.Message);
                 return false;
             }
         }
@@ -413,7 +421,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error setting the killfeed row count.", Resources.error_set_menu_class_image,
+                MainWindow.ShowErrorMessage("Error setting the killfeed row count.",
+                    Resources.error_set_menu_class_image,
                     ex.Message);
                 return false;
             }
@@ -459,17 +468,22 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
 
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, ""), Positions.Bottom);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_cleaver"), Positions.Middle);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sodapopper"), Positions.Top);
-                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomancharge.res", Positions.Middle, "ChargeMeter");
-                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomanpipes.res", Positions.Default, "PipesPresentPanel");
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, ""));
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_cleaver"),
+                    Positions.Middle);
+                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sodapopper"),
+                    Positions.Top);
+                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomancharge.res", Positions.Middle,
+                    "ChargeMeter");
+                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomanpipes.res", Positions.Default,
+                    "PipesPresentPanel");
                 SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\hudrocketpack.res", Positions.Middle);
                 return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error updating player health and ammo positions.", Resources.error_set_lower_player_stats,
+                MainWindow.ShowErrorMessage("Error updating player health and ammo positions.",
+                    Resources.error_set_lower_player_stats,
                     ex.Message);
                 return false;
             }
@@ -596,7 +610,8 @@ namespace FlawHUD.Installer
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Error repositioning player health and ammo.", Resources.error_set_lower_player_stats,
+                MainWindow.ShowErrorMessage("Error repositioning player health and ammo.",
+                    Resources.error_set_lower_player_stats,
                     ex.Message);
                 return false;
             }
@@ -605,7 +620,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Retrieves the index of where a given value was found in a string array.
         /// </summary>
-        public int FindIndex(string[] array, string value, int skip = 0)
+        public static int FindIndex(string[] array, string value, int skip = 0)
         {
             var list = array.Skip(skip);
             var index = list.Select((v, i) => new { Index = i, Value = v }) // Pair up values and indexes
@@ -617,7 +632,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Clear all existing comment identifiers, then apply a fresh one.
         /// </summary>
-        public string CommentOutTextLine(string value)
+        public static string CommentOutTextLine(string value)
         {
             return string.Concat("//", value.Replace("//", string.Empty));
         }
@@ -648,7 +663,8 @@ namespace FlawHUD.Installer
             return $"{color.R} {pulseNew} {color.B} {alphaNew}";
         }
 
-        private void SetItemEffectPosition(string file, Positions position = Positions.Bottom, string search = "HudItemEffectMeter")
+        private static void SetItemEffectPosition(string file, Positions position = Positions.Bottom,
+            string search = "HudItemEffectMeter")
         {
             // positions 1 = top, 2 = middle, 3 = bottom
             var lines = File.ReadAllLines(file);
@@ -662,6 +678,14 @@ namespace FlawHUD.Installer
             };
             lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
             File.WriteAllLines(file, lines);
+        }
+
+        private enum Positions
+        {
+            Top,
+            Middle,
+            Bottom,
+            Default
         }
     }
 }

@@ -42,7 +42,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Calls to download the latest version of FlawHUD
         /// </summary>
-        private void DownloadHUD()
+        private static void DownloadHUD()
         {
             Logger.Info("Downloading the latest FlawHUD...");
             ServicePointManager.Expect100Continue = true;
@@ -181,7 +181,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Check if FlawHUD is installed in the tf/custom directory
         /// </summary>
-        public bool CheckHUDPath()
+        public static bool CheckHUDPath()
         {
             return Directory.Exists(Settings.Default.hud_directory + "\\flawhud");
         }
@@ -189,7 +189,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Check if user's directory setting is valid
         /// </summary>
-        public bool CheckUserPath()
+        public static bool CheckUserPath()
         {
             return !string.IsNullOrWhiteSpace(Settings.Default.hud_directory) &&
                    Settings.Default.hud_directory.Contains("tf\\custom");
@@ -361,11 +361,17 @@ namespace FlawHUD.Installer
                     Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
                     Process.Start("xdg-open", url);
+                }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
                     Process.Start("open", url);
+                }
                 else
+                {
                     throw;
+                }
             }
         }
 
@@ -536,7 +542,8 @@ namespace FlawHUD.Installer
             if (!writer.MainMenuBackground()) return;
             if (!writer.DisguiseImage()) return;
             if (!writer.MainMenuClassImage()) return;
-            if (!writer.Crosshair(CbXHairStyle.SelectedValue.ToString(), IntXHairSize.Value, CbXHairEffect.SelectedValue.ToString())) return;
+            if (!writer.Crosshair(CbXHairStyle.SelectedValue.ToString(), IntXHairSize.Value,
+                CbXHairEffect.SelectedValue.ToString())) return;
             if (!writer.CrosshairPulse()) return;
             if (!writer.CrosshairRotate()) return;
             if (!writer.Colors()) return;
