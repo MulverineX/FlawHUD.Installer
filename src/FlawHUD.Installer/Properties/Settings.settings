@@ -80,5 +80,14 @@
     <Setting Name="toggle_lower_stats" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="color_target_health" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#00FF7F</Value>
+    </Setting>
+    <Setting Name="color_target_damage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#FFFF00</Value>
+    </Setting>
+    <Setting Name="toggle_alt_stats" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

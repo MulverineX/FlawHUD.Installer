@@ -7,8 +7,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\style\favicon.ico</ApplicationIcon>
     <StartupObject>FlawHUD.Installer.App</StartupObject>
-    <AssemblyVersion>1.7.0.0</AssemblyVersion>
-    <Version>1.7.0</Version>
+    <AssemblyVersion>1.8.0.0</AssemblyVersion>
+    <Version>1.8.0</Version>
     <Copyright>Igor Nikitin</Copyright>
     <PackageProjectUrl>https://github.com/CriticalFlaw/FlawHUD.Installer</PackageProjectUrl>
     <Company>CriticalFlaw</Company>
@@ -38,9 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autoupdater.NET.Official" Version="1.6.3" />
+    <PackageReference Include="Autoupdater.NET.Official" Version="1.6.4" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.1" />
-    <PackageReference Include="log4net" Version="2.0.11" />
+    <PackageReference Include="log4net" Version="2.0.12" />
   </ItemGroup>
 
   <ItemGroup>

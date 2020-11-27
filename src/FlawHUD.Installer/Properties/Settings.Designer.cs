@@ -12,7 +12,7 @@ namespace FlawHUD.Installer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -332,6 +332,42 @@ namespace FlawHUD.Installer.Properties {
             }
             set {
                 this["toggle_lower_stats"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#00FF7F")]
+        public string color_target_health {
+            get {
+                return ((string)(this["color_target_health"]));
+            }
+            set {
+                this["color_target_health"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFF00")]
+        public string color_target_damage {
+            get {
+                return ((string)(this["color_target_damage"]));
+            }
+            set {
+                this["color_target_damage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool toggle_alt_stats {
+            get {
+                return ((bool)(this["toggle_alt_stats"]));
+            }
+            set {
+                this["toggle_alt_stats"] = value;
             }
         }
     }

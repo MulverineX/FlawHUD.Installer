@@ -367,6 +367,15 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to \flawhud\resource\ui\hudplayerclass.res.
+        /// </summary>
+        internal static string file_playerclass {
+            get {
+                return ResourceManager.GetString("file_playerclass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to \flawhud\resource\ui\hudplayerhealth.res.
         /// </summary>
         internal static string file_playerhealth {

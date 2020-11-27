@@ -25,7 +25,6 @@ namespace FlawHUD.Installer
     public partial class MainWindow
     {
         public static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly string _appPath = Directory.GetCurrentDirectory();
 
         public MainWindow()
         {
@@ -60,11 +59,11 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Calls to extract FlawHUD to the tf/custom directory
         /// </summary>
-        private void ExtractHUD()
+        private static void ExtractHUD()
         {
             var settings = Settings.Default;
             Logger.Info("Extracting downloaded FlawHUD to " + settings.hud_directory);
-            ZipFile.ExtractToDirectory(_appPath + "\\flawhud.zip", settings.hud_directory);
+            ZipFile.ExtractToDirectory(Directory.GetCurrentDirectory() + "\\flawhud.zip", settings.hud_directory);
             if (Directory.Exists(settings.hud_directory + "\\flawhud"))
                 Directory.Delete(settings.hud_directory + "\\flawhud", true);
             if (Directory.Exists(settings.hud_directory + "\\flawhud-master"))
@@ -75,7 +74,6 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Set the tf/custom directory if not already set
         /// </summary>
-        /// <remarks>TODO: Possible bug, consider refactoring</remarks>
         private void SetupDirectory(bool userSet = false)
         {
             if (!SearchRegistry() && !CheckUserPath() || userSet)
@@ -117,13 +115,13 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Cleans up the tf/custom and installer directories
         /// </summary>
-        private void CleanDirectory()
+        private static void CleanDirectory()
         {
             Logger.Info("Cleaning-up FlawHUD directories...");
 
             // Clean the application directory
-            if (File.Exists(_appPath + "\\flawhud.zip"))
-                File.Delete(_appPath + "\\flawhud.zip");
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\flawhud.zip"))
+                File.Delete(Directory.GetCurrentDirectory() + "\\flawhud.zip");
 
             // Clean the tf/custom directory
             var settings = Settings.Default;
@@ -379,6 +377,18 @@ namespace FlawHUD.Installer
             SetCrosshairControls();
         }
 
+        private void CbLowerPlayerStats_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (CbLowerPlayerStats.IsChecked != null)
+                CbAlternatePlayerStats.IsEnabled = !(bool)CbLowerPlayerStats.IsChecked;
+        }
+
+        private void CbAlternatePlayerStats_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (CbAlternatePlayerStats.IsChecked != null)
+                CbLowerPlayerStats.IsEnabled = !(bool)CbAlternatePlayerStats.IsChecked;
+        }
+
         #endregion CLICK_EVENTS
 
         #region SAVE_LOAD
@@ -399,6 +409,8 @@ namespace FlawHUD.Installer
                 settings.color_uber_full = CpUberFullColor.SelectedColor?.ToString();
                 settings.color_xhair_normal = CpXHairColor.SelectedColor?.ToString();
                 settings.color_xhair_pulse = CpXHairPulse.SelectedColor?.ToString();
+                settings.color_target_health = CpTargetHealth.SelectedColor?.ToString();
+                settings.color_target_damage = CpTargetDamage.SelectedColor?.ToString();
                 settings.val_xhair_size = IntXHairSize.Value ?? 18;
                 settings.val_xhair_style = CbXHairStyle.SelectedIndex;
                 settings.val_xhair_effect = CbXHairEffect.SelectedIndex;
@@ -413,6 +425,7 @@ namespace FlawHUD.Installer
                 settings.toggle_transparent_viewmodels = CbTransparentViewmodel.IsChecked ?? false;
                 settings.toggle_code_fonts = CbCodeProFonts.IsChecked ?? false;
                 settings.toggle_lower_stats = CbLowerPlayerStats.IsChecked ?? false;
+                settings.toggle_alt_stats = CbAlternatePlayerStats.IsChecked ?? false;
                 settings.val_health_style = CbHealthStyle.SelectedIndex;
                 settings.val_killfeed_rows = IntKillFeedRows.Value ?? 5;
                 settings.Save();
@@ -441,6 +454,8 @@ namespace FlawHUD.Installer
                 CpUberFullColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_uber_full);
                 CpXHairColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_xhair_normal);
                 CpXHairPulse.SelectedColor = (Color)cc.ConvertFrom(settings.color_xhair_pulse);
+                CpTargetHealth.SelectedColor = (Color)cc.ConvertFrom(settings.color_target_health);
+                CpTargetDamage.SelectedColor = (Color)cc.ConvertFrom(settings.color_target_damage);
                 IntXHairSize.Value = settings.val_xhair_size;
                 CbXHairStyle.SelectedIndex = settings.val_xhair_style;
                 CbXHairEffect.SelectedIndex = settings.val_xhair_effect;
@@ -455,6 +470,7 @@ namespace FlawHUD.Installer
                 CbTransparentViewmodel.IsChecked = settings.toggle_transparent_viewmodels;
                 CbCodeProFonts.IsChecked = settings.toggle_code_fonts;
                 CbLowerPlayerStats.IsChecked = settings.toggle_lower_stats;
+                CbAlternatePlayerStats.IsChecked = settings.toggle_alt_stats;
                 CbHealthStyle.SelectedIndex = settings.val_health_style;
                 IntKillFeedRows.Value = settings.val_killfeed_rows;
                 Logger.Info("Loading HUD Settings...Done!");
@@ -481,6 +497,8 @@ namespace FlawHUD.Installer
                 CpUberFullColor.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
                 CpXHairColor.SelectedColor = (Color)cc.ConvertFrom("#F2F2F2");
                 CpXHairPulse.SelectedColor = (Color)cc.ConvertFrom("#FF0000");
+                CpTargetHealth.SelectedColor = (Color)cc.ConvertFrom("#00AA7F");
+                CpTargetDamage.SelectedColor = (Color)cc.ConvertFrom("#FFFF00");
                 IntXHairSize.Value = 18;
                 CbXHairStyle.SelectedIndex = 24;
                 CbXHairEffect.SelectedIndex = 0;
@@ -495,6 +513,7 @@ namespace FlawHUD.Installer
                 CbTransparentViewmodel.IsChecked = false;
                 CbCodeProFonts.IsChecked = false;
                 CbLowerPlayerStats.IsChecked = false;
+                CbAlternatePlayerStats.IsChecked = false;
                 CbHealthStyle.SelectedIndex = 0;
                 IntKillFeedRows.Value = 5;
                 SetCrosshairControls();
@@ -514,18 +533,19 @@ namespace FlawHUD.Installer
         {
             Logger.Info("Applying HUD Settings...");
             var writer = new HUDController();
-            writer.MainMenuBackground();
-            writer.DisguiseImage();
-            writer.MainMenuClassImage();
-            writer.Crosshair(CbXHairStyle.SelectedValue.ToString(), IntXHairSize.Value, CbXHairEffect.SelectedValue.ToString());
-            writer.CrosshairPulse();
-            writer.CrosshairRotate();
-            writer.Colors();
-            writer.TransparentViewmodels();
-            writer.CodeProFonts();
-            writer.HealthStyle();
-            writer.KillFeedRows();
-            writer.LowerPlayerStats();
+            if (!writer.MainMenuBackground()) return;
+            if (!writer.DisguiseImage()) return;
+            if (!writer.MainMenuClassImage()) return;
+            if (!writer.Crosshair(CbXHairStyle.SelectedValue.ToString(), IntXHairSize.Value, CbXHairEffect.SelectedValue.ToString())) return;
+            if (!writer.CrosshairPulse()) return;
+            if (!writer.CrosshairRotate()) return;
+            if (!writer.Colors()) return;
+            if (!writer.TransparentViewmodels()) return;
+            if (!writer.CodeProFonts()) return;
+            if (!writer.HealthStyle()) return;
+            if (!writer.KillFeedRows()) return;
+            if (!writer.LowerPlayerStats()) return;
+            if (!writer.AlternatePlayerStats()) return;
             LblNews.Content = "Settings Saved at " + DateTime.Now;
             Logger.Info("Resetting HUD Settings...Done!");
         }

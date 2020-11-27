@@ -8,19 +8,18 @@ namespace FlawHUD.Installer
 {
     public class HUDController
     {
-        private readonly string _appPath = Directory.GetCurrentDirectory();
         private readonly string _hudPath = Settings.Default.hud_directory;
 
         private enum Positions { Top, Middle, Bottom, Default }
 
         /// <summary>
-        ///     Set the client scheme colors
+        ///     Update the client scheme colors.
         /// </summary>
-        public void Colors()
+        public bool Colors()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Colors.");
+                MainWindow.Logger.Info("Updating the color client scheme.");
                 var file = _hudPath + Resources.file_clientscheme_colors;
                 var lines = File.ReadAllLines(file);
                 // Health
@@ -42,6 +41,10 @@ namespace FlawHUD.Installer
                     $"\t\t\"PositiveValue\"\t\t\t\t\"{RgbConverter(Settings.Default.color_health_buff)}\"";
                 lines[FindIndex(lines, "NegativeValue")] =
                     $"\t\t\"NegativeValue\"\t\t\t\t\"{RgbConverter(Settings.Default.color_health_low, true)}\"";
+                lines[FindIndex(lines, "\"TargetHealth\"")] =
+                    $"\t\t\"TargetHealth\"\t\t\t\t\"{RgbConverter(Settings.Default.color_target_health)}\"";
+                lines[FindIndex(lines, "TargetDamage")] =
+                    $"\t\t\"TargetDamage\"\t\t\t\t\"{RgbConverter(Settings.Default.color_target_damage)}\"";
                 // Crosshair
                 lines[FindIndex(lines, "\"Crosshair\"")] =
                     $"\t\t\"Crosshair\"\t\t\t\t\t\"{RgbConverter(Settings.Default.color_xhair_normal)}\"";
@@ -55,20 +58,23 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "UberCharging")] =
                     $"\t\t\"UberCharging\"\t\t\t\t\"{RgbConverter(Settings.Default.color_uber_bar)}\"";
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Colors.", Resources.error_set_colors, ex.Message);
+                MainWindow.ShowErrorMessage("Error updating colors.", Resources.error_set_colors, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the health and ammo colors to be displayed on text instead of a panel
+        ///     Set the health and ammo colors to be displayed on text instead of a panel.
         /// </summary>
-        public void ColorText(bool colorText = false)
+        public bool ColorText(bool colorText = false)
         {
             try
             {
+                MainWindow.Logger.Info("Setting player health color style.");
                 var file = _hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
                 // Panels
@@ -82,21 +88,23 @@ namespace FlawHUD.Installer
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoInReserve", colorText);
                 CommentOutTextLineSuper(lines, "HudLowAmmoPulse", "AmmoNoClip", colorText);
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Colors.", Resources.error_set_colors, ex.Message);
+                MainWindow.ShowErrorMessage("Error updating player health color style.", Resources.error_set_colors, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the crosshair
+        ///     Set the crosshair style, position and effect.
         /// </summary>
-        public void Crosshair(string style, int? size, string effect)
+        public bool Crosshair(string style, int? size, string effect)
         {
             try
             {
-                MainWindow.Logger.Info("Updating Crosshair.");
+                MainWindow.Logger.Info("Updating crosshair settings.");
                 var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "CustomCrosshair");
@@ -108,8 +116,8 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "font", start)] = "\t\t\"font\"\t\t\t\t\"Size:18 | Outline:OFF\"";
                 File.WriteAllLines(file, lines);
 
-                if (Settings.Default.toggle_xhair_rotate) return;
-                if (!Settings.Default.toggle_xhair_enable) return;
+                if (Settings.Default.toggle_xhair_rotate) return true;
+                if (!Settings.Default.toggle_xhair_enable) return true;
                 var strEffect = effect != "None" ? $"{effect}:ON" : "Outline:OFF";
                 lines[FindIndex(lines, "visible", start)] = "\t\t\"visible\"\t\t\t\"1\"";
                 lines[FindIndex(lines, "enabled", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
@@ -118,21 +126,23 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"c-{Settings.Default.val_xhair_y}\"";
                 lines[FindIndex(lines, "font", start)] = $"\t\t\"font\"\t\t\t\t\"Size:{size} | {strEffect}\"";
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Crosshair.", Resources.error_set_xhair, ex.Message);
+                MainWindow.ShowErrorMessage("Error updating crosshair settings.", Resources.error_set_xhair, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the crosshair hitmarker
+        ///     Toggle the crosshair hitmarker.
         /// </summary>
-        public void CrosshairPulse()
+        public bool CrosshairPulse()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Crosshair Pulse.");
+                MainWindow.Logger.Info("Toggling crosshair hitmarker.");
                 var file = _hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "DamagedPlayer");
@@ -142,25 +152,27 @@ namespace FlawHUD.Installer
                 lines[index2] = CommentOutTextLine(lines[index2]);
                 File.WriteAllLines(file, lines);
 
-                if (!Settings.Default.toggle_xhair_pulse) return;
+                if (!Settings.Default.toggle_xhair_pulse) return true;
                 lines[index1] = lines[index1].Replace("//", string.Empty);
                 lines[index2] = lines[index2].Replace("//", string.Empty);
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Crosshair Pulse.", Resources.error_set_xhair_pulse, ex.Message);
+                MainWindow.ShowErrorMessage("Error toggling crosshair hitmarker.", Resources.error_set_xhair_pulse, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the rotating crosshair
+        ///     Toggle the rotating crosshair.
         /// </summary>
-        public void CrosshairRotate()
+        public bool CrosshairRotate()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Rotating Crosshair.");
+                MainWindow.Logger.Info("Toggling rotating crosshairs.");
 
                 var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
@@ -172,8 +184,8 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "\"enabled\"", start)] = "\t\t\"enabled\"\t\t\t\"0\"";
                 File.WriteAllLines(file, lines);
 
-                if (!Settings.Default.toggle_xhair_enable) return;
-                if (!Settings.Default.toggle_xhair_rotate) return;
+                if (!Settings.Default.toggle_xhair_enable) return true;
+                if (!Settings.Default.toggle_xhair_rotate) return true;
                 start = FindIndex(lines, "\"Crosshair\"");
                 lines[FindIndex(lines, "\"visible\"", start)] = "\t\t\"visible\"\t\t\t\"1\"";
                 lines[FindIndex(lines, "\"enabled\"", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
@@ -181,21 +193,23 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "\"visible\"", start)] = "\t\t\"visible\"\t\t\t\"1\"";
                 lines[FindIndex(lines, "\"enabled\"", start)] = "\t\t\"enabled\"\t\t\t\"1\"";
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Rotating Crosshair.", Resources.error_set_xhair, ex.Message);
+                MainWindow.ShowErrorMessage("Error toggling rotating crosshairs.", Resources.error_set_xhair, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the visibility of the Spy's disguise image
+        ///     Toggle the visibility of the Spy's disguise image.
         /// </summary>
-        public void DisguiseImage()
+        public bool DisguiseImage()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Spy Disguise Image.");
+                MainWindow.Logger.Info("Toggling the Spy's disguise image.");
                 var file = _hudPath + Resources.file_hudanimations;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "HudSpyDisguiseFadeIn");
@@ -210,28 +224,29 @@ namespace FlawHUD.Installer
                 lines[index4] = CommentOutTextLine(lines[index4]);
                 File.WriteAllLines(file, lines);
 
-                if (!Settings.Default.toggle_disguise_image) return;
+                if (!Settings.Default.toggle_disguise_image) return true;
                 lines[index1] = lines[index1].Replace("//", string.Empty);
                 lines[index2] = lines[index2].Replace("//", string.Empty);
                 lines[index3] = lines[index3].Replace("//", string.Empty);
                 lines[index4] = lines[index4].Replace("//", string.Empty);
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Spy Disguise Image.", Resources.error_set_spy_disguise_image,
-                    ex.Message);
+                MainWindow.ShowErrorMessage("Error toggling the Spy's disguise image.", Resources.error_set_spy_disguise_image, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the main menu backgrounds
+        ///     Toggle the custom main menu backgrounds.
         /// </summary>
-        public void MainMenuBackground()
+        public bool MainMenuBackground()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Main Menu Backgrounds.");
+                MainWindow.Logger.Info("Toggling custom main menu backgrounds.");
                 var directory = new DirectoryInfo(_hudPath + Resources.dir_console);
                 var chapterbackgrounds = _hudPath + Resources.file_chapterbackgrounds;
                 var chapterbackgroundsTemp = chapterbackgrounds.Replace(".txt", ".file");
@@ -250,44 +265,49 @@ namespace FlawHUD.Installer
                     if (File.Exists(chapterbackgroundsTemp))
                         File.Move(chapterbackgroundsTemp, chapterbackgrounds);
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Main Menu Backgrounds.", Resources.error_set_menu_backgrounds,
+                MainWindow.ShowErrorMessage("Error toggling custom main menu backgrounds.", Resources.error_set_menu_backgrounds,
                     ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the visibility of the main menu class image
+        ///     Toggle the visibility of the main menu class images.
         /// </summary>
-        public void MainMenuClassImage()
+        public bool MainMenuClassImage()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Main Menu Class Image.");
+                MainWindow.Logger.Info("Toggling main menu class images.");
                 var file = _hudPath + Resources.file_mainmenuoverride;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "TFCharacterImage");
                 var value = Settings.Default.toggle_menu_images ? "-80" : "9999";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Main Menu Class Image.", Resources.error_set_menu_class_image,
+                MainWindow.ShowErrorMessage("Error toggling main menu class images.", Resources.error_set_menu_class_image,
                     ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the weapon viewmodel transparency
+        ///     Toggle the weapon viewmodel transparency.
         /// </summary>
-        public void TransparentViewmodels()
+        public bool TransparentViewmodels()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Transparent Viewmodels.");
+                MainWindow.Logger.Info("Toggling transparent viewmodels.");
                 var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "\"TransparentViewmodel\"");
@@ -297,7 +317,7 @@ namespace FlawHUD.Installer
                 lines[index2] = "\t\t\"enabled\"\t\t\t\"0\"";
                 File.WriteAllLines(file, lines);
 
-                if (!Settings.Default.toggle_transparent_viewmodels) return;
+                if (!Settings.Default.toggle_transparent_viewmodels) return true;
                 lines[index1] = "\t\t\"visible\"\t\t\t\"1\"";
                 lines[index2] = "\t\t\"enabled\"\t\t\t\"1\"";
 
@@ -305,23 +325,26 @@ namespace FlawHUD.Installer
                     Directory.CreateDirectory(_hudPath + "\\flawhud\\cfg");
                 if (File.Exists(_hudPath + Resources.file_cfg))
                     File.Delete(_hudPath + Resources.file_cfg);
-                File.Copy(_appPath + "\\hud.cfg", _hudPath + Resources.file_cfg);
+                File.Copy(Directory.GetCurrentDirectory() + "\\hud.cfg", _hudPath + Resources.file_cfg);
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Transparent Viewmodels.",
+                MainWindow.ShowErrorMessage("Error toggling transparent viewmodels.",
                     Resources.error_set_transparent_viewmodels, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the health indicator to the cross style.
+        ///     Update the health indicator to use the cross style.
         /// </summary>
-        public void HealthStyle()
+        public bool HealthStyle()
         {
             try
             {
+                MainWindow.Logger.Info("Setting player health style.");
                 var file = _hudPath + Resources.file_playerhealth;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "\"PlayerStatusHealthBonusImage\"");
@@ -341,63 +364,69 @@ namespace FlawHUD.Installer
                     CommentOutTextLineSuper(lines, "HudHealthDyingPulse", "HealthBG", false);
                 }
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Colors.", Resources.error_set_colors, ex.Message);
+                MainWindow.ShowErrorMessage("Error setting player health style.", Resources.error_set_colors, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the visibility of the main menu class image
+        ///     Toggle to a Code Pro font instead of the default.
         /// </summary>
-        public void CodeProFonts()
+        public bool CodeProFonts()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Custom Fonts.");
+                MainWindow.Logger.Info("Setting to the preferred font.");
                 var file = _hudPath + Resources.file_clientscheme;
                 var lines = File.ReadAllLines(file);
-                var value = Settings.Default.toggle_code_fonts ? "clientscheme_fonts" : "clientscheme_fonts_tf";
+                var value = Settings.Default.toggle_code_fonts ? "clientscheme_fonts_pro" : "clientscheme_fonts";
                 lines[FindIndex(lines, "clientscheme_fonts")] = $"#base \"scheme/{value}.res\"";
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Custom Fonts.", Resources.error_set_fonts, ex.Message);
+                MainWindow.ShowErrorMessage("Error setting to the preferred font.", Resources.error_set_fonts, ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Set the number of rows on the killfeed
+        ///     Set the number of rows shown on the killfeed.
         /// </summary>
-        public void KillFeedRows()
+        public bool KillFeedRows()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Kill Feed Row Count.");
+                MainWindow.Logger.Info("Setting the killfeed row count.");
                 var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "HudDeathNotice");
                 var value = Settings.Default.val_killfeed_rows;
                 lines[FindIndex(lines, "MaxDeathNotices", start)] = $"\t\t\"MaxDeathNotices\"\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Kill Feed Row Count.", Resources.error_set_menu_class_image,
+                MainWindow.ShowErrorMessage("Error setting the killfeed row count.", Resources.error_set_menu_class_image,
                     ex.Message);
+                return false;
             }
         }
 
         /// <summary>
-        ///     Lowers the player health and ammo, if enabled.
+        ///     Lowers the player health and ammo.
         /// </summary>
-        public void LowerPlayerStats()
+        public bool LowerPlayerStats()
         {
             try
             {
-                MainWindow.Logger.Info("Updating Player Health and Ammo Position.");
+                MainWindow.Logger.Info("Updating player health and ammo positions.");
                 var file = _hudPath + Resources.file_hudlayout;
                 var lines = File.ReadAllLines(file);
                 var start = FindIndex(lines, "HudWeaponAmmo");
@@ -432,24 +461,144 @@ namespace FlawHUD.Installer
 
                 SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, ""), Positions.Bottom);
                 SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_cleaver"), Positions.Middle);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_heavy"), Positions.Middle);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_particlecannon"), Positions.Middle);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_pomson"), Positions.Middle);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_pyro"), Positions.Middle);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sapper"), Positions.Top);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_scout"), Positions.Middle);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sniperfocus"), Positions.Middle);
-                SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_spyknife"), Positions.Middle);
                 SetItemEffectPosition(string.Format(_hudPath + Resources.file_itemeffectmeter, "_sodapopper"), Positions.Top);
                 SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomancharge.res", Positions.Middle, "ChargeMeter");
                 SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomanpipes.res", Positions.Default, "PipesPresentPanel");
-                SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\huddemomanpipes.res", Positions.Default, "NoPipesPresentPanel");
                 SetItemEffectPosition(_hudPath + Resources.dir_resource_ui + "\\hudrocketpack.res", Positions.Middle);
+                return true;
             }
             catch (Exception ex)
             {
-                MainWindow.ShowErrorMessage("Updating Player Health and Ammo Position.", Resources.error_set_lower_player_stats,
+                MainWindow.ShowErrorMessage("Error updating player health and ammo positions.", Resources.error_set_lower_player_stats,
                     ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///     Repositions the player health and ammo.
+        /// </summary>
+        public bool AlternatePlayerStats()
+        {
+            try
+            {
+                // Skip if the player already has "Lowered Player Stats" enabled.
+                if (Settings.Default.toggle_lower_stats) return true;
+                MainWindow.Logger.Info("Repositioning player health and ammo.");
+                var file = _hudPath + Resources.file_hudlayout;
+                var lines = File.ReadAllLines(file);
+                var start = FindIndex(lines, "HudWeaponAmmo");
+                var value = Settings.Default.toggle_alt_stats ? "r110" : "c90";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r50" : "c93";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "HudMedicCharge");
+                value = Settings.Default.toggle_alt_stats ? "c60" : "c38";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "CHealthAccountPanel");
+                value = Settings.Default.toggle_alt_stats ? "113" : "c-180";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r90" : "267";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "CDamageAccountPanel");
+                value = Settings.Default.toggle_alt_stats ? "137" : "c-120";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r47" : "c70";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "DisguiseStatus");
+                value = Settings.Default.toggle_alt_stats ? "115" : "100";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r62" : "r38";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "CMainTargetID");
+                value = Settings.Default.toggle_alt_stats ? "r200" : "265";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "HudAchievementTracker");
+                value = Settings.Default.toggle_alt_stats ? "135" : "335";
+                lines[FindIndex(lines, "NormalY", start)] = $"\t\t\"NormalY\"\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "9999" : "335";
+                lines[FindIndex(lines, "EngineerY", start)] = $"\t\t\"EngineerY\"\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "9999" : "95";
+                lines[FindIndex(lines, "tall", start)] = $"\t\t\"tall\"\t\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = _hudPath + Resources.file_playerhealth;
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "HudPlayerHealth");
+                value = Settings.Default.toggle_alt_stats ? "10" : "c-190";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r75" : "c68";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = _hudPath + Resources.file_playerhealth;
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "HudPlayerHealth");
+                value = Settings.Default.toggle_alt_stats ? "10" : "c-190";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r75" : "c68";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = _hudPath + Resources.file_playerclass;
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "classmodelpanel");
+                value = Settings.Default.toggle_alt_stats ? "r230" : "r200";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "180" : "200";
+                lines[FindIndex(lines, "tall", start)] = $"\t\t\"tall\"\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = string.Format(_hudPath + Resources.file_itemeffectmeter, string.Empty);
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "HudItemEffectMeter");
+                value = Settings.Default.toggle_alt_stats ? "r110" : "c-60";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r65" : "c120";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "ItemEffectMeterLabel");
+                value = Settings.Default.toggle_alt_stats ? "100" : "120";
+                lines[FindIndex(lines, "wide", start)] = $"\t\t\"wide\"\t\t\t\t\"{value}\"";
+                start = FindIndex(lines, "\"ItemEffectMeter\"");
+                value = Settings.Default.toggle_alt_stats ? "100" : "120";
+                lines[FindIndex(lines, "wide", start)] = $"\t\t\"wide\"\t\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = string.Format(_hudPath + Resources.file_itemeffectmeter, "_cleaver");
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "HudItemEffectMeter");
+                value = Settings.Default.toggle_alt_stats ? "r85" : "c110";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = string.Format(_hudPath + Resources.file_itemeffectmeter, "_sodapopper");
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "HudItemEffectMeter");
+                value = Settings.Default.toggle_alt_stats ? "r75" : "c100";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = string.Format(_hudPath + Resources.file_itemeffectmeter, "_killstreak");
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "HudItemEffectMeter");
+                value = Settings.Default.toggle_alt_stats ? "115" : "2";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r33" : "r28";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = _hudPath + Resources.file_hudanimations;
+                File.WriteAllText(file,
+                    Settings.Default.toggle_alt_stats
+                        ? File.ReadAllText(file).Replace("Blank", "HudBlack")
+                        : File.ReadAllText(file).Replace("HudBlack", "Blank"));
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MainWindow.ShowErrorMessage("Error repositioning player health and ammo.", Resources.error_set_lower_player_stats,
+                    ex.Message);
+                return false;
             }
         }
 
@@ -470,8 +619,7 @@ namespace FlawHUD.Installer
         /// </summary>
         public string CommentOutTextLine(string value)
         {
-            value = value.Replace("//", string.Empty);
-            return string.Concat("//", value);
+            return string.Concat("//", value.Replace("//", string.Empty));
         }
 
         /// <summary>
@@ -505,21 +653,13 @@ namespace FlawHUD.Installer
             // positions 1 = top, 2 = middle, 3 = bottom
             var lines = File.ReadAllLines(file);
             var start = FindIndex(lines, search);
-            var value = Settings.Default.toggle_lower_stats ? "r80" : "c92";
-            switch (position)
+            var value = position switch
             {
-                case Positions.Top:
-                    value = Settings.Default.toggle_lower_stats ? "r70" : "c100";
-                    break;
-
-                case Positions.Middle:
-                    value = Settings.Default.toggle_lower_stats ? "r60" : "c110";
-                    break;
-
-                case Positions.Bottom:
-                    value = Settings.Default.toggle_lower_stats ? "r50" : "c120";
-                    break;
-            }
+                Positions.Top => Settings.Default.toggle_lower_stats ? "r70" : "c100",
+                Positions.Middle => Settings.Default.toggle_lower_stats ? "r60" : "c110",
+                Positions.Bottom => Settings.Default.toggle_lower_stats ? "r50" : "c120",
+                _ => Settings.Default.toggle_lower_stats ? "r80" : "c92"
+            };
             lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\"{value}\"";
             File.WriteAllLines(file, lines);
         }

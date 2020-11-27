@@ -219,6 +219,9 @@
   <data name="file_mainmenuoverride" xml:space="preserve">
     <value>\flawhud\resource\ui\mainmenuoverride.res</value>
   </data>
+  <data name="file_playerclass" xml:space="preserve">
+    <value>\flawhud\resource\ui\hudplayerclass.res</value>
+  </data>
   <data name="file_playerhealth" xml:space="preserve">
     <value>\flawhud\resource\ui\hudplayerhealth.res</value>
   </data>
