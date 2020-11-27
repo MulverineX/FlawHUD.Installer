@@ -340,6 +340,15 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to \flawhud\resource\ui\huddamageaccount.res.
+        /// </summary>
+        internal static string file_huddamageaccount {
+            get {
+                return ResourceManager.GetString("file_huddamageaccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to \flawhud\scripts\hudlayout.res.
         /// </summary>
         internal static string file_hudlayout {

@@ -447,9 +447,6 @@ namespace FlawHUD.Installer
                 start = FindIndex(lines, "CHealthAccountPanel");
                 value = Settings.Default.toggle_lower_stats ? "r150" : "267";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
-                start = FindIndex(lines, "CDamageAccountPanel");
-                value = Settings.Default.toggle_lower_stats ? "65" : "0";
-                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
                 start = FindIndex(lines, "CSecondaryTargetID");
                 value = Settings.Default.toggle_lower_stats ? "325" : "355";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
@@ -459,6 +456,13 @@ namespace FlawHUD.Installer
                 start = FindIndex(lines, "HudSpellMenu");
                 value = Settings.Default.toggle_lower_stats ? "c-270" : "c-210";
                 lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = _hudPath + Resources.file_huddamageaccount;
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "\"DamageAccountValue\"");
+                value = Settings.Default.toggle_lower_stats ? "r105" : "0";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
 
                 file = _hudPath + Resources.file_playerhealth;
@@ -514,11 +518,6 @@ namespace FlawHUD.Installer
                 lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\t\"{value}\"";
                 value = Settings.Default.toggle_alt_stats ? "r90" : "267";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
-                start = FindIndex(lines, "CDamageAccountPanel");
-                value = Settings.Default.toggle_alt_stats ? "137" : "c-120";
-                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\t\"{value}\"";
-                value = Settings.Default.toggle_alt_stats ? "r47" : "c70";
-                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
                 start = FindIndex(lines, "DisguiseStatus");
                 value = Settings.Default.toggle_alt_stats ? "115" : "100";
                 lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\t\"{value}\"";
@@ -539,10 +538,19 @@ namespace FlawHUD.Installer
                 file = _hudPath + Resources.file_playerhealth;
                 lines = File.ReadAllLines(file);
                 start = FindIndex(lines, "HudPlayerHealth");
-                value = Settings.Default.toggle_alt_stats ? "10" : "c-190";
-                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\"{value}\"";
-                value = Settings.Default.toggle_alt_stats ? "r75" : "c68";
-                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "137" : "c-120";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r47" : "c70";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
+                File.WriteAllLines(file, lines);
+
+                file = _hudPath + Resources.file_huddamageaccount;
+                lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "\"DamageAccountValue\"");
+                value = Settings.Default.toggle_alt_stats ? "137" : "c-120";
+                lines[FindIndex(lines, "xpos", start)] = $"\t\t\"xpos\"\t\t\t\t\t\"{value}\"";
+                value = Settings.Default.toggle_alt_stats ? "r47" : "c70";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\t\t\"{value}\"";
                 File.WriteAllLines(file, lines);
 
                 file = _hudPath + Resources.file_playerhealth;
