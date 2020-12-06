@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -196,6 +197,18 @@ namespace FlawHUD.Installer
         }
 
         /// <summary>
+        ///     Check if Team Fortress 2 is currently running
+        /// </summary>
+        public static bool CheckGameStatus()
+        {
+            if (!CheckHUDPath()) return true;
+            if (!Process.GetProcessesByName("hl2").Any()) return true;
+            MessageBox.Show(Properties.Resources.info_game_running_desc,
+                Properties.Resources.info_game_running, MessageBoxButton.OK, MessageBoxImage.Information);
+            return false;
+        }
+
+        /// <summary>
         ///     Update the installer controls like labels and buttons
         /// </summary>
         private void SetFormControls()
@@ -205,7 +218,7 @@ namespace FlawHUD.Installer
                 var isInstalled = CheckHUDPath();
                 BtnStart.IsEnabled = true;
                 BtnInstall.IsEnabled = true;
-                BtnInstall.Content = isInstalled ? "Refresh" : "Install";
+                BtnInstall.Content = isInstalled ? "Reinstall" : "Install";
                 BtnSave.IsEnabled = isInstalled;
                 BtnUninstall.IsEnabled = isInstalled;
                 LblStatus.Content = $"FlawHUD is {(!isInstalled ? "not " : "")}installed...";
@@ -246,6 +259,7 @@ namespace FlawHUD.Installer
         {
             try
             {
+                if (!CheckGameStatus()) return;
                 Logger.Info("Installing FlawHUD...");
                 var worker = new BackgroundWorker();
                 worker.DoWork += (o, ea) =>
@@ -282,6 +296,7 @@ namespace FlawHUD.Installer
         {
             try
             {
+                if (!CheckGameStatus()) return;
                 Logger.Info("Uninstalling FlawHUD...");
                 if (!CheckHUDPath()) return;
                 Directory.Delete(Settings.Default.hud_directory + "\\flawhud", true);

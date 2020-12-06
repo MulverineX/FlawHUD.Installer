@@ -7,8 +7,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\style\favicon.ico</ApplicationIcon>
     <StartupObject>FlawHUD.Installer.App</StartupObject>
-    <AssemblyVersion>1.8.0.0</AssemblyVersion>
-    <Version>1.8.0</Version>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <Version>1.9.0</Version>
     <Copyright>Igor Nikitin</Copyright>
     <PackageProjectUrl>https://github.com/CriticalFlaw/FlawHUD.Installer</PackageProjectUrl>
     <Company>CriticalFlaw</Company>

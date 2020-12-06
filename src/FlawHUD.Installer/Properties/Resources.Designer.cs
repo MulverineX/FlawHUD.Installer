@@ -421,6 +421,24 @@ namespace FlawHUD.Installer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TF2 is still running.
+        /// </summary>
+        internal static string info_game_running {
+            get {
+                return ResourceManager.GetString("info_game_running", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to initiate process because Team Fortress 2 is still running. Please close it then try again..
+        /// </summary>
+        internal static string info_game_running_desc {
+            get {
+                return ResourceManager.GetString("info_game_running_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Install Complete.
         /// </summary>
         internal static string info_install_complete {

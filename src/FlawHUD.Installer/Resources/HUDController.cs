@@ -253,6 +253,11 @@ namespace FlawHUD.Installer
                 var directory = new DirectoryInfo(_hudPath + Resources.dir_console);
                 var chapterbackgrounds = _hudPath + Resources.file_chapterbackgrounds;
                 var chapterbackgroundsTemp = chapterbackgrounds.Replace(".txt", ".file");
+                var menu = _hudPath + Resources.file_mainmenuoverride;
+                var lines = File.ReadAllLines(menu);
+                var start = FindIndex(lines, "Background");
+                var index1 = FindIndex(lines, "image", FindIndex(lines, "if_halloween", start));
+                var index2 = FindIndex(lines, "image", FindIndex(lines, "if_christmas", start));
 
                 if (Settings.Default.toggle_stock_backgrounds)
                 {
@@ -260,6 +265,10 @@ namespace FlawHUD.Installer
                         File.Move(file.FullName, file.FullName.Replace("upward", "off"));
                     if (File.Exists(chapterbackgrounds))
                         File.Move(chapterbackgrounds, chapterbackgroundsTemp);
+
+                    lines[index1] = CommentOutTextLine(lines[index1]);
+                    lines[index2] = CommentOutTextLine(lines[index2]);
+                    File.WriteAllLines(menu, lines);
                 }
                 else
                 {
@@ -267,8 +276,12 @@ namespace FlawHUD.Installer
                         File.Move(file.FullName, file.FullName.Replace("off", "upward"));
                     if (File.Exists(chapterbackgroundsTemp))
                         File.Move(chapterbackgroundsTemp, chapterbackgrounds);
+
+                    lines[index1] = lines[index1].Replace("//", string.Empty);
+                    lines[index2] = lines[index2].Replace("//", string.Empty);
                 }
 
+                File.WriteAllLines(menu, lines);
                 return true;
             }
             catch (Exception ex)
@@ -564,6 +577,9 @@ namespace FlawHUD.Installer
 
                 file = _hudPath + Resources.file_playerclass;
                 lines = File.ReadAllLines(file);
+                start = FindIndex(lines, "PlayerStatusClassImage");
+                value = Settings.Default.toggle_alt_stats ? "r125" : "r75";
+                lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";
                 start = FindIndex(lines, "classmodelpanel");
                 value = Settings.Default.toggle_alt_stats ? "r230" : "r200";
                 lines[FindIndex(lines, "ypos", start)] = $"\t\t\"ypos\"\t\t\t\"{value}\"";

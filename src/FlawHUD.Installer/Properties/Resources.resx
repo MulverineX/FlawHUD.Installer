@@ -237,6 +237,12 @@
   <data name="info_folder_browser" xml:space="preserve">
     <value>Select your tf/custom folder. If a valid directory is not provided, the options to install and modify FlawHUD will not be available.</value>
   </data>
+  <data name="info_game_running" xml:space="preserve">
+    <value>TF2 is still running</value>
+  </data>
+  <data name="info_game_running_desc" xml:space="preserve">
+    <value>Unable to initiate process because Team Fortress 2 is still running. Please close it then try again.</value>
+  </data>
   <data name="info_install_complete" xml:space="preserve">
     <value>Install Complete</value>
   </data>
