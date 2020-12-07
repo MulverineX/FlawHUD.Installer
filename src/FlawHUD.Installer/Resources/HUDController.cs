@@ -265,10 +265,6 @@ namespace FlawHUD.Installer
                         File.Move(file.FullName, file.FullName.Replace("upward", "off"));
                     if (File.Exists(chapterbackgrounds))
                         File.Move(chapterbackgrounds, chapterbackgroundsTemp);
-
-                    lines[index1] = CommentOutTextLine(lines[index1]);
-                    lines[index2] = CommentOutTextLine(lines[index2]);
-                    File.WriteAllLines(menu, lines);
                 }
                 else
                 {
@@ -276,11 +272,15 @@ namespace FlawHUD.Installer
                         File.Move(file.FullName, file.FullName.Replace("off", "upward"));
                     if (File.Exists(chapterbackgroundsTemp))
                         File.Move(chapterbackgroundsTemp, chapterbackgrounds);
-
-                    lines[index1] = lines[index1].Replace("//", string.Empty);
-                    lines[index2] = lines[index2].Replace("//", string.Empty);
                 }
 
+                lines[index1] = lines[index1].Replace("//", string.Empty);
+                lines[index2] = lines[index2].Replace("//", string.Empty);
+                File.WriteAllLines(menu, lines);
+                if (Settings.Default.toggle_stock_backgrounds) return true;
+
+                lines[index1] = CommentOutTextLine(lines[index1]);
+                lines[index2] = CommentOutTextLine(lines[index2]);
                 File.WriteAllLines(menu, lines);
                 return true;
             }
@@ -404,7 +404,7 @@ namespace FlawHUD.Installer
                 var file = _hudPath + Resources.file_clientscheme;
                 var lines = File.ReadAllLines(file);
                 var value = Settings.Default.toggle_code_fonts ? "clientscheme_fonts_pro" : "clientscheme_fonts";
-                lines[FindIndex(lines, "clientscheme_fonts")] = $"#base \"scheme/{value}.res\"";
+                lines[FindIndex(lines, "clientscheme_fonts")] = $"#base \"scheme/{value}.res\"	// Change to fonts_pro.res for Code Pro fonts";
                 File.WriteAllLines(file, lines);
                 return true;
             }
@@ -664,7 +664,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Clear all existing comment identifiers, then apply a fresh one.
         /// </summary>
-        public string[] CommentOutTextLineSuper(string[] lines, string start, string query, bool commentOut)
+        public static string[] CommentOutTextLineSuper(string[] lines, string start, string query, bool commentOut)
         {
             var index1 = FindIndex(lines, query, FindIndex(lines, start));
             var index2 = FindIndex(lines, query, index1++);
