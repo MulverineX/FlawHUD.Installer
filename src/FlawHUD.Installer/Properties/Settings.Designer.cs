@@ -277,30 +277,6 @@ namespace FlawHUD.Installer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50")]
-        public int val_xhair_x {
-            get {
-                return ((int)(this["val_xhair_x"]));
-            }
-            set {
-                this["val_xhair_x"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("49")]
-        public int val_xhair_y {
-            get {
-                return ((int)(this["val_xhair_y"]));
-            }
-            set {
-                this["val_xhair_y"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int val_health_style {
             get {

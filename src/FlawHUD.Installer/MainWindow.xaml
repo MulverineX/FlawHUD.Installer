@@ -128,48 +128,48 @@
                 <Grid>
                     <x2:ColorPicker
                         x:Name="CpXHairColor"
-                        Width="100"
+                        Width="200"
                         Margin="200,60,0,0"
                         IsEnabled="False" />
 
                     <Label
                         Margin="10,60,0,0"
-                        Content="Colors:"
-                        ToolTip="Color of the crosshair." />
+                        Content="Base Colors:"
+                        ToolTip="Default crosshair color." />
 
                     <Label
-                        Margin="10,84,0,0"
-                        Content="*First color is the crosshair default and second is the hitmarker"
-                        FontSize="10px" />
+                        Margin="10,110,0,0"
+                        Content="Hitmarker Color:"
+                        ToolTip="Color of the crosshair when hitting a shot." />
 
                     <x2:IntegerUpDown
                         x:Name="IntXHairSize"
-                        Margin="200,110,0,0"
+                        Margin="200,160,0,0"
                         Value="18"
                         Minimum="10"
                         Maximum="30" Height="28" Width="200"
                         IsEnabled="False" />
 
                     <Label
-                        Margin="10,110,0,0"
+                        Margin="10,160,0,0"
                         Content="Crosshair Size:"
                         ToolTip="Size of the crosshair." />
 
                     <x2:ColorPicker
                         x:Name="CpXHairPulse"
-                        Width="100"
-                        Margin="301,60,0,0"
+                        Width="200"
+                        Margin="200,110,0,0"
                         IsEnabled="False" />
 
                     <Label
-                        Margin="10,160,0,0"
+                        Margin="10,210,0,0"
                         Content="Crosshair Style:"
                         ToolTip="Size of the crosshair." />
 
                     <ComboBox
                         Name="CbXHairStyle"
                         Width="200"
-                        Margin="200,152,0,0"
+                        Margin="200,210,0,0"
                         SelectedValuePath="Content"
                         Style="{StaticResource CrosshairBox}"
                         IsEnabled="False">
@@ -361,49 +361,19 @@
                     </ComboBox>
 
                     <Label
-                        Margin="10,210,0,0"
+                        Margin="10,260,0,0"
                         Content="Crosshair Effect:"
                         ToolTip="Effect applied to the crosshair (None, Blur or Outline)." />
 
                     <ComboBox
                         x:Name="CbXHairEffect"
                         Width="200"
-                        Margin="200,210,0,0"
+                        Margin="200,260,0,0"
                         SelectedValuePath="Content">
                         <ComboBoxItem>None</ComboBoxItem>
                         <ComboBoxItem>Blur</ComboBoxItem>
                         <ComboBoxItem>Outline</ComboBoxItem>
                     </ComboBox>
-
-                    <x2:IntegerUpDown
-                        x:Name="IntXHairXPos"
-                        Value="25"
-                        Minimum="-9999"
-                        Maximum="9999"
-                        Margin="81,262,0,0"
-                        TextAlignment="Left"
-                        Width="120"
-                        IsEnabled="False" />
-
-                    <x2:IntegerUpDown
-                        x:Name="IntXHairYPos"
-                        Value="24"
-                        Minimum="-9999"
-                        Maximum="9999"
-                        Margin="280,262,0,0"
-                        TextAlignment="Left"
-                        Width="120"
-                        IsEnabled="False" />
-
-                    <Label
-                        Margin="10,260,0,0"
-                        Content="X-Axis:"
-                        ToolTip="Horizontal position of the crosshair." />
-
-                    <Label
-                        Margin="206,260,0,0"
-                        Content="Y-Axis:"
-                        ToolTip="Vertical position of the crosshair." />
 
                     <CheckBox
                         x:Name="CbXHairEnable"

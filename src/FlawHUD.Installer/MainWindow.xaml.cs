@@ -34,7 +34,7 @@ namespace FlawHUD.Installer
             Logger.Info("INITIALIZING...");
             InitializeComponent();
             SetupDirectory();
-            ReloadHUDSettings();
+            ReloadHudSettings();
             SetCrosshairControls();
             AutoUpdater.OpenDownloadPage = true;
             AutoUpdater.Start(Properties.Resources.app_update);
@@ -43,7 +43,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Calls to download the latest version of FlawHUD
         /// </summary>
-        private static void DownloadHUD()
+        private static void DownloadHud()
         {
             Logger.Info("Downloading the latest FlawHUD...");
             ServicePointManager.Expect100Continue = true;
@@ -53,14 +53,14 @@ namespace FlawHUD.Installer
             client.DownloadFile(Properties.Resources.app_download, "flawhud.zip");
             client.Dispose();
             Logger.Info("Downloading the latest FlawHUD...Done!");
-            ExtractHUD();
+            ExtractHud();
             CleanDirectory();
         }
 
         /// <summary>
         ///     Calls to extract FlawHUD to the tf/custom directory
         /// </summary>
-        private static void ExtractHUD()
+        private static void ExtractHud()
         {
             var settings = Settings.Default;
             Logger.Info("Extracting downloaded FlawHUD to " + settings.hud_directory);
@@ -182,7 +182,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Check if FlawHUD is installed in the tf/custom directory
         /// </summary>
-        public static bool CheckHUDPath()
+        public static bool CheckHudPath()
         {
             return Directory.Exists(Settings.Default.hud_directory + "\\flawhud");
         }
@@ -201,7 +201,7 @@ namespace FlawHUD.Installer
         /// </summary>
         public static bool CheckGameStatus()
         {
-            if (!CheckHUDPath()) return true;
+            if (!CheckHudPath()) return true;
             if (!Process.GetProcessesByName("hl2").Any()) return true;
             MessageBox.Show(Properties.Resources.info_game_running_desc,
                 Properties.Resources.info_game_running, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -215,7 +215,7 @@ namespace FlawHUD.Installer
         {
             if (Directory.Exists(Settings.Default.hud_directory) && CheckUserPath())
             {
-                var isInstalled = CheckHUDPath();
+                var isInstalled = CheckHudPath();
                 BtnStart.IsEnabled = true;
                 BtnInstall.IsEnabled = true;
                 BtnInstall.Content = isInstalled ? "Reinstall" : "Install";
@@ -246,8 +246,6 @@ namespace FlawHUD.Installer
             IntXHairSize.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
             CbXHairStyle.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
             CbXHairEffect.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
-            IntXHairXPos.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
-            IntXHairYPos.IsEnabled = CbXHairEnable.IsChecked & !CbXHairRotate.IsChecked ?? false;
         }
 
         #region CLICK_EVENTS
@@ -262,17 +260,17 @@ namespace FlawHUD.Installer
                 if (!CheckGameStatus()) return;
                 Logger.Info("Installing FlawHUD...");
                 var worker = new BackgroundWorker();
-                worker.DoWork += (o, ea) =>
+                worker.DoWork += (_, _) =>
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        DownloadHUD();
-                        SaveHUDSettings();
-                        ApplyHUDSettings();
+                        DownloadHud();
+                        SaveHudSettings();
+                        ApplyHudSettings();
                         SetFormControls();
                     });
                 };
-                worker.RunWorkerCompleted += (o, ea) =>
+                worker.RunWorkerCompleted += (_, _) =>
                 {
                     BusyIndicator.IsBusy = false;
                     LblNews.Content = "Installation finished at " + DateTime.Now;
@@ -298,7 +296,7 @@ namespace FlawHUD.Installer
             {
                 if (!CheckGameStatus()) return;
                 Logger.Info("Uninstalling FlawHUD...");
-                if (!CheckHUDPath()) return;
+                if (!CheckHudPath()) return;
                 Directory.Delete(Settings.Default.hud_directory + "\\flawhud", true);
                 LblNews.Content = "Uninstalled FlawHUD at " + DateTime.Now;
                 SetupDirectory();
@@ -318,15 +316,15 @@ namespace FlawHUD.Installer
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
             var worker = new BackgroundWorker();
-            worker.DoWork += (o, ea) =>
+            worker.DoWork += (_, _) =>
             {
                 Dispatcher.Invoke(() =>
                 {
-                    SaveHUDSettings();
-                    ApplyHUDSettings();
+                    SaveHudSettings();
+                    ApplyHudSettings();
                 });
             };
-            worker.RunWorkerCompleted += (o, ea) => { BusyIndicator.IsBusy = false; };
+            worker.RunWorkerCompleted += (_, _) => { BusyIndicator.IsBusy = false; };
             BusyIndicator.IsBusy = true;
             worker.RunWorkerAsync();
         }
@@ -336,7 +334,7 @@ namespace FlawHUD.Installer
         /// </summary>
         private void BtnReset_OnClick(object sender, RoutedEventArgs e)
         {
-            ResetHUDSettings();
+            ResetHudSettings();
         }
 
         /// <summary>
@@ -417,7 +415,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Save user settings to the file
         /// </summary>
-        private void SaveHUDSettings()
+        private void SaveHudSettings()
         {
             try
             {
@@ -435,8 +433,6 @@ namespace FlawHUD.Installer
                 settings.val_xhair_size = IntXHairSize.Value ?? 18;
                 settings.val_xhair_style = CbXHairStyle.SelectedIndex;
                 settings.val_xhair_effect = CbXHairEffect.SelectedIndex;
-                settings.val_xhair_x = IntXHairXPos.Value ?? 50;
-                settings.val_xhair_y = IntXHairYPos.Value ?? 49;
                 settings.toggle_xhair_enable = CbXHairEnable.IsChecked ?? false;
                 settings.toggle_xhair_pulse = CbXHairHitmarker.IsChecked ?? false;
                 settings.toggle_xhair_rotate = CbXHairRotate.IsChecked ?? false;
@@ -461,14 +457,14 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Load GUI with user settings from the file
         /// </summary>
-        private void ReloadHUDSettings()
+        private void ReloadHudSettings()
         {
             try
             {
                 Logger.Info("Loading HUD Settings...");
                 var settings = Settings.Default;
                 var cc = new ColorConverter();
-                CpHealthBuffed.SelectedColor = (Color)cc.ConvertFrom(settings.color_health_buff);
+                CpHealthBuffed.SelectedColor = (Color) cc.ConvertFrom(settings.color_health_buff);
                 CpHealthLow.SelectedColor = (Color)cc.ConvertFrom(settings.color_health_low);
                 CpAmmoLow.SelectedColor = (Color)cc.ConvertFrom(settings.color_ammo_low);
                 CpUberBarColor.SelectedColor = (Color)cc.ConvertFrom(settings.color_uber_bar);
@@ -480,8 +476,6 @@ namespace FlawHUD.Installer
                 IntXHairSize.Value = settings.val_xhair_size;
                 CbXHairStyle.SelectedIndex = settings.val_xhair_style;
                 CbXHairEffect.SelectedIndex = settings.val_xhair_effect;
-                IntXHairXPos.Value = settings.val_xhair_x;
-                IntXHairYPos.Value = settings.val_xhair_y;
                 CbXHairEnable.IsChecked = settings.toggle_xhair_enable;
                 CbXHairHitmarker.IsChecked = settings.toggle_xhair_pulse;
                 CbXHairRotate.IsChecked = settings.toggle_xhair_rotate;
@@ -505,7 +499,7 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Reset user settings to their default values
         /// </summary>
-        private void ResetHUDSettings()
+        private void ResetHudSettings()
         {
             try
             {
@@ -523,8 +517,6 @@ namespace FlawHUD.Installer
                 IntXHairSize.Value = 18;
                 CbXHairStyle.SelectedIndex = 24;
                 CbXHairEffect.SelectedIndex = 0;
-                IntXHairXPos.Value = 50;
-                IntXHairYPos.Value = 49;
                 CbXHairEnable.IsChecked = false;
                 CbXHairHitmarker.IsChecked = true;
                 CbXHairRotate.IsChecked = false;
@@ -550,10 +542,10 @@ namespace FlawHUD.Installer
         /// <summary>
         ///     Apply user settings to FlawHUD files
         /// </summary>
-        private void ApplyHUDSettings()
+        private void ApplyHudSettings()
         {
             Logger.Info("Applying HUD Settings...");
-            var writer = new HUDController();
+            var writer = new HudController();
             if (!writer.MainMenuBackground()) return;
             if (!writer.DisguiseImage()) return;
             if (!writer.MainMenuClassImage()) return;
